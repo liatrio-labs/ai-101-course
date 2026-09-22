@@ -14,7 +14,7 @@
 <script src="_ds/liatrio-design-system-019dd485-a9ab-7b37-9403-944d981aaea9/_ds_bundle.js"></script>
 <style>
 body{margin:0;background:#1A1F23;font-size:16px;line-height:normal;}
-a{color:#89DF00;border-bottom:1px solid rgba(137,223,0,.35);} a:hover{color:#F2F5F6fff;border-bottom-color:#F2F5F6fff;}
+a{color:#89DF00;border-bottom:1px solid rgba(137,223,0,.35);} a:hover{color:#F2F5F6;border-bottom-color:#F2F5F6;}
 x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 @keyframes flyR{0%{transform:translateX(-130px);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(130px);opacity:0}}
@@ -32,7 +32,7 @@ x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
 }
 [data-finale="1"] > div:not([data-outro]){animation:disintegrate .85s ease-out both;pointer-events:none;}
 [data-finale="1"] > div[data-course-finished]{animation:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;}
-[data-finale="1"]:has([data-course-finished]){height:620px!important;}
+[data-finale="1"]:has([data-course-finished]), .course-canvas:has([data-course-finished]){height:640px!important;}
 @keyframes caretBlink{0%,100%{background:#89DF00}50%{background:transparent}}
 @keyframes outroIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
 .completion-shell{gap:14px;overflow:auto;}
@@ -54,6 +54,9 @@ x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
 .completion-action--quiet{background:transparent;color:#89DF00;}
 
 button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offset:3px;}
+@media (min-width: 768px) and (max-height: 899px) {
+  .course-shell { zoom: 1 !important; }
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
 @media (max-width:767px){
   html,body{max-width:100%;overflow-x:hidden;}
@@ -111,7 +114,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
     <div class="course-brand" style="display:flex;align-items:center;gap:16px;">
       <img src="logo_Liatrio_reverse-color.png" alt="Liatrio" style="height:20px;width:auto;display:block;">
       <div style="width:1px;height:20px;background:#2A3036;"></div>
-      <div class="course-brand-title" style="font-size:26px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6fff;">How AI Works</div>
+      <div class="course-brand-title" style="font-size:26px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6;">How AI Works</div>
     </div>
     <div class="course-position" style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">{{ dnum }} / {{ dcount }} · {{ dtitle }}</div>
   </header>
@@ -419,7 +422,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       </sc-if>
       <sc-if value="{{ d8 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">the point: Large file sets are often searched instead of sent all at once</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">DOCUMENT RETRIEVAL: SEARCHING LARGE FILES INSTEAD OF SENDING EVERYTHING</div>
           <div style="display:flex;align-items:center;gap:14px;margin-top:34px;">
             <div style="opacity:{{ s1 }};transition:opacity .5s;width:160px;flex:none;box-sizing:border-box;border:1px solid #2A3036;padding:12px;background:#1E2327;">
               <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:8px;">your insurance policy</div>
@@ -796,7 +799,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
             </div>
             <div style="flex:1;min-width:180px;">
               <div style="opacity:{{ s3 }};transition:opacity .5s;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">why the word matters</div>
-              <div style="opacity:{{ s3 }};transition:opacity .5s;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;margin-top:8px;">Almost everything you think of as “the AI” is the harness, not the model: ChatGPT, Claude, Copilot and Codex are harnesses.</div>
+              <div style="opacity:{{ s3 }};transition:opacity .5s;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;margin-top:8px;">Almost everything you think of as “the AI” is the harness, not the model: ChatGPT, Claude.ai, Copilot and Codex are harnesses.</div>
               <div style="opacity:{{ s4 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;line-height:1.5;margin-top:14px;border-top:1px solid #2A3036;padding-top:12px;">Same model, different harness → very different experience. It explains why one product can browse and another can't, why one remembers your files, and why “the AI can't do X” is usually the harness, not the model.</div>
               <div style="opacity:{{ s5 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;line-height:1.5;margin-top:12px;">It's also what manages the context window: trimming, compacting, and choosing what to send are all harness decisions.</div>
             </div>
@@ -943,7 +946,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div style="font-size:10.5px;color:#9FE626;margin-top:10px;opacity:{{ s4 }};transition:opacity .5s;">the catch: a new model reads the same window differently; so keep the plan and decisions written down, not implied.</div>
             </div>
           </div>
-          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:14px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.4;">Two of the three are just text you put in the window; and that's where nearly all of your leverage sits. Choosing the model is the only dial that isn't text.</div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:14px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.4;">Prompting and skills provide direct text guidance; model selection, tools, approvals, and budgets configure the runtime around it.</div>
         </div>
       </sc-if>
       <sc-if value="{{ outro }}" hint-placeholder-val="{{ false }}">
@@ -1044,7 +1047,7 @@ class Component extends DCLogic {
       "The context window is the model's working memory; a fixed-size box measured in tokens.",
       "The system prompt and conversation history take up space inside it. Only what's in the box gets sent.",
       "As the chat grows, the box fills up.",
-      "Past the limit the oldest fall out: still on your machine, no longer sent."
+      "Past the limit the oldest fall out in this harness: still on your machine, no longer sent."
     ]},
     { title: "The round trip", steps: [
       "Long before you showed up: a crawl of the web, then months of training.",
@@ -1055,8 +1058,8 @@ class Component extends DCLogic {
     ]},
     { title: "Tool calls", steps: [
       "Two sides to keep straight: your computer on the left, the model in a datacenter on the right.",
-      "You ask something the model can't possibly know, like today's weather.",
-      "Rather than guess, the model sends back a request: 'run get_weather for me'.",
+      "You ask something the model can't possibly know, like today's date.",
+      "Rather than guess, the model sends back a request: 'run get_current_time() for me'.",
       "In this client-executed example, your computer runs the tool and fetches real data. The model receives the result.",
       "The result becomes context, and now the model can answer with current data."
     ]},
@@ -1131,13 +1134,13 @@ class Component extends DCLogic {
       "Part four: agents, the loop, splitting work up, and the levers you can influence."
     ]},
     { title: "Words: the basics", steps: [
-      "LLM and prompt: the text generator, and what you send it.",
+      "A quick glossary preview of the words you'll hear most: LLM and prompt (the generator, and what you send it).",
       "Token and conversation: how text is measured, and how a chat is stored.",
       "Context window and system prompt: what it can see, and who sets the rules.",
       "Hallucination and streaming: why it's confidently wrong, and why it looks like typing."
     ]},
     { title: "Words: the machinery", steps: [
-      "Now the machinery. The harness is the app around the model; a tool call is it asking that app to do something.",
+      "A preview of the machinery: the harness is the app around the model; a tool call is it asking that app to do something.",
       "Skills are written instructions; plugins and connectors can add tools, context, or reusable prompts. These are different things, often confused.",
       "An agent is a model in a loop; sub-tasks are the pieces of a job, which sub-agents can take on.",
       "And two habits: retrieval, for getting your documents in, and persistent artifacts, for keeping what matters."
@@ -1190,7 +1193,7 @@ class Component extends DCLogic {
     13: ["The context window is temporary", "Data and decisions get pushed out as context fills", "Write durable context out to external sources", "A spec stays maintained outside of any chat"],
     4: ["Trained and post-trained before you asked", "Fixed weights for this request", "Relevant context is made available to the model", "Tokens stream back, then the request ends", "No fresh data without a tool"],
     7: ["Training learns weights that score next tokens", "Picks a likely one, repeats", "A hallucination can be an outcome of this process", "Uncertainty language is not reliably calibrated"],
-    11: ["A correct answer does not prove reliable arithmetic", "Large calculations can produce plausible digits", "Use a calculator to verify exact work", "A calculator tool provides the exact result"],
+    11: ["A correct answer does not prove reliable arithmetic", "Large calculations can produce plausible digits", "Pattern matching cannot replace multi-step calculation", "A calculator tool computes the exact result"],
     18: ["The harness is the app around the model", "It keeps the list and runs the tools", "The model sits outside it", "Same model, different harness"],
     5: ["Two sides in this client-executed example", "It can't know today's date", "So it requests a tool", "The app fetches; the model reads the result"],
     19: ["Tool: a capability", "Skill: written instructions", "Plugin: tools, context, or prompts", "Skills guide, integrations expose interfaces"],
@@ -1309,6 +1312,7 @@ class Component extends DCLogic {
   actOf(i) { const t = this.ORDER[i % this.ORDER.length]; return (this.META[t] || [0])[0]; }
   componentDidMount() {
     this.onKey = (e) => {
+      if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) return;
       if (e.key === "ArrowRight") this.go(1);
       if (e.key === "ArrowLeft") this.go(-1);
     };
@@ -1326,16 +1330,31 @@ class Component extends DCLogic {
     const key = this.state.d + ":" + this.state.step;
     if (key !== this._key) { this._key = key; this.startType(); }
     this.setAuto();
-    this.persistProgress();
+    const persistKey = `${key}:${this.state.finished}:${this.state.completion?.id}:${this.state.learnerName}`;
+    if (persistKey !== this._persistKey) {
+      this._persistKey = persistKey;
+      this.persistProgress();
+    }
   }
   setAuto() {
     const want = !!(this.props.autoPlay ?? false);
-    if (want && !this.timer) this.timer = setInterval(() => this.go(1), 2800);
-    if (!want && this.timer) { clearInterval(this.timer); this.timer = null; }
+    if (this.state.finished || !want) {
+      if (this.timer) { clearInterval(this.timer); this.timer = null; }
+      return;
+    }
+    const cur = this.at(this.state.d);
+    const text = (cur && cur.steps && cur.steps[this.state.step]) || "";
+    const delay = Math.max(3000, 1000 + (text.length * 34) + 1500);
+    const timerKey = `${this.state.d}:${this.state.step}:${delay}`;
+    if (!this.timer || this._timerKey !== timerKey) {
+      if (this.timer) clearInterval(this.timer);
+      this._timerKey = timerKey;
+      this.timer = setInterval(() => this.go(1), delay);
+    }
   }
   componentWillUnmount() { window.removeEventListener("keydown", this.onKey); if (this.timer) clearInterval(this.timer); clearTimeout(this.tOut); clearInterval(this.tInt); }
   go(dir) {
-    const isCompleted = this.state.finished || (!!this.state.completion && HowAiWorksCourseState.isTerminalPosition({ lesson: this.state.d, step: this.state.step }, this.course()));
+    const isCompleted = this.state.finished;
     if (isCompleted) {
       if (dir < 0) this.setState(s => ({ step: Math.max(0, s.step - 1), finished: false }));
       return;
@@ -1364,7 +1383,7 @@ class Component extends DCLogic {
   }
   renderVals() {
     const { d, step } = this.state;
-    const finished = this.state.finished || (!!this.state.completion && HowAiWorksCourseState.isTerminalPosition({ lesson: d, step }, this.course()));
+    const finished = this.state.finished;
     const acc = "#89DF00";
     const cur = this.at(d), N = this.ORDER.length;
     const now = new Date(), p2 = n => String(n).padStart(2, "0");
@@ -1454,7 +1473,7 @@ class Component extends DCLogic {
     v.preO = st === 0 ? 1 : 0.3;
     v.preDetail = st === 0 ? 1 : 0;
     v.preLabel = st === 0 ? "step zero · months before you asked" : "already done, long ago";
-    v.flow1 = d === 3 && st === 1;
+    v.flow1 = d === 8 && st === 1;
     v.flow2 = d === 3 && st === 2;
     v.subs = [
       { n: "A", job: "Read chapters 1–5", doing: "reading · configured context", fill: st >= 3 ? "72%" : "18%", used: st >= 3 ? "38k tokens read" : "starting…" },
@@ -1508,7 +1527,7 @@ class Component extends DCLogic {
       dc: i === cur2 ? "#F2F5F6" : "#AEB8BF"
     }));
     v.agentNote = st >= 3 ? "still broken → back to “look”, and round again" : "the loop runs until it finishes, hits a limit, needs approval, or is stopped";
-    v.resendC = (d === 0 && st >= 4) ? acc : "transparent";
+    v.resendC = (d === 3 && st >= 4) ? acc : "transparent";
     v.preds = [
       { word: "Paris", pct: "94%", w: st >= 1 ? "94%" : "0%", c: acc },
       { word: "Lyon", pct: "3%", w: st >= 1 ? "3%" : "0%", c: "#4A545C" },
@@ -1519,10 +1538,9 @@ class Component extends DCLogic {
       { label: "system prompt", w: "100%", c: "#DCE3E7" },
       { label: "you: pasta recipe?", w: "78%", c: acc },
       { label: "assistant: cacio e pepe…", w: "92%", c: "#4A545C" },
-      { label: "you: make it vegetarian?", w: "64%", c: acc },
-      { label: "assistant: swap the…", w: "86%", c: "#4A545C" }
+      { label: "you: make it vegetarian?", w: "64%", c: acc }
     ];
-    const shown = Math.min(st + 1, 5);
+    const shown = Math.min(st + 1, 4);
     v.sentBars = sentMsgs.map((m, i) => ({ ...m, o: i < shown ? fin(i, true) : 0.12 }));
     v.sentPhrase = st === 0
       ? "nothing sent yet; the list is just waiting"
@@ -1543,9 +1561,9 @@ class Component extends DCLogic {
       y: st >= m.from ? "0px" : "6px"
     }));
     const rightActive = st === 1 || st === 3 || st === 4;
-    v.loopWire = (st === 1 || st === 3) ? acc : (st === 4 ? acc : "#2A3036");
-    v.loopArrow = (st === 1 || st === 3) ? "this example sends context →" : (st >= 4 ? "← the reply comes back" : "");
-    v.loopJustify = (st === 1 || st === 3) ? "flex-end" : "flex-start";
+    v.loopWire = (st === 1 || st === 3 || st === 5) ? acc : (st === 4 ? acc : "#2A3036");
+    v.loopArrow = (st === 1 || st === 3 || st === 5) ? "this example sends context →" : (st === 4 ? "← the reply comes back" : "");
+    v.loopJustify = (st === 1 || st === 3 || st === 5) ? "flex-end" : "flex-start";
     v.loopLb = loopFin ? "#242A2F" : (rightActive ? "#2A3036" : "#5C6870");
     v.loopLbg = rightActive && !loopFin ? "#1E2327" : (loopFin ? "#1E2327" : "#22282D");
     v.loopLtc = loopFin ? "#3E474E" : (rightActive ? "#6D777E" : "#F2F5F6");

@@ -104,3 +104,91 @@ test('aligns the context-window key idea with its left-column heading', () => {
   assert.match(source, /class="context-layout" style="display:grid;grid-template-columns:520px minmax\(0,1fr\);gap:40px;align-items:start;margin-top:0;"/);
   assert.match(source, /class="context-key-idea" style="border-left:1px solid #2A3036;padding-left:32px;"/);
 });
+
+test('ignores keyboard navigation when typing into inputs or editable elements', () => {
+  assert.match(source, /this\.onKey\s*=\s*\(e\)\s*=>\s*\{[\s\S]*?(?:tagName\s*===\s*["']INPUT["']|matches\(["'].*?input.*__["']\))/);
+});
+
+test('synchronizes Lesson 13 tool call captions with the date/time tool diagram', () => {
+  assert.match(source, /"You ask something the model can't possibly know, like today's date\."/);
+  assert.match(source, /"Rather than guess, the model sends back a request: 'run get_current_time\(\) for me'\."/);
+  assert.doesNotMatch(source, /today's weather/);
+  assert.doesNotMatch(source, /get_weather/);
+});
+
+test('checks d === 3 for resend outline highlighting in renderVals', () => {
+  assert.match(source, /v\.resendC\s*=\s*\(d\s*===\s*3\s*&&\s*st\s*>=\s*4\)\s*\?\s*acc\s*:\s*["']transparent["']/);
+});
+
+test('checks d === 8 for flow1 pulse in renderVals', () => {
+  assert.match(source, /v\.flow1\s*=\s*d\s*===\s*8\s*&&\s*st\s*===\s*1;/);
+});
+
+test('sends context to model on turn 2 step 5 of the loop wire animation', () => {
+  assert.match(source, /v\.loopWire\s*=\s*\(st\s*===\s*1\s*\|\|\s*st\s*===\s*3\s*\|\|\s*st\s*===\s*5\)\s*\?\s*acc\s*:\s*\(st\s*===\s*4\s*\?\s*acc\s*:\s*["']#2A3036["']\);/);
+  assert.match(source, /v\.loopArrow\s*=\s*\(st\s*===\s*1\s*\|\|\s*st\s*===\s*3\s*\|\|\s*st\s*===\s*5\)\s*\?\s*["']this example sends context →["']\s*:\s*\(st\s*===\s*4\s*\?\s*["']← the reply comes back["']\s*:\s*["']["']\);/);
+  assert.match(source, /v\.loopJustify\s*=\s*\(st\s*===\s*1\s*\|\|\s*st\s*===\s*3\s*\|\|\s*st\s*===\s*5\)\s*\?\s*["']flex-end["']\s*:\s*["']flex-start["'];/);
+});
+
+test('does not include a 5th phantom message in Lesson 04 turn 2 sent context', () => {
+  assert.doesNotMatch(source, /assistant: swap the…/);
+  assert.match(source, /const\s+sentMsgs\s*=\s*\[\s*\{ label: "system prompt"[^\]]+you: make it vegetarian\?[^\]]+\];/);
+  assert.match(source, /const\s+shown\s*=\s*Math\.min\(st\s*\+\s*1,\s*4\);/);
+});
+
+test('avoids duplicated calculator takeaways in RECAP[11]', () => {
+  assert.match(source, /11:\s*\[\s*"A correct answer does not prove reliable arithmetic",\s*"Large calculations can produce plausible digits",\s*"Pattern matching cannot replace multi-step calculation",\s*"A calculator tool computes the exact result"\s*\]/);
+  assert.doesNotMatch(source, /"Use a calculator to verify exact work",\s*"A calculator tool provides the exact result"/);
+});
+
+test('references Claude.ai as a harness in Slide 12.03', () => {
+  assert.match(source, /ChatGPT, Claude\.ai, Copilot and Codex/);
+});
+
+test('uses DOCUMENT RETRIEVAL heading in Slide 17.01', () => {
+  assert.match(source, /<div style="font-size:10\.5px;letter-spacing:\.1em;text-transform:uppercase;color:#8B959D;">DOCUMENT RETRIEVAL: SEARCHING LARGE FILES INSTEAD OF SENDING EVERYTHING<\/div>/);
+  assert.doesNotMatch(source, /the point: Large file sets are often searched instead of sent all at once/);
+});
+
+test('accurately describes runtime levers beyond prompting in Slide 21.05 footer', () => {
+  assert.match(source, /Prompting and skills provide direct text guidance; model selection, tools, approvals, and budgets configure the runtime around it\./);
+  assert.doesNotMatch(source, /Two of the three are just text you put in the window; and that's where nearly all of your leverage sits\./);
+});
+
+test('mentions harness context dropping in Slide 06.04 caption', () => {
+  assert.match(source, /"Past the limit the oldest fall out in this harness: still on your machine, no longer sent\."/);
+});
+
+test('frames glossary and machinery previews clearly in Slides 02.01 and 03.01', () => {
+  assert.match(source, /"A quick glossary preview of the words you'll hear most: LLM and prompt \(the generator, and what you send it\)\."/);
+  assert.match(source, /"A preview of the machinery: the harness is the app around the model; a tool call is it asking that app to do something\."/);
+});
+
+test('does not contain invalid 9-digit hex colors', () => {
+  assert.doesNotMatch(source, /#F2F5F6fff/);
+});
+
+test('sets completion canvas height to 640px to eliminate desktop vertical scrollbars', () => {
+  assert.match(source, /(?:\[data-finale="1"\]|\.course-canvas):has\(\[data-course-finished\]\)\s*\{\s*height:\s*640px!important;/);
+});
+
+test('scales course shell zoom to 1 on desktop viewports with height under 900px', () => {
+  assert.match(source, /@media\s*\(\s*min-width:\s*768px\s*\)\s*and\s*\(\s*max-height:\s*899px\s*\)\s*\{\s*\.course-shell\s*\{\s*zoom:\s*1\s*!important;\s*\}\s*\}/);
+});
+
+test('throttles persistProgress in componentDidUpdate using persistKey change tracking', () => {
+  assert.match(source, /const\s+persistKey\s*=\s*`\$\{key\}:\$\{this\.state\.finished\}:\$\{this\.state\.completion\?\.id\}:\$\{this\.state\.learnerName\}`;/);
+  assert.match(source, /if\s*\(persistKey\s*!==\s*this\._persistKey\)\s*\{\s*this\._persistKey\s*=\s*persistKey;\s*this\.persistProgress\(\);\s*\}/);
+});
+
+test('setAuto clears timer when finished and dynamically scales delay from caption length', () => {
+  assert.match(source, /if\s*\(this\.state\.finished\s*\|\|\s*!want\)\s*\{\s*if\s*\(this\.timer\)\s*\{\s*clearInterval\(this\.timer\);\s*this\.timer\s*=\s*null;\s*\}\s*return;\s*\}/);
+  assert.match(source, /const\s+delay\s*=\s*Math\.max\(3000,\s*1000\s*\+\s*\(text\.length\s*\*\s*34\)\s*\+\s*1500\);/);
+  assert.match(source, /const\s+timerKey\s*=\s*`\$\{this\.state\.d\}:\$\{this\.state\.step\}:\$\{delay\}`;/);
+  assert.match(source, /if\s*\(!this\.timer\s*\|\|\s*this\._timerKey\s*!==\s*timerKey\)\s*\{\s*if\s*\(this\.timer\)\s*clearInterval\(this\.timer\);\s*this\._timerKey\s*=\s*timerKey;\s*this\.timer\s*=\s*setInterval\(\(\)\s*=>\s*this\.go\(1\),\s*delay\);\s*\}/);
+});
+
+test('renderVals uses this.state.finished directly rather than forcing finished via isTerminalPosition', () => {
+  assert.match(source, /renderVals\(\)\s*\{[\s\S]*?const\s+finished\s*=\s*this\.state\.finished;/);
+  assert.doesNotMatch(source, /renderVals\(\)\s*\{[\s\S]*?const\s+finished\s*=\s*this\.state\.finished\s*\|\|\s*\(!!this\.state\.completion/);
+});

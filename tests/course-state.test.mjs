@@ -202,3 +202,13 @@ test('reset clears course position, name, and completion record', () => {
     learnerName: 'Ada Lovelace'
   }), CourseState.defaultState());
 });
+
+test('generates a valid completion UUID even when crypto.randomUUID is unavailable', () => {
+  assert.match(CourseState.complete(CourseState.defaultState()).completion.id, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+
+  const source = readFileSync(new URL('../course-state.js', import.meta.url), 'utf8');
+  const isolated = {};
+  new Function('window', source)(isolated);
+  const state = isolated.HowAiWorksCourseState.complete(isolated.HowAiWorksCourseState.defaultState());
+  assert.match(state.completion.id, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+});

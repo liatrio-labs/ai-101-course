@@ -30,7 +30,7 @@ The course saves progress locally in your browser using `localStorage`. It survi
 
 At completion, you may optionally add a name to a local personal completion record. The browser generates its UUID and timestamp; use the native **Print / save as PDF** action to keep a copy. This record is not independently verified, Liatrio-issued, or a formal credential.
 
-Choose **Start again** to clear the local course position, name, and completion record.
+Choose **Reset Progress & Restart** to clear the local course position, name, and completion record.
 
 ## Development note
 
