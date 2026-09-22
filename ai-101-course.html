@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/liatrio-design-system-019dd485-a9ab-7b37-9403-944d981aaea9/colors_and_type.css">
+<script src="_ds/liatrio-design-system-019dd485-a9ab-7b37-9403-944d981aaea9/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#1A1F23;font-size:16px;line-height:normal;}
+a{color:#89DF00;border-bottom:1px solid rgba(137,223,0,.35);} a:hover{color:#F2F5F6fff;border-bottom-color:#F2F5F6fff;}
+x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes flyR{0%{transform:translateX(-130px);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(130px);opacity:0}}
+@keyframes flyUp{0%{transform:translateY(52px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(-14px);opacity:0}}
+@keyframes flyDown{0%{transform:translateY(-14px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(52px);opacity:0}}
+@keyframes sendList{0%{transform:translateX(-150px) scale(.9);opacity:0}18%{opacity:1}72%{opacity:1}100%{transform:translateX(150px) scale(.9);opacity:0}}
+@keyframes flyL{0%{transform:translateX(120px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateX(-120px);opacity:0}}
+@keyframes crunch{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+@keyframes disintegrate{
+0%{opacity:1;-webkit-mask-image:none;mask-image:none}
+14%{opacity:1;-webkit-mask-image:radial-gradient(circle,#000 48%,transparent 49%);mask-image:radial-gradient(circle,#000 48%,transparent 49%);-webkit-mask-size:3px 3px;mask-size:3px 3px}
+42%{opacity:.8;-webkit-mask-image:radial-gradient(circle,#000 34%,transparent 35%);mask-image:radial-gradient(circle,#000 34%,transparent 35%);-webkit-mask-size:5px 5px;mask-size:5px 5px}
+70%{opacity:.4;-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 21%);mask-image:radial-gradient(circle,#000 20%,transparent 21%);-webkit-mask-size:7px 7px;mask-size:7px 7px}
+100%{opacity:0;visibility:hidden;-webkit-mask-image:none;mask-image:none}
+}
+[data-finale="1"] > div:not([data-outro]){animation:disintegrate .85s ease-out both;pointer-events:none;}
+@keyframes caretBlink{0%,100%{background:#89DF00}50%{background:transparent}}
+@keyframes outroIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="zoom:1.25;min-height:80vh;display:flex;flex-direction:column;font-family:'Space Grotesk',sans-serif;color:#F2F5F6;">
+  <header style="display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <img src="logo_Liatrio_reverse-color.png" alt="Liatrio" style="height:20px;width:auto;display:block;">
+      <div style="width:1px;height:20px;background:#2A3036;"></div>
+      <div style="font-size:26px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6fff;">How AI works</div>
+    </div>
+    <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">{{ dnum }} / {{ dcount }} · {{ dtitle }}</div>
+  </header>
+  <div style="height:1px;max-width:1060px;width:calc(100% - 80px);margin:18px auto 0;background:linear-gradient(90deg,#C068F9 0%,#C6F135 100%);"></div>
+  <nav style="display:flex;gap:4px;padding:16px 40px 0;max-width:1060px;width:calc(100% - 80px);margin:0 auto;box-sizing:content-box;">
+    <sc-for list="{{ acts }}" as="a" hint-placeholder-count="5">
+      <button onClick="{{ a.pick }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;border:none;cursor:pointer;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;background:{{ a.bg }};color:{{ a.fg }};transition:all .3s;white-space:nowrap;">{{ a.label }}</button>
+    </sc-for>
+  </nav>
+  <main style="flex:1;display:flex;flex-direction:column;padding:14px 40px 28px;max-width:1060px;width:calc(100% - 80px);margin:0 auto;box-sizing:content-box;">
+    <div style="display:flex;align-items:center;min-height:24px;margin-bottom:12px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;line-height:1.3;color:#C9D1D6;flex:1;text-wrap:pretty;"><sc-for list="{{ capParts }}" as="p" hint-placeholder-count="1"><span style="color:{{ p.c }};">{{ p.t }}</span></sc-for><sc-if value="{{ caret }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;width:8px;height:15px;margin-left:2px;vertical-align:-2px;background:#89DF00;"></span></sc-if></div>
+    </div>
+    <div data-finale="{{ finaleFlag }}" style="position:relative;height:480px;border:1px solid #2A3036;background:#1E2327;border-radius:12px;overflow:hidden;">
+
+      <sc-if value="{{ d1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;padding:36px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The conversation is a list of messages</div>
+          <div style="display:flex;gap:40px;margin-top:22px;align-items:flex-start;">
+            <div style="display:flex;flex-direction:column;gap:12px;width:460px;outline:2px solid {{ resendC }};outline-offset:12px;transition:outline-color .5s;">
+              <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s;border:1px solid #3A4046;background:#22282D;padding:12px 16px;">
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:4px;">system prompt · hidden</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“You are ChefBot. Only discuss cooking — politely decline everything else.”</div>
+              </div>
+              <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border:1px solid #89DF00;padding:12px 16px;margin-left:34px;">
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:4px;">you</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“What's a good pasta recipe?”</div>
+              </div>
+              <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:12px 16px;">
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:4px;">assistant</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“Try cacio e pepe — three ingredients…”</div>
+              </div>
+              <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;border:1px solid #89DF00;padding:12px 16px;margin-left:34px;">
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:4px;">you</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“Make it vegetarian?”</div>
+              </div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;text-align:center;font-size:10.5px;color:#89DF00;">↻ every send = this ENTIRE list again, top to bottom</div>
+            </div>
+            <div style="flex:1;border-left:1px solid #2A3036;padding-left:32px;margin-top:6px;">
+              <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">what gets sent on this turn</div>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-top:12px;">
+                <sc-for list="{{ sentBars }}" as="b" hint-placeholder-count="5">
+                  <div style="opacity:{{ b.o }};transition:opacity .45s;">
+                    <div style="height:9px;width:{{ b.w }};background:{{ b.c }};"></div>
+                    <div style="font-size:9.5px;color:#8B959D;margin-top:2px;">{{ b.label }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-size:11px;margin-top:12px;color:#89DF00;">{{ sentPhrase }}</div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;margin-top:14px;border-top:1px solid #2A3036;padding-top:12px;">Never just your latest message — the <em>whole list</em>, from the top, every single time. The model has no memory outside this list.</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ d2 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:36px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Text becomes tokens becomes numbers</div>
+          <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s;margin-top:30px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:10px;">1 · your text</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:25px;">The spaghetti was unbelievably good.</div>
+          </div>
+          <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;margin-top:26px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:10px;">2 · chopped into tokens</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <sc-for list="{{ tokChips }}" as="tk" hint-placeholder-count="8">
+                <div style="border:1px solid #89DF00;padding:6px 10px;font-size:15px;background:rgba(137,223,0,0.08);white-space:pre;">{{ tk.t }}</div>
+              </sc-for>
+            </div>
+            <div style="font-size:11px;color:#8B959D;margin-top:8px;">common words = 1 token · rare words get split</div>
+          </div>
+          <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:26px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:10px;">3 · each token is just a number (ids below are illustrative)</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:15px;color:#89DF00;">
+              <sc-for list="{{ tokChips }}" as="tk" hint-placeholder-count="8">
+                <div style="border:1px dashed #3B444B;padding:6px 10px;font-family:var(--font-mono);">{{ tk.n }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;margin-top:26px;border-top:1px solid #2A3036;padding-top:16px;display:flex;gap:44px;">
+            <div><span style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">~4 characters</span><div style="font-size:11px;color:#8B959D;margin-top:2px;">per token, on average</div></div>
+            <div><span style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">~750 words</span><div style="font-size:11px;color:#8B959D;margin-top:2px;">≈ 1,000 tokens of English</div></div>
+            <div><span style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">$ / token</span><div style="font-size:11px;color:#8B959D;margin-top:2px;">pricing and limits are counted in tokens</div></div>
+          </div>
+          <div style="opacity:{{ s5 }};transform:translateY({{ y5 }});transition:opacity .5s,transform .5s;margin-top:18px;display:flex;gap:12px;align-items:baseline;font-size:12.5px;">
+            <span style="letter-spacing:.1em;text-transform:uppercase;font-size:10px;color:#8B959D;white-space:nowrap;">not all text is equal</span>
+            <span>“good” = <span style="color:#89DF00;">1 token</span> · “unbelievably” splits into <span style="color:#89DF00;">2</span> · and dense code, JSON or logs use roughly <span style="color:#89DF00;">twice as many</span> tokens per character as plain prose</span>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d3 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:36px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The context window — working memory with a hard limit</div>
+          <div style="display:flex;gap:40px;margin-top:26px;align-items:flex-start;">
+            <div style="width:520px;">
+              <div style="opacity:{{ s4 }};transition:opacity .5s;border:1px dashed #3B444B;background:repeating-linear-gradient(45deg,#252B30,#252B30 6px,#1E2327 6px,#1E2327 12px);padding:8px 14px;font-size:10.5px;color:#8B959D;display:flex;justify-content:space-between;gap:12px;"><span>oldest messages — pushed out of the box</span><span>still saved in your app · just no longer sent</span></div>
+              <div style="opacity:{{ s4 }};transition:opacity .5s;text-align:center;font-size:11px;color:#8B959D;line-height:20px;height:20px;">↑ overflow falls out here</div>
+              <div style="border:2px solid #5C6870;height:236px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#1E2327;">
+                <div style="opacity:{{ s3 }};transition:opacity .5s,height .6s;background:rgba(137,223,0,0.22);height:{{ histH2 }};display:flex;align-items:center;justify-content:center;font-size:11px;color:#B9EC6B;border-top:1px solid #1A1F23;">…the chat keeps growing…</div>
+                <div style="opacity:{{ s2 }};transition:opacity .5s;background:rgba(137,223,0,0.25);height:60px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#B9EC6B;border-top:1px solid #1A1F23;">conversation history</div>
+                <div style="background:#DCE3E7;height:40px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#1A1F23;">system prompt</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:10.5px;color:#8B959D;margin-top:8px;">
+                <span style="color:#89DF00;white-space:nowrap;">{{ tokCount }} tokens in the box</span><span style="opacity:{{ s1 }};transition:opacity .5s;white-space:nowrap;">a common limit today: ~200,000 tokens</span>
+              </div>
+              <div style="opacity:{{ s1 }};transition:opacity .5s;text-align:center;font-size:11px;color:#89DF00;margin-top:6px;">only what's inside the box is sent to the model — nothing else exists for it</div>
+            </div>
+            <div style="flex:1;border-left:1px solid #2A3036;padding-left:32px;margin-top:6px;">
+              <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">the key idea</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:21px;line-height:1.45;margin-top:10px;">{{ d3note }}</div>
+              <div style="display:{{ warnDisp }};margin-top:16px;border-left:3px solid #E63946;padding:8px 14px;background:rgba(230,57,70,0.08);font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:17px;line-height:1.4;color:#FFFFFF;">This is a major cause of hallucinations and mistakes from the AI.</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d4 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Every message you've sent — shipped to a sealed-off model</div>
+          <div style="display:flex;align-items:stretch;margin-top:24px;">
+            <div style="opacity:{{ s1 }};transition:opacity .5s;width:220px;border:1px solid #3A4046;padding:16px;background:#1E2327;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">Your device</div>
+              <div style="font-size:10.5px;color:#8B959D;margin:4px 0 12px;">holds the conversation</div>
+              <div style="display:flex;flex-direction:column;gap:5px;">
+                <div style="height:11px;background:#DCE3E7;width:100%;"></div>
+                <div style="height:11px;background:rgba(137,223,0,0.45);width:82%;"></div>
+                <div style="height:11px;background:#39424A;width:92%;"></div>
+                <div style="height:11px;background:rgba(137,223,0,0.45);width:68%;"></div>
+                <div style="height:11px;background:#39424A;width:86%;"></div>
+              </div>
+              <div style="font-size:10px;color:#8B959D;margin-top:8px;">system prompt + every message so far</div>
+            </div>
+            <div style="flex:1;position:relative;display:flex;align-items:center;padding:0 18px;">
+              <div style="opacity:{{ s2 }};transition:opacity .5s;width:100%;position:relative;height:2px;background:{{ w41 }};">
+                <sc-if value="{{ flow1 }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:-4px;left:40%;width:10px;height:10px;border-radius:50%;background:#89DF00;animation:pulse 1s infinite;"></div></sc-if>
+              </div>
+              <div style="opacity:{{ s2 }};transition:opacity .5s;position:absolute;top:calc(50% - 44px);left:0;width:100%;text-align:center;font-size:10.5px;color:#89DF00;">the ENTIRE list →<br>every message, every time</div>
+              <div style="opacity:{{ s3 }};transition:opacity .5s;position:absolute;top:calc(50% + 18px);left:0;width:100%;text-align:center;font-size:10.5px;color:#8B959D;">← the reply streams back,<br>token by token</div>
+              <sc-if value="{{ flyMsgs }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;top:calc(50% - 34px);left:0;width:100%;display:flex;justify-content:center;pointer-events:none;">
+                  <div style="border:1px solid #89DF00;background:#1E2327;padding:5px 6px;width:96px;animation:sendList 2.6s linear infinite;">
+                    <div style="font-size:7.5px;letter-spacing:.06em;text-transform:uppercase;color:#89DF00;margin-bottom:3px;">copy of the whole window</div>
+                    <div style="display:flex;flex-direction:column;gap:2px;">
+                      <div style="height:4px;background:#DCE3E7;"></div>
+                      <div style="height:4px;background:rgba(137,223,0,0.72);width:82%;"></div>
+                      <div style="height:4px;background:#4A545C;width:92%;"></div>
+                      <div style="height:4px;background:rgba(137,223,0,0.72);width:68%;"></div>
+                      <div style="height:4px;background:#4A545C;width:86%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ streaming }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;top:calc(50% + 44px);left:0;width:100%;display:flex;justify-content:center;pointer-events:none;">
+                  <sc-for list="{{ tokenStream }}" as="t" hint-placeholder-count="5">
+                    <div style="position:absolute;border:1px solid #333B42;background:#1E2327;font-size:9px;padding:1px 4px;white-space:nowrap;animation:flyL 2.2s {{ t.delay }} infinite;">{{ t.text }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+            <div style="opacity:{{ s1 }};width:300px;border:1px solid {{ b43 }};background:{{ bg43 }};padding:16px;transition:opacity .5s,border-color .4s,background .4s;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">a datacenter, somewhere else</div>
+              <div style="opacity:{{ preO }};transition:opacity .6s;border:1px dashed #89DF00;background:rgba(137,223,0,0.06);padding:9px 11px;margin-top:8px;">
+                <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:6px;">{{ preLabel }}</div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;">
+                  <div style="flex:1;border:1px solid #333B42;padding:4px 6px;background:#1E2327;">public web text + licensed data<div style="color:#8B959D;opacity:{{ preDetail }};transition:opacity .5s;">up to a cut-off date</div></div>
+                  <div style="color:#8B959D;">→</div>
+                  <div style="flex:1;border:1px solid #333B42;padding:4px 6px;background:#1E2327;">months of training<div style="color:#8B959D;opacity:{{ preDetail }};transition:opacity .5s;">on huge GPU clusters</div></div>
+                </div>
+              </div>
+              <div style="opacity:{{ preO }};transition:opacity .6s;text-align:center;font-size:9.5px;color:#89DF00;line-height:16px;height:16px;">↓ baked in once, then sealed</div>
+              <div style="opacity:{{ s2 }};transition:opacity .5s;border:1px solid #3A4046;background:#0E1216;color:#F2F5F6;padding:12px 14px;">
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;">The model</div>
+                <div style="font-size:10px;color:#9AA4AB;margin-top:2px;line-height:1.35;">frozen weights on racks of GPUs — a sealed box that reads the list and writes the next reply</div>
+                <div style="display:flex;align-items:center;gap:7px;margin-top:6px;">
+                  <div style="display:flex;align-items:flex-end;gap:2px;height:11px;width:64px;flex:none;">
+                    <sc-for list="{{ crunchBars }}" as="c" hint-placeholder-count="14">
+                      <div style="flex:1;height:11px;transform-origin:bottom;background:{{ c.bg }};animation:{{ c.anim }};"></div>
+                    </sc-for>
+                  </div>
+                  <div style="font-size:9px;color:{{ crunchFg }};transition:color .4s;line-height:1.25;">{{ crunchLabel }}</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:8px;">
+                <div style="opacity:{{ s3 }};transition:opacity .5s;flex:1;border:1px solid #89DF00;background:rgba(137,223,0,0.08);padding:7px 9px;font-size:10px;color:#B9EC6B;">✓ can see<div style="color:#AEB8BF;margin-top:2px;">only the messages you just sent</div></div>
+                <div style="opacity:{{ s5 }};transition:opacity .5s;flex:1;border:1px dashed #E63946;padding:7px 9px;font-size:10px;color:#EF6B75;">✕ cannot see<div style="color:#AEB8BF;margin-top:2px;">the live internet, your files, today's news</div></div>
+              </div>
+            </div>
+          </div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:14px;border-top:1px solid #2A3036;padding-top:10px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.3;">No memory between turns. No internet. Nothing past its training.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d5 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:28px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Tool calls — when the model needs the outside world</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 48px;margin-top:14px;background:linear-gradient(#2A3036,#2A3036) center top / 1px 100% no-repeat;">
+            <div style="grid-row:1;grid-column:1;opacity:{{ s1 }};transition:opacity .5s;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #5C6870;padding-bottom:6px;">on your computer</div>
+            <div style="grid-row:1;grid-column:2;opacity:{{ s1 }};transition:opacity .5s;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #5C6870;padding-bottom:6px;text-align:right;">in the datacenter · the model</div>
+            <div style="grid-row:2;grid-column:1;opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border:1px solid #89DF00;padding:10px 14px;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:3px;">you</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:15px;">“What's today's date?”</div>
+              <div style="font-size:10px;color:#8B959D;margin-top:4px;text-align:right;">sent across →</div>
+            </div>
+            <div style="grid-row:3;grid-column:2;opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;border:1px dashed #5C6870;background:#22282D;padding:10px 14px;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:3px;">model · has no clock and no calendar, so it asks</div>
+              <div style="font-size:13px;">← “please run <span style="color:#89DF00;">get_current_time()</span> and send me the result”</div>
+            </div>
+            <div style="grid-row:4;grid-column:1;opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:10px 14px;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:3px;">your computer runs the tool · the model just waits</div>
+              <div style="font-size:13px;">reads your system clock → <span style="color:#89DF00;">{{ nowIso }}</span><div style="color:#8B959D;margin-top:3px;">appended to the list as a message · whole conversation resent →</div></div>
+            </div>
+            <div style="grid-row:5;grid-column:2;opacity:{{ s5 }};transform:translateY({{ y5 }});transition:opacity .5s,transform .5s;border:1px solid #3A4046;padding:10px 14px;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:3px;">model · now with real data</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:15px;">← “Today is {{ nowLong }}.”</div>
+            </div>
+          </div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:10px;font-size:10.5px;line-height:1.4;color:#8B959D;">the date is the clearest case — nothing in training could contain today. Same shape for your files, live prices, your calendar.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d6 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:36px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Sub-agents — splitting a job too big for one context window</div>
+          <div style="display:flex;gap:32px;margin-top:26px;align-items:flex-start;">
+            <div style="width:490px;">
+              <div style="opacity:{{ s1 }};transition:opacity .5s;border:1px solid #3A4046;background:#0E1216;color:#F2F5F6;padding:12px 16px;width:340px;margin:0 auto;">
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#9AA4AB;margin-bottom:3px;">lead agent · the one you're talking to</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;">“Research this 300-page report”</div>
+                <div style="display:flex;flex-direction:column;gap:3px;margin-top:8px;opacity:{{ leadFill }};transition:opacity .6s;">
+                  <sc-for list="{{ leadLines }}" as="l" hint-placeholder-count="3">
+                    <div style="font-size:9.5px;color:#B9EC6B;border-left:2px solid rgba(137,223,0,0.85);padding-left:6px;">{{ l.text }}</div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="position:relative;height:52px;">
+                <div style="opacity:{{ s2 }};transition:opacity .5s;position:absolute;inset:0;display:flex;justify-content:center;gap:120px;">
+                  <div style="width:1px;background:{{ wireC }};transition:background .4s;"></div><div style="width:1px;background:{{ wireC }};transition:background .4s;"></div><div style="width:1px;background:{{ wireC }};transition:background .4s;"></div>
+                </div>
+                <sc-if value="{{ flowDown }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;inset:0;display:flex;justify-content:space-between;gap:10px;pointer-events:none;">
+                    <sc-for list="{{ briefs }}" as="b" hint-placeholder-count="3">
+                      <div style="flex:1;display:flex;justify-content:center;"><div style="border:1px solid #333B42;background:#1E2327;font-size:8.5px;color:#AEB8BF;padding:2px 5px;height:fit-content;white-space:nowrap;animation:flyDown 2.2s {{ b.delay }} infinite;">{{ b.text }}</div></div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ flowUp }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;inset:0;display:flex;justify-content:space-between;gap:10px;pointer-events:none;">
+                    <sc-for list="{{ upNotes }}" as="u" hint-placeholder-count="3">
+                      <div style="flex:1;display:flex;justify-content:center;align-items:flex-end;"><div style="border:1px solid #89DF00;background:#1E2327;font-size:8.5px;color:#9FE626;padding:2px 5px;height:fit-content;white-space:nowrap;animation:flyUp 2.2s {{ u.delay }} infinite;">{{ u.text }}</div></div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><span style="background: #1E2327; padding: 0 8px; font-size: 10px; transition: color .4s; color: #89DF00;">{{ wireLabel }}</span></div>
+              </div>
+              <div style="display:flex;gap:14px;">
+                <sc-for list="{{ subs }}" as="sub" hint-placeholder-count="3">
+                  <div style="opacity:{{ s2 }};transition:opacity .5s;flex:1;border:1px solid #89DF00;padding:10px 12px;background:rgba(137,223,0,0.08);">
+                    <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:3px;">sub-task {{ sub.n }}</div>
+                    <div style="font-size:12.5px;">{{ sub.job }}</div>
+                    <div style="opacity:{{ s3 }};transition:opacity .5s;font-size:10px;color:#8B959D;margin-top:6px;">{{ sub.doing }}</div>
+                    <div style="opacity:{{ s3 }};transition:opacity .5s;height:5px;background:#39424A;margin-top:6px;"><div style="height:5px;width:{{ sub.fill }};background:rgba(137,223,0,0.85);transition:width 1s;"></div></div>
+                    <div style="opacity:{{ s3 }};transition:opacity .5s;font-size:9px;color:#8B959D;margin-top:3px;">{{ sub.used }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="opacity:{{ s4 }};transition:opacity .5s;text-align:center;font-size:10px;color:#89DF00;margin-top:10px;">↑ each sub-agent read tens of thousands of tokens — only these few lines climb back into the lead's window</div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;border:1px solid #3A4046;background:#22282D;padding:10px 16px;margin-top:8px;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">…which is why the lead can still answer without ever holding the 300 pages</div>
+            </div>
+            <div style="flex:1;border-left:1px solid #2A3036;padding-left:32px;margin-top:6px;">
+              <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">the key idea</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;margin-top:10px;">Three fresh windows instead of one overflowing one. The lead holds only the summaries — that's the real reason to split work, not magic.</div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;margin-top:14px;border-top:1px solid #2A3036;padding-top:12px;">Worth it when the pieces are genuinely independent. For small, tightly connected work one agent is clearer. The lead stays accountable either way.</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d7 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Why it sometimes makes things up</div>
+          <div style="margin-top:26px;display:flex;gap:40px;align-items:flex-start;">
+            <div style="width:450px;">
+              <div style="opacity:{{ s1 }};transition:opacity .5s;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:23px;">“The capital of France is <span style="border-bottom:2px solid #89DF00;padding:0 22px;"></span>”</div>
+              <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;margin-top:22px;">
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:10px;">MODEL TRAINING CREATES A DATABASE OF SCORES FOR LIKELY NEXT TOKENS</div>
+                <div style="display:flex;flex-direction:column;gap:7px;">
+                  <sc-for list="{{ preds }}" as="p" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                      <div style="width:78px;font-size:14px;text-align:right;">{{ p.word }}</div>
+                      <div style="flex:1;height:16px;background:#22282D;"><div style="height:16px;width:{{ p.w }};background:{{ p.c }};transition:width .6s;"></div></div>
+                      <div style="width:52px;font-size:11px;color:#8B959D;">{{ p.pct }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:20px;border:1px solid #3A4046;padding:10px 14px;font-size:12.5px;">at runtime, the model picks the most likely token, adds it to the text, and repeats — one token at a time, forever forward</div>
+            </div>
+            <div style="flex:1;border-left:1px solid #2A3036;padding-left:32px;">
+              <div style="opacity:{{ s4 }};transition:opacity .5s;">
+                <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">so what's a hallucination?</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;margin-top:10px;">The model never knows anything — it only scores. When the pattern is rare, or the window is full of muddled context, the scores still pick a winner — so out comes a confident, fluent, wrong answer.</div>
+              </div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:16px;border-top:1px solid #2A3036;padding-top:12px;font-size:12px;color:#AEB8BF;">There's no built-in “I don't know” — the scoring always produces a next token. Tools, source documents, and a clean context window keep the scores anchored to something real.</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d8 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">the point: Large file sets are never sent all at once to&nbsp;the model</div>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:34px;">
+            <div style="opacity:{{ s1 }};transition:opacity .5s;width:160px;flex:none;box-sizing:border-box;border:1px solid #2A3036;padding:12px;background:#1E2327;">
+              <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:8px;">your insurance policy</div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <div style="height:9px;background:#39424A;"></div><div style="height:9px;background:#39424A;width:88%;"></div>
+                <div style="height:9px;background:#39424A;"></div><div style="height:9px;background:#39424A;width:72%;"></div>
+                <div style="height:9px;background:#39424A;"></div><div style="height:9px;background:#39424A;width:94%;"></div>
+              </div>
+              <div style="font-size:11.5px;color:#8B959D;margin-top:8px;line-height:1.35;">300 pages — far too big to send</div>
+            </div>
+            <div style="opacity:{{ s2 }};transition:opacity .5s;flex:1;min-width:180px;box-sizing:border-box;">
+              <div style="border:1px solid #3A4046;padding:9px 11px;font-size:11.5px;background:#1E2327;">you ask: <span style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:15px;">“am I covered for a cracked phone screen?”</span></div>
+              <div style="height:2px;background:#89DF00;margin:8px 0;"></div>
+              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;">the agent calls a <span style="color:#89DF00;">search tool</span> against the file — <span style="font-family:var(--font-mono);color:#F2F5F6;">grep “screen|handset|accidental”</span> — reads the hits, and searches again if the first pass missed</div>
+            </div>
+            <div style="opacity:{{ s3 }};transition:opacity .5s;width:180px;flex:none;box-sizing:border-box;border:1px solid #89DF00;background:rgba(137,223,0,0.08);padding:12px;">
+              <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:8px;">what the tool returned</div>
+              <div style="display:flex;flex-direction:column;gap:7px;font-size:11px;color:#B9EC6B;">
+                <div style="display:flex;justify-content:space-between;gap:6px;"><span>accidental damage</span><span>p.41</span></div>
+                <div style="display:flex;justify-content:space-between;gap:6px;"><span>handsets &amp; screens</span><span>p.88</span></div>
+                <div style="display:flex;justify-content:space-between;gap:6px;"><span>excess &amp; limits</span><span>p.212</span></div>
+                <div style="display:flex;justify-content:space-between;gap:6px;color:#9AA4AB;border-top:1px solid #2A3036;padding-top:4px;"><span>…297 other pages</span><span>never read</span></div>
+              </div>
+            </div>
+            <div style="opacity:{{ s4 }};transition:opacity .5s;font-size:20px;color:#8B959D;">→</div>
+            <div style="opacity:{{ s4 }};transition:opacity .5s;width:160px;flex:none;box-sizing:border-box;border:2px solid #5C6870;padding:12px;">
+              <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:8px;">the context window</div>
+              <div style="display:flex;flex-direction:column;gap:5px;">
+                <div style="height:10px;background:#DCE3E7;"></div>
+                <div style="height:10px;background:rgba(137,223,0,0.45);width:80%;"></div>
+                <div style="height:10px;background:rgba(137,223,0,0.62);"></div>
+                <div style="height:10px;background:rgba(137,223,0,0.62);width:86%;"></div>
+              </div>
+              <div style="font-size:11.5px;color:#89DF00;margin-top:8px;line-height:1.35;">the tool result lands next to your question</div>
+            </div>
+          </div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:26px;border-top:1px solid #2A3036;padding-top:14px;display:flex;gap:32px;">
+            <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;">Nothing was “trained on your data”. Three pages were added to the context window, read once, and will be forgotten after the current session. The model is answering from text you handed it a second ago.</div>
+            <div style="width:280px;font-size:11.5px;color:#AEB8BF;">Which explains the failure you'll actually hit: if the search picks the wrong pages, the model may hallucinate an answer based on this potentially relevant but ultimately inaccurate data — and the model has no idea it's missing anything.</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d9 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Putting it together — one question, two crossings, then the next turn</div>
+          <div style="display:grid;grid-template-columns:230px 1fr 230px;gap:16px;margin-top:10px;align-items:start;">
+            <div style="border:2px solid {{ loopLb }};background:{{ loopLbg }};padding:12px 14px;height:118px;box-sizing:border-box;display:flex;flex-direction:column;transition:border-color .4s,background .4s;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">your computer</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;margin-top:2px;line-height:1.25;">holds the list · runs tools</div>
+              <div style="font-size:11px;color:{{ loopLtc }};margin-top:auto;transition:color .4s;">{{ loopLact }}</div>
+            </div>
+            <div>
+              <div style="height:22px;position:relative;">
+                <div style="position:absolute;left:10px;right:10px;top:9px;height:2px;background:{{ loopWire }};transition:background .4s;"></div>
+                <div style="position:absolute;top:0;left:10px;right:10px;display:flex;justify-content:{{ loopJustify }};transition:all .5s;">
+                  <div style="background:#1E2327;padding:0 8px;font-size:11px;color:{{ loopWire }};">{{ loopArrow }}</div>
+                </div>
+              </div>
+              <div style="border:1px solid #2A3036;padding:10px 12px;margin-top:6px;background:#1E2327;">
+                <div style="display:flex;justify-content:space-between;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#8B959D;">
+                  <span>the message list</span><span style="color:#89DF00;">{{ loopTok }} tokens sent so far</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:5px;margin-top:8px;min-height:146px;overflow:hidden;">
+                  <sc-for list="{{ loopMsgs }}" as="m" hint-placeholder-count="3">
+                    <div style="opacity:{{ m.o }};transform:translateY({{ m.y }});transition:opacity .45s,transform .45s;">
+                      <div style="height:8px;width:{{ m.w }};background:{{ m.c }};"></div>
+                      <div style="font-size:9px;color:#8B959D;margin-top:1px;">{{ m.label }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="font-size:9.5px;color:#8B959D;border-top:1px solid #2A3036;padding-top:6px;">it only ever gets longer — every crossing resends all of it</div>
+              </div>
+            </div>
+            <div style="border:2px solid {{ loopRb }};background:{{ loopRbg }};padding:12px 14px;height:118px;box-sizing:border-box;display:flex;flex-direction:column;transition:border-color .4s,background .4s;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">the model</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;margin-top:2px;line-height:1.25;">reads the list · replies once</div>
+              <div style="font-size:11px;color:{{ loopRtc }};margin-top:auto;transition:color .4s;">{{ loopRact }}</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:20px;margin-top:12px;border-top:1px solid #2A3036;padding-top:10px;">
+            <div style="font-size:11px;color:#89DF00;white-space:nowrap;">{{ loopTrip }}</div>
+            <div style="font-size:12px;color:#AEB8BF;">Every crossing resends the whole list, so the price of a turn is the size of everything before it.</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d10 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">When the box fills up — your three options</div>
+          <div style="opacity:{{ s1 }};transition:opacity .5s;display:flex;align-items:center;gap:14px;margin-top:20px;">
+            <div style="flex:1;height:26px;background:#22282D;position:relative;"><div style="position:absolute;inset:0 8% 0 0;background:rgba(137,223,0,0.25);"></div><div style="position:absolute;left:8px;top:5px;font-size:11px;color:#B9EC6B;white-space:nowrap;">92% full · 40 turns of chat</div></div>
+            <div style="font-size:11px;color:#EF6B75;white-space:nowrap;">slower · pricier · easier to distract</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;">
+            <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">1 · Trim</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;min-height:30px;">drop the oldest messages, keep the newest</div>
+              <div style="display:flex;flex-direction:column;gap:4px;margin-top:10px;">
+                <div style="height:10px;background:#DCE3E7;"></div>
+                <div style="height:10px;background:repeating-linear-gradient(45deg,#252B30,#252B30 4px,#1E2327 4px,#1E2327 8px);"></div>
+                <div style="height:10px;background:repeating-linear-gradient(45deg,#252B30,#252B30 4px,#1E2327 4px,#1E2327 8px);"></div>
+                <div style="height:10px;background:rgba(137,223,0,0.45);"></div>
+                <div style="height:10px;background:rgba(137,223,0,0.45);width:80%;"></div>
+              </div>
+              <div style="font-size:10.5px;color:#EF6B75;margin-top:10px;">free, automatic — but detail from early on is simply gone</div>
+            </div>
+            <div style="opacity: {{ s3 }}; transform: translateY({{ y3 }}); transition: opacity .5s,transform .5s; border: 1px solid #2A3036; padding: 14px">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">2 · Compact</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;min-height:30px;">ask the model to summarise the old part, keep the summary</div>
+              <div style="display:flex;flex-direction:column;gap:4px;margin-top:10px;">
+                <div style="height:10px;background:#DCE3E7;"></div>
+                <div style="height:22px;border:1px dashed #89DF00;font-size:9px;color:#9FE626;display:flex;align-items:center;padding-left:5px;">30 turns → one paragraph</div>
+                <div style="height:10px;background:rgba(137,223,0,0.45);"></div>
+                <div style="height:10px;background:rgba(137,223,0,0.45);width:80%;"></div>
+              </div>
+              <div style="font-size:10.5px;color:#9FE626;margin-top:10px;">keeps the thread; costs one extra call; fine detail gets lost, especially after repeated compactions</div>
+            </div>
+            <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">3 · Hand Off</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;min-height:30px;">new chat, paste back only what matters</div>
+              <div style="display:flex;flex-direction:column;gap:4px;margin-top:10px;">
+                <div style="height:10px;background:#DCE3E7;"></div>
+                <div style="height:10px;background:rgba(137,223,0,0.45);width:60%;"></div>
+                <div style="height:42px;border:1px dashed #2A3036;"></div>
+              </div>
+              <div style="font-size:10.5px;color:#AEB8BF;margin-top:10px;">cheapest and sharpest — you decide what's worth carrying over</div>
+            </div>
+          </div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:12px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;">A clean context window that is&nbsp;intentionally constructed&nbsp;beats a big messy one that has evolved over many turns. Everything in the box competes for the model's attention, so irrelevant history actively makes answers worse.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d11 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">So can it do maths? — recall vs. calculation</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:22px;">
+            <div style="opacity:{{ s1 }};transition:opacity .5s;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:24px;">“1 + 1 = <span style="color:#89DF00;">2</span>”</div>
+              <div style="border:1px solid #2A3036;padding:10px 12px;margin-top:12px;font-size:12px;">✓ right — but not because it added anything.<div style="color:#8B959D;margin-top:4px;">“1 + 1 =” is followed by “2” countless times in its training text, so “2” is overwhelmingly the likeliest next token. This is recall.</div></div>
+            </div>
+            <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:24px;">“4,391 × 7,208 = <span style="color:#EF6B75;">31,648,528</span>”</div>
+              <div style="border:1px solid #E63946;padding:10px 12px;margin-top:12px;font-size:12px;">✕ a typical wrong answer. The true value is <span style="color:#89DF00;">31,650,328</span>.<div style="color:#8B959D;margin-top:4px;">That exact sum appears nowhere in its training data, so it predicts digit by digit: right length, plausible shape, wrong number.</div></div>
+            </div>
+          </div>
+          <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:22px;border-top:1px solid #2A3036;padding-top:16px;display:flex;gap:16px;align-items:center;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;white-space:nowrap;">the fix is the same as always</div>
+            <div style="flex:1;display:flex;align-items:center;gap:10px;font-size:12px;">
+              <div style="border:1px dashed #5C6870;padding:7px 10px;background:#22282D;">model asks: <span style="color:#89DF00;">calculate("4391*7208")</span></div>
+              <div style="color:#8B959D;">→</div>
+              <div style="border:1px solid #2A3036;padding:7px 10px;">your computer computes it exactly</div>
+              <div style="color:#8B959D;">→</div>
+              <div style="border:1px solid #3A4046;padding:7px 10px;">31,650,328</div>
+            </div>
+          </div>
+          <div style="opacity:{{ s4 }};transition:opacity .5s;margin-top:18px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.45;">The rule of thumb: it's strong at language-shaped tasks it has seen patterns of, and unreliable at anything needing exact computation or live facts — which is precisely what tools are for.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d20 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Recap — the whole thing in four ideas</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px;">
+            <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">The list</div>
+              <div style="border:1px solid #3A4046;padding:6px;margin-top:8px;display:flex;flex-direction:column;gap:3px;height:56px;box-sizing:border-box;justify-content:flex-end;">
+                <div style="height:7px;background:#DCE3E7;"></div>
+                <div style="height:7px;background:rgba(137,223,0,0.45);width:84%;"></div>
+                <div style="height:7px;background:#39424A;width:92%;"></div>
+                <div style="height:7px;background:rgba(137,223,0,0.45);width:70%;"></div>
+              </div>
+              <div style="font-size:11.5px;color:#AEB8BF;margin-top:8px;line-height:1.45;">A chat is a list of messages. It's resent in full every turn — that's the only reason it seems to remember.</div>
+            </div>
+            <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">The box</div>
+              <div style="border:2px solid #5C6870;padding:6px;margin-top:8px;height:56px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:3px;left:6px;right:6px;height:7px;background:repeating-linear-gradient(45deg,#252B30,#252B30 4px,#1E2327 4px,#1E2327 8px);"></div>
+                <div style="height:7px;background:rgba(137,223,0,0.45);width:90%;"></div>
+                <div style="height:7px;background:#DCE3E7;"></div>
+              </div>
+              <div style="font-size:11.5px;color:#AEB8BF;margin-top:8px;line-height:1.45;">The context window is a fixed box measured in tokens. Only what's inside exists; the overflow is genuinely gone.</div>
+            </div>
+            <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">The prediction</div>
+              <div style="padding-top:10px;margin-top:8px;display:flex;flex-direction:column;gap:5px;height:56px;box-sizing:border-box;">
+                <div style="height:9px;background:#89DF00;width:88%;"></div>
+                <div style="height:9px;background:#4A545C;width:22%;"></div>
+                <div style="height:9px;background:#4A545C;width:11%;"></div>
+              </div>
+              <div style="font-size:11.5px;color:#AEB8BF;margin-top:8px;line-height:1.45;">It only predicts the next token. Fluent and confident even when wrong, and incapable of native operations outside of text prediction.</div>
+            </div>
+            <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;border-top:2px solid #89DF00;padding-top:10px;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">The loop</div>
+              <div style="display:flex;justify-content:center;align-items:flex-start;height:56px;box-sizing:border-box;margin-top:8px;font-size:9px;color:#8B959D;">
+                <div style="position:relative;">
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="border:1px solid #2A3036;padding:6px 5px;">look</div>
+                    <div style="color:#89DF00;">→</div>
+                    <div style="border:1px solid #2A3036;padding:6px 5px;">act</div>
+                    <div style="color:#89DF00;">→</div>
+                    <div style="border:1px solid #2A3036;padding:6px 5px;">check</div>
+                  </div>
+                  <div style="position:absolute;left:16px;right:17px;top:calc(100% + 3px);height:11px;border:1px dashed #89DF00;border-top:0;"></div>
+                  <div style="position:absolute;left:16px;top:calc(100% + 1px);transform:translateX(-50%);color:#89DF00;font-size:10px;line-height:1;">↑</div>
+                </div>
+              </div>
+              <div style="font-size:11.5px;color:#AEB8BF;margin-top:8px;line-height:1.45;">Everything else — tools, skills, harness, agents, sub-agents — is software running that loop around the box.</div>
+            </div>
+          </div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:22px;border-top:1px solid #2A3036;padding-top:14px;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:22px;line-height:1.35;">A frozen text predictor, handed a list of messages in a fixed box, run in a loop by ordinary software that does all the fetching.</div>
+            <div style="font-size:11.5px;color:#AEB8BF;margin-top:10px;">Each piece explains something you'll encounter: confident wrong answers come from the predictor, missing context from information falling out of a box that filled up, and anything it appears to do in the world from the loop calling a tool.</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d21 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">A skill is a text file · nothing more</div>
+          <div style="display:flex;gap:24px;margin-top:20px;align-items:flex-start;">
+            <div style="opacity:{{ s1 }};transition:opacity .5s;width:330px;flex:none;box-sizing:border-box;border:1px solid #3A4046;background:#1E2327;">
+              <div style="border-bottom:1px solid #2A3036;background:#22282D;padding:6px 10px;font-family:var(--font-mono);font-size:10px;color:#AEB8BF;">SKILL.md</div>
+              <div style="padding:12px;font-family:var(--font-mono);font-size:11px;line-height:1.6;color:#C9D1D6;">
+                <div style="color:#8B959D;">---</div>
+                <div><span style="color:#00C1DB;">name</span>: monthly-report</div>
+                <div><span style="color:#00C1DB;">description</span>: Writes the monthly</div>
+                <div>&nbsp;&nbsp;business report. Use when asked</div>
+                <div>&nbsp;&nbsp;for the monthly report or a</div>
+                <div>&nbsp;&nbsp;month-end summary.</div>
+                <div style="color:#8B959D;">---</div>
+                <div style="margin-top:6px;color:#89DF00;"># Monthly report</div>
+                <div style="margin-top:6px;">Always pull figures from the finance sheet, never from chat.</div>
+                <div style="margin-top:6px;color:#89DF00;">## Steps</div>
+                <div>1. Check last month's file for the format</div>
+                <div>2. Fill the four sections in order</div>
+                <div>3. Flag anything down more than 5%</div>
+                <div style="margin-top:6px;color:#89DF00;">## Done when</div>
+                <div>Every number has a source noted beside it.</div>
+              </div>
+            </div>
+            <div style="flex:1;min-width:180px;">
+              <div style="opacity:{{ s2 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;line-height:1.5;">That's the whole artifact — a plain markdown file written in plain English. No code, no training, no new abilities. When the current work matches the trigger phrasing in the description of the skill, the harness adds the full content of the SKILL.md to the context window. This grants additional knowledge and capability to the model.</div>
+              <div style="opacity:{{ s3 }};transition:opacity .5s;border:1px solid #2A3036;padding:10px 12px;margin-top:12px;font-size:11px;">
+                <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:4px;">why bother</div>
+                The judgment your best people carry in their heads becomes something the whole team can run — reviewable, correctable, and improving with every pass.
+              </div>
+              <div style="opacity:{{ s4 }};transition:opacity .5s;border:1px solid #89DF00;background:rgba(137,223,0,0.06);padding:10px 12px;margin-top:10px;font-size:11px;">
+                <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:4px;">and you don't have to write it yourself</div>
+                Talk through the job once and ask the AI to help you convert it to a skill. Most tools ship a skill <em>for making skills</em>, so your job is reviewing the draft, not authoring it.
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </sc-if>
+      <sc-if value="{{ d22 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Who actually does the work — one plugin, step by step</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 44px;margin-top:16px;background:linear-gradient(#2A3036,#2A3036) center top / 1px 100% no-repeat;">
+            <div style="grid-row:1;grid-column:1;opacity:{{ s1 }};transition:opacity .5s;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #5C6870;padding-bottom:6px;">your computer · the harness</div>
+            <div style="grid-row:1;grid-column:2;opacity:{{ s1 }};transition:opacity .5s;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #5C6870;padding-bottom:6px;text-align:right;">the model</div>
+            <div style="grid-row:2;grid-column:1;opacity:{{ s1 }};transition:opacity .5s;border:1px solid #2A3036;padding:9px 12px;font-size:11.5px;">you connect the calendar plugin. Your side stores the login, and tells the model only that a tool named <span style="color:#89DF00;">list_events</span> exists.</div>
+            <div style="grid-row:3;grid-column:2;opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border:1px dashed #5C6870;background:#22282D;padding:9px 12px;font-size:11.5px;">← all the model produces is a line of text: <span style="color:#89DF00;">list_events(day: "tomorrow")</span></div>
+            <div style="grid-row:4;grid-column:1;opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;border:1px solid #89DF00;background:rgba(137,223,0,0.06);padding:9px 12px;font-size:11.5px;">your side does everything real: signs in, calls the calendar service, handles errors and retries, scopes the results down to just tomorrow's events, and formats them as text →</div>
+            <div style="grid-row:5;grid-column:2;opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;border:1px solid #3A4046;padding:9px 12px;font-size:11.5px;">← reads those six lines like any other message, and writes your summary</div>
+          </div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:16px;border-top:1px solid #2A3036;padding-top:12px;display:flex;gap:28px;">
+            <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.4;">The model never held your password, never opened a connection, never saw the events beyond tomorrow. It asked, in text, and received text back.</div>
+            <div style="width:290px;font-size:11.5px;color:#AEB8BF;">So a “plugin” is just registered local capability. When one misbehaves it's almost always the plumbing — the login, the search, the formatting — not the model.</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d15 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Start here</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:30px;line-height:1.15;margin-top:8px;max-width:820px;">How AI works, end to end</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.35;margin-top:8px;max-width:700px;color:#C9D1D6;">What actually happens between pressing Enter and reading the reply — and why AI behaves the way it does.</div>
+          
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px;">
+            <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
+              <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">part one</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;margin-top:2px;">What the model is</div>
+              <div style="border:1px solid #3A4046;padding:6px;margin-top:8px;display:flex;flex-direction:column;gap:3px;height:52px;box-sizing:border-box;justify-content:flex-end;">
+                <div style="height:7px;background:#DCE3E7;"></div>
+                <div style="height:7px;background:rgba(137,223,0,0.45);width:84%;"></div>
+                <div style="height:7px;background:#39424A;width:92%;"></div>
+                <div style="height:7px;background:rgba(137,223,0,0.45);width:70%;"></div>
+              </div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:8px;line-height:1.45;">The model is a text predictor: it reads a list of messages in a fixed-size box and writes the next piece. It keeps nothing outside that box.</div>
+            </div>
+            <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
+              <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">part two</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;margin-top:2px;">What it can't do</div>
+              <div style="padding:6px 0;margin-top:8px;display:flex;flex-direction:column;gap:4px;height:52px;box-sizing:border-box;justify-content:center;">
+                <div style="height:9px;background:#89DF00;width:88%;"></div>
+                <div style="height:9px;background:#4A545C;width:22%;"></div>
+                <div style="height:9px;background:#4A545C;width:12%;"></div>
+              </div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:8px;line-height:1.45;">AI is built around predicting the next word. That's why it can make mistakes, and can't do sums.</div>
+            </div>
+            <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
+              <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">part three</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;margin-top:2px;">How it reaches the world</div>
+              <div style="display:flex;align-items:center;gap:5px;height:52px;box-sizing:border-box;margin-top:8px;font-size:9px;color:#8B959D;">
+                <div style="border:1px solid #DCE3E7;background:#DCE3E7;color:#1A1F23;padding:6px 5px;">model</div>
+                <div style="flex:1;text-align:center;color:#89DF00;">⇄</div>
+                <div style="border:1px solid #89DF00;padding:6px 5px;color:#9FE626;">tool</div>
+                <div style="flex:1;text-align:center;">→</div>
+                <div style="border:1px solid #2A3036;padding:6px 5px;">files, web</div>
+              </div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:8px;line-height:1.45;">It can't reach anything itself, so it asks the software around it to fetch things and perform actions.</div>
+            </div>
+            <div style="opacity:{{ s5 }};transform:translateY({{ y5 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
+              <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">part four</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;margin-top:2px;">Agents at work</div>
+              <div style="display:flex;justify-content:center;align-items:flex-start;height:52px;box-sizing:border-box;margin-top:8px;font-size:9px;color:#8B959D;">
+                <div style="position:relative;">
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="border:1px solid #2A3036;padding:6px 5px;">look</div>
+                    <div style="color:#89DF00;">→</div>
+                    <div style="border:1px solid #2A3036;padding:6px 5px;">act</div>
+                    <div style="color:#89DF00;">→</div>
+                    <div style="border:1px solid #2A3036;padding:6px 5px;">check</div>
+                  </div>
+                  <div style="position:absolute;left:16px;right:17px;top:calc(100% + 3px);height:11px;border:1px dashed #89DF00;border-top:0;"></div>
+                  <div style="position:absolute;left:16px;top:calc(100% + 1px);transform:translateX(-50%);color:#89DF00;font-size:10px;line-height:1;">↑</div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:8px;line-height:1.45;">An agent is that same model, run in a loop until the job is done.</div>
+            </div>
+          </div>
+          
+        </div>
+      </sc-if>
+      <sc-if value="{{ d16 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:30px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The words you'll hear · 1 of 2 · the basics</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 44px;margin-top:20px;">
+            <sc-for list="{{ glossA }}" as="g" hint-placeholder-count="8">
+              <div style="opacity:{{ g.o }};transform:translateY({{ g.y }});transition:opacity .45s,transform .45s;border-left:2px solid {{ g.c }};padding-left:12px;">
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">{{ g.term }}</div>
+                <div style="font-size:12.5px;color:#AEB8BF;line-height:1.45;margin-top:3px;">{{ g.def }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d17 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:30px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The words you'll hear · 2 of 2 · the machinery around the model</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 44px;margin-top:20px;">
+            <sc-for list="{{ glossB }}" as="g" hint-placeholder-count="8">
+              <div style="opacity:{{ g.o }};transform:translateY({{ g.y }});transition:opacity .45s,transform .45s;border-left:2px solid {{ g.c }};padding-left:12px;">
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">{{ g.term }}</div>
+                <div style="font-size:12.5px;color:#AEB8BF;line-height:1.45;margin-top:3px;">{{ g.def }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d18 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The harness — the software wrapped around the model</div>
+          <div style="display:flex;gap:26px;margin-top:20px;align-items:flex-start;">
+            <div style="width:520px;flex:none;box-sizing:border-box;">
+              <div style="border:1px dashed #89DF00;background:rgba(137,223,0,0.04);padding:14px;">
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">the harness · the app, running on your side</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
+                  <sc-for list="{{ harness }}" as="h" hint-placeholder-count="6">
+                    <div style="opacity:{{ h.o }};transform:translateY({{ h.y }});transition:opacity .45s,transform .45s;border:1px solid #2A3036;background:#1E2327;padding:7px 9px;font-size:11px;">{{ h.text }}</div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="opacity:{{ s2 }};transition:opacity .5s;display:flex;align-items:center;gap:10px;margin:8px 0;">
+                <div style="flex:1;height:1px;background:#4A545C;"></div>
+                <div style="font-size:9.5px;color:#8B959D;white-space:nowrap;">↕ sends text over the internet, gets text back</div>
+                <div style="flex:1;height:1px;background:#4A545C;"></div>
+              </div>
+              <div style="opacity:{{ s2 }};transition:opacity .5s;border:1px solid #3A4046;background:#0E1216;color:#F2F5F6;padding:11px 14px;text-align:center;">
+                <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#9AA4AB;">outside the harness · someone else's datacenter</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;margin-top:2px;">the model</div>
+                <div style="font-size:10.5px;color:#9AA4AB;margin-top:2px;">frozen · stateless · text in, text out. It does exactly one thing.</div>
+              </div>
+            </div>
+            <div style="flex:1;min-width:180px;">
+              <div style="opacity:{{ s3 }};transition:opacity .5s;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">why the word matters</div>
+              <div style="opacity:{{ s3 }};transition:opacity .5s;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;margin-top:8px;">Almost everything you think of as “the AI” is the harness, not the model: ChatGPT, Claude, Copilot and Codex are harnesses.</div>
+              <div style="opacity:{{ s4 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;line-height:1.5;margin-top:14px;border-top:1px solid #2A3036;padding-top:12px;">Same model, different harness → very different experience. It explains why one product can browse and another can't, why one remembers your files, and why “the AI can't do X” is usually the harness, not the model.</div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;line-height:1.5;margin-top:12px;">It's also what manages the context window: trimming, compacting, and choosing what to send are all harness decisions.</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d19 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Three words people mix up — tools, skills, plugins</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;">
+            <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;box-sizing:border-box;">
+              <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">a capability</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;margin-top:2px;">Tool · tool call</div>
+              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A <span style="color:#F2F5F6;">tool</span> is something the harness can do — read a file, search, run a sum. A <span style="color:#F2F5F6;">tool call</span> is the model asking for one and getting the result back as text.</div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:10px;border-top:1px solid #2A3036;padding-top:8px;">gives it <span style="color:#F2F5F6;">new abilities</span></div>
+            </div>
+            <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;box-sizing:border-box;">
+              <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">instructions</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;margin-top:2px;">Skill</div>
+              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A written playbook for a kind of work — “here's how we build a spreadsheet”. Just text, pulled into the window when it's relevant.</div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:10px;border-top:1px solid #2A3036;padding-top:8px;">gives it <span style="color:#F2F5F6;">know-how</span>, no new powers</div>
+            </div>
+            <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;box-sizing:border-box;">
+              <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">plumbing</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;margin-top:2px;">Plugin · connector</div>
+              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A package you switch on that hands the harness a bundle of new tools — connect your email, and “search inbox” and “send draft” appear.</div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:10px;border-top:1px solid #2A3036;padding-top:8px;">delivers <span style="color:#F2F5F6;">more tools</span></div>
+            </div>
+          </div>
+          <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:14px;display:flex;gap:28px;align-items:baseline;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;white-space:nowrap;">Skills <span style="color:#8B959D;">teach</span> · plugins <span style="color:#8B959D;">add</span> · tool calls <span style="color:#8B959D;">do</span>.</div>
+            <div style="font-size:11.5px;color:#AEB8BF;">And none of them change the model itself. The model is always based on its own static training data. Tools, Skills, and Plugins change what's in the context window and what the harness can run.</div>
+          </div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:14px;font-size:11.5px;color:#8B959D;">Products name these differently — “actions”, “connectors”, “extensions”, “MCP servers”. Ask which of the three it is and the confusion clears.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d12 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">What is an “agent”, exactly?</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:20px;">
+            <div style="opacity:{{ s1 }};transition:opacity .5s;border:1px solid #2A3036;padding:14px;box-sizing:border-box;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">a plain chatbot reply</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:11.5px;">
+                <div style="border:1px solid #3A4046;padding:6px 9px;">you ask</div>
+                <div style="color:#8B959D;">→</div>
+                <div style="border:1px solid #3A4046;padding:6px 9px;">it answers</div>
+                <div style="color:#8B959D;">■</div>
+              </div>
+              <div style="font-size:11px;color:#8B959D;margin-top:12px;">one pass, answered from training data alone — and it reads exactly the same whether it knew or guessed.</div>
+            </div>
+            <div style="opacity:{{ s2 }};transition:opacity .5s;border:1px solid #89DF00;background:rgba(137,223,0,0.06);padding:14px;box-sizing:border-box;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">an agent · same model, run in a loop</div>
+              <div style="font-size:11.5px;color:#C9D1D6;margin-top:6px;">the job: “fix the broken link on the pricing page”</div>
+              <div style="display:flex;flex-direction:column;gap:2px;margin-top:8px;">
+                <sc-for list="{{ agentStages }}" as="a" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:baseline;gap:8px;border-left:2px solid {{ a.b }};padding:2px 0 2px 8px;transition:border-color .4s;">
+                    <div style="font-size:9.5px;width:58px;flex:none;color:{{ a.tc }};letter-spacing:.06em;text-transform:uppercase;transition:color .4s;">{{ a.name }}</div>
+                    <div style="font-size:10.5px;color:{{ a.dc }};transition:color .4s;text-wrap:pretty;">{{ a.doing }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-size:10.5px;color:#9FE626;margin-top:7px;">↺ {{ agentNote }}</div>
+            </div>
+          </div>
+          <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:14px;display:flex;align-items:baseline;gap:12px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">“acting” = calling a tool</div>
+            <div style="font-size:11px;color:#AEB8BF;">read a file · run the tests · click through a web app in a real browser · change the file and commit it — each result comes back as text in the window</div>
+          </div>
+          <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;margin-top:12px;display:flex;align-items:baseline;gap:12px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">the price of looping</div>
+            <div style="font-size:11px;color:#AEB8BF;">3 times round is 3 full resends of a list that grew on every pass — same model, same box, several times the tokens</div>
+          </div>
+          <div style="opacity:{{ s5 }};transform:translateY({{ y5 }});transition:opacity .5s,transform .5s;margin-top:12px;border-top:1px solid #2A3036;padding-top:12px;display:flex;gap:28px;">
+            <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;">Which is why an agent can work for twenty minutes on one instruction — and why that instruction has to say what <em>done</em> looks like.</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d13 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Anything that must outlive the window has to be written down</div>
+          <div style="display:flex;align-items:stretch;gap:20px;margin-top:22px;">
+            <div style="opacity:{{ s1 }};transition:opacity .5s;width:240px;flex:none;box-sizing:border-box;border:2px solid #5C6870;padding:14px;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">the context window</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;margin-top:2px;">temporary by design</div>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-top:12px;">
+                <div style="height:10px;background:#DCE3E7;"></div>
+                <div style="height:10px;background:rgba(137,223,0,0.45);width:86%;"></div>
+                <div style="height:10px;background:{{ artiTrim }};width:74%;transition:background .5s;"></div>
+                <div style="height:10px;background:{{ artiTrim }};width:92%;transition:background .5s;"></div>
+              </div>
+              <div style="font-size:10.5px;color:#EF6B75;margin-top:10px;opacity:{{ s2 }};transition:opacity .5s;">the decision you made 30 turns ago was trimmed. As far as the model is concerned, it never happened.</div>
+            </div>
+            <div style="opacity:{{ s3 }};transition:opacity .5s;flex:1;min-width:120px;display:flex;flex-direction:column;justify-content:center;text-align:center;">
+              <div style="font-size:10.5px;color:#89DF00;">write it out →</div>
+              <div style="height:2px;background:#89DF00;margin:8px 0;"></div>
+              <div style="font-size:10px;color:#8B959D;">← read it back in<br>next session</div>
+            </div>
+            <div style="opacity:{{ s3 }};transition:opacity .5s;width:340px;flex:none;box-sizing:border-box;border:1px solid #89DF00;background:rgba(137,223,0,0.06);padding:14px;">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">durable artifacts · outside the window</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;font-size:11px;">
+                <div style="border:1px solid #333B42;background:#1E2327;padding:5px 8px;">a spec or design doc</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:5px 8px;">source files</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:5px 8px;">a commit or pull request</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:5px 8px;">an issue / ticket</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:5px 8px;">a project instructions file</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:5px 8px;">test output, screenshots</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:5px 8px;">a decision record</div>
+              </div>
+            </div>
+          </div>
+          <div style="opacity:{{ s4 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:14px;display:flex;gap:28px;">
+            <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;">This is why “write the spec first” works so well with agents: the spec is a persistent artifact. It survives every trim, and it gives you and the agent one shared definition of “done”.</div>
+            <div style="width:280px;font-size:11.5px;color:#AEB8BF;opacity:{{ s5 }};transition:opacity .5s;">Rule of thumb: if losing it would hurt, it doesn't belong in the chat — it belongs in a file.</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d14 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding:32px 44px;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The three things you actually control</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px;">
+            <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s,border-color .4s,background .4s;border:1px solid {{ c1b }};background:{{ c1bg }};padding:14px;box-sizing:border-box;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">1 · Your prompt</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;">everything it knows about the job arrives this way</div>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:11.5px;">
+                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">the goal — what you want</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">the constraints — what it must respect</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">what “done” looks like</div>
+              </div>
+              <div style="font-size:10.5px;color:#9FE626;margin-top:10px;">leave one out and it will cheerfully invent it</div>
+            </div>
+            <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s,border-color .4s,background .4s;border:1px solid {{ c2b }};background:{{ c2bg }};padding:14px;box-sizing:border-box;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">2 · Skills</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;">reusable instruction packs, written once</div>
+              <div style="border:1px solid #333B42;padding:8px 10px;margin-top:12px;font-size:11px;background:#1E2327;">“how we build a spreadsheet”<div style="color:#8B959D;margin-top:3px;">a playbook — steps, conventions, sometimes scripts</div></div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:10px;">it gets pulled into the window when the work matches, so you don't re-explain the same process every time. It's instructions — not a smarter model.</div>
+            </div>
+            <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s,border-color .4s,background .4s;border:1px solid {{ c3b }};background:{{ c3bg }};padding:14px;box-sizing:border-box;">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">3 · Which model</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;">and you can switch part-way</div>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:11px;">
+                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">fast + cheap → sorting, drafting, bulk edits</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">strong reasoning → the tricky bug, the design call, deep analysis, complex reasoning</div>
+              </div>
+              <div style="font-size:10.5px;color:#9FE626;margin-top:10px;opacity:{{ s4 }};transition:opacity .5s;">the catch: a new model reads the same window differently — so keep the plan and decisions written down, not implied.</div>
+            </div>
+          </div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:14px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.4;">Two of the three are just text you put in the window — and that's where nearly all of your leverage sits. Choosing the model is the only dial that isn't text.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ outro }}" hint-placeholder-val="{{ false }}">
+        <div data-outro="1" style="position:absolute;inset:0;padding:32px 44px;display:flex;flex-direction:column;animation:outroIn .5s .45s both;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">what we just covered</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:25px;margin-top:5px;">{{ dtitle }}</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;">
+            <sc-for list="{{ recapPoints }}" as="r" hint-placeholder-count="5">
+              <div style="display:flex;gap:10px;align-items:baseline;">
+                <div style="width:12px;flex:none;font-size:10px;color:#89DF00;">{{ r.n }}</div>
+                <div style="font-size:14px;color:#C9D1D6;line-height:1.35;">{{ r.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:auto;border-top:1px solid #2A3036;padding-top:14px;display:flex;align-items:flex-end;gap:24px;">
+            <div style="flex:1;">
+              <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">coming next</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:21px;margin-top:3px;">{{ nextTitle }}</div>
+              <div style="font-size:11.5px;color:#AEB8BF;margin-top:2px;">{{ nextTeaches }}</div>
+            </div>
+            <button onClick="{{ next }}" style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:11px 20px;border:1px solid #89DF00;background:#89DF00;color:#1A1F23;cursor:pointer;white-space:nowrap;flex:none;transition:all .2s;" style-hover="background:rgba(137,223,0,0.88);border-color:rgba(137,223,0,0.88);">{{ nextLabel }}</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-top:14px;">
+      <div style="font-size:11.5px;color:#F2F5F6;white-space:nowrap;">{{ dnum }}.{{ dstep }} · {{ dtitle }}</div>
+      <div style="display:flex;gap:5px;align-items:center;flex:none;">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
+          <button onClick="{{ t.pick }}" title="{{ t.label }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:11px;letter-spacing:.04em;min-width:32px;height:26px;padding:0 8px;cursor:pointer;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};transition:all .25s;" style-hover="border-color:#89DF00;color:#F2F5F6;background:rgba(137,223,0,0.10);">{{ t.num }}</button>
+        </sc-for>
+      </div>
+      <div style="font-size:10.5px;color:#8B959D;white-space:nowrap;">{{ actProgress }}</div>
+      <div style="font-size:11px;color:#AEB8BF;border-left:1px solid #2A3036;padding-left:12px;">teaches: <span style="color:#F2F5F6;">{{ dteaches }}</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:14px;border-top:1px solid #2A3036;padding-top:14px;">
+      <div style="display:flex;gap:8px;flex:none;">
+        <button onClick="{{ back }}" disabled="{{ backOff }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;padding:10px 18px;border:1px solid {{ backBc }};background:rgba(137,223,0,0.10);color:{{ backFg }};cursor:{{ backCur }};white-space:nowrap;transition:all .25s;" style-hover="background:rgba(137,223,0,0.18);">← Back</button>
+        <button onClick="{{ next }}" style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:10px 18px;border:1px solid #89DF00;background:#89DF00;color:#1A1F23;cursor:pointer;white-space:nowrap;transition:all .2s;" style-hover="background:rgba(137,223,0,0.88);border-color:rgba(137,223,0,0.88);">{{ nextLabel }}</button>
+      </div>
+      <div style="display:flex;gap:6px;flex:none;">
+        <sc-for list="{{ dots }}" as="dot" hint-placeholder-count="5">
+          <div style="width:7px;height:7px;border-radius:50%;background:{{ dot.c }};transition:background .3s;"></div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;autoPlay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Playback&quot;}}">
+class Component extends DCLogic {
+  KEY = "howAIWorks.progress";
+  state = (() => {
+    try {
+      const raw = sessionStorage.getItem("howAIWorks.progress");
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (Number.isInteger(p.d) && Number.isInteger(p.step) && p.d >= 0) return { d: p.d, step: Math.max(0, p.step) };
+      }
+    } catch (e) {}
+    return { d: 0, step: 0 };
+  })();
+  D = [
+    { title: "Messages", steps: [
+      "Every conversation starts with a system prompt — hidden instructions that set the AI's behavior.",
+      "Your message gets added to the list, labeled as coming from you.",
+      "The model's reply is appended too — same list, different label.",
+      "Each new turn just adds to the list. A chat is nothing more than this growing list.",
+      "And here's the trick: the whole list is resent with every message. That's how it 'remembers'."
+    ]},
+    { title: "Tokens", steps: [
+      "Models don't read letters or words — text is first chopped into pieces called tokens.",
+      "Common words are one token; rarer words get split into chunks.",
+      "Each token maps to a number — that's what the model actually processes.",
+      "Rule of thumb: a token is about 4 characters. Pricing and limits are all counted in tokens.",
+      "And not all text costs the same — dense code or raw tool output eats far more tokens than plain prose."
+    ]},
+    { title: "Context window", steps: [
+      "The context window is the model's working memory — a fixed-size box measured in tokens.",
+      "The system prompt and conversation history take up space inside it. Only what's in the box gets sent.",
+      "As the chat grows, the box fills up.",
+      "Past the limit the oldest fall out: still on your machine, no longer sent."
+    ]},
+    { title: "The round trip", steps: [
+      "Long before you showed up: a crawl of the web, then months of training.",
+      "What it produced is the model: frozen weights in a datacenter. Sealed — it never learns again after this point.",
+      "Now your turn: a copy of the whole window is sent to the model. That's all it ever sees.",
+      "It reads all of it, then streams back one token at a time. Then forgets the conversation ever happened.",
+      "Notice what's missing: no internet, no files, no idea what today is."
+    ]},
+    { title: "Tool calls", steps: [
+      "Two sides to keep straight: your computer on the left, the model in a datacenter on the right.",
+      "You ask something the model can't possibly know — like today's weather.",
+      "Rather than guess, the model sends back a request: 'run get_weather for me'.",
+      "Your computer runs the tool and fetches real data. The model just waits — it never touches the internet.",
+      "The result is appended to the list, everything is resent, and now the model answers for real."
+    ]},
+    { title: "Sub-agents", steps: [
+      "Some jobs won't fit in one window — researching a 300-page report, for example. This is the lead agent: the one you're talking to.",
+      "It splits the job into sub-tasks and sends each one down as a short brief. Each helper starts with its own empty window.",
+      "They work in parallel, and they burn through real volume — tens of thousands of tokens each.",
+      "But watch what climbs back up: a couple of lines each. The raw pages never enter the lead's window.",
+      "So the lead never reads all 300 pages. It answers from three short summaries, and its own window stays small."
+    ]},
+    { title: "Prediction", steps: [
+      "Under the hood the model does one thing: predict the next token based on the model's training.",
+      "Every possible next token has been scored by likelihood via semantic analysis.",
+      "It picks a likely one, appends it, and repeats — that's the whole trick.",
+      "A hallucination isn't a bug in this process, it IS the process: an unusual question, or a cluttered window, and the scoring still picks a winner.",
+      "There's no built-in 'I don't know' — which is exactly why tools and source documents matter."
+    ]},
+    { title: "Your documents", steps: [
+      "A 300-page policy is far too big to send, so it never goes to the model as a whole.",
+      "Instead the agent is given a tool that can search it, and it decides what to look up: “cracked screen coverage”.",
+      "The tool returns the matching pages, and the agent reads them — searching again if the first pass missed.",
+      "Only those three pages land in the context window, next to your question. That's the entire trick.",
+      "The model was never trained on your documents. It went and looked, and what it found came back as text."
+    ]},
+    { title: "The loop", steps: [
+      "Turn 1 starts on your side. Nothing exists yet but the system prompt and the question you just typed.",
+      "Everything the model will ever know about this conversation crosses now — there is no earlier session for it to draw on.",
+      "It didn't keep the date it asked for. The only reason it still knows is that the result now sits in the list on your side.",
+      "So the same turn has to cross a second time, carrying everything it carried before — providers cache the unchanged part, but it still has to be sent and re-read.",
+      "Only now does an answer come back: one question from you, two crossings, about 350 tokens billed.",
+      "And turn 2 opens by resending all of turn 1. Every turn you add is a turn that every later turn has to carry."
+    ]},
+    { title: "Filling up", steps: [
+      "Long chats fill the window, and a nearly-full window is slow, expensive, and easy to distract.",
+      "Option 1 — trim: drop the oldest messages. Free and automatic, but early detail is gone for good.",
+      "Option 2 — compact: have the model summarise the old part and keep only the summary.",
+      "Option 3 — start fresh: a new chat, with just the bits worth carrying over pasted back in.",
+      "Either way the lesson is the same: a small clean window beats a big cluttered one."
+    ]},
+    { title: "Can it do maths?", steps: [
+      "Ask it 1 + 1 and it says 2 — correct, but it never added anything. It has simply seen that text a million times.",
+      "Two big numbers, and it fails: that sum isn't in its training text.",
+      "The fix is the usual one — hand the sum to a calculator tool and let the model read the exact result.",
+      "Rule of thumb: strong on language-shaped patterns, unreliable on exact computation and live facts."
+    ]},
+    { title: "What's an agent?", steps: [
+      "A plain reply is recalled from training in a single pass. It can't tell you that it never went and looked.",
+      "An agent is that same model in a loop: look, act, check, repeat.",
+      "The model still touches nothing itself. It emits a request, the harness does the acting, and the result comes back as more text.",
+      "The `check` is what the loop buys you: it can catch its own mistake and go round again — and it pays for that in tokens every time.",
+      "So the dividing line isn't intelligence, it's autonomy: a chat waits for you between every step, while an agent picks its own next step until the check passes."
+    ]},
+    { title: "Writing it down", steps: [
+      "The window is temporary by design — you've seen it trim itself.",
+      "A decision from 30 turns ago can vanish — for the model, it never happened.",
+      "So anything that matters goes outside it: a file, a spec, a commit, a ticket.",
+      "So “write the spec first” works: it survives every trim and defines done.",
+      "Rule of thumb — if losing it would hurt, it belongs in a file, not in the chat."
+    ]},
+    { title: "What you control", steps: [
+      "Your prompt is the whole briefing: the goal, the constraints, and what “done” looks like. Leave one out and it will invent it.",
+      "Skills are written playbooks, pulled in when relevant so you don't re-explain.",
+      "And you choose the model: fast and cheap for bulk work, strong reasoning for the tricky call — you can switch part-way through.",
+      "The catch when you switch: a different model reads the same window differently, so keep the plan and decisions explicit.",
+      "Two of the three are text you put in the window, and that's where nearly all of your leverage is. Which model you pick is the one lever that isn't text."
+    ]},
+    { title: "Start here", steps: [
+      "What happens when you send a message to an AI, from your keyboard to the reply and back.",
+      "Part one: messages, tokens, and the context window — and why it has no memory.",
+      "Part two: it guesses the next word. That explains both the invented facts and the failed sums.",
+      "Part three: it can't reach anything itself. Tools, documents, and the software that does the reaching.",
+      "Part four: agents — the loop, splitting work up, and the three levers you control."
+    ]},
+    { title: "Words: the basics", steps: [
+      "LLM and prompt: the text generator, and what you send it.",
+      "Token and conversation: how text is measured, and how a chat is stored.",
+      "Context window and system prompt: what it can see, and who sets the rules.",
+      "Hallucination and streaming: why it's confidently wrong, and why it looks like typing."
+    ]},
+    { title: "Words: the machinery", steps: [
+      "Now the machinery. The harness is the app around the model; a tool call is it asking that app to do something.",
+      "Skills are written instructions; plugins are packages that add new tools. Two different things, often confused.",
+      "An agent is a model in a loop; sub-tasks are the pieces of a job, which sub-agents can take on.",
+      "And two habits: retrieval, for getting your documents in, and persistent artifacts, for keeping what matters."
+    ]},
+    { title: "The harness", steps: [
+      "Here's the thing nobody tells beginners: the model is a small part of what you're using.",
+      "The model sits outside it entirely — reachable only by sending text across.",
+      "The list, the token budget, trimming, tools, the loop, streaming: all harness.",
+      "So the same model feels different in two products — usually a harness limit.",
+      "It also means the forgetting is a choice someone made in software, not a mystery of the model."
+    ]},
+    { title: "Tools vs skills vs plugins", steps: [
+      "A tool is a capability the harness has; a tool call is the model asking for it and reading the result.",
+      "A skill is just written instructions — a playbook for a kind of work. It teaches, it doesn't add powers.",
+      "A plugin or connector is plumbing: switch it on and a bundle of new tools appears.",
+      "Skills teach, plugins add, tool calls do — and none of them change the model itself.",
+      "Every product names these differently, so ask which of the three someone means."
+    ]},
+    { title: "Recap", steps: [
+      "Four ideas carry the whole thing. First: a chat is a list of messages, resent in full every turn.",
+      "Second: that list lives in a fixed box measured in tokens. Only what's inside exists.",
+      "Third: the model just predicts the next token — hence the invented facts and the failed sums.",
+      "Fourth: everything else is ordinary software running a loop around the box, fetching things on its behalf.",
+      "Put together: a frozen text predictor, handed a list in a box, run in a loop by software that does the fetching."
+    ]},
+    { title: "Skills are files", steps: [
+      "Here's an actual skill. It's a markdown file — plain text with a few headings.",
+      "That's genuinely all it is: no code, no training. Just a simple plain-language workflow dynamically injected into the context window.",
+      "Which means the useful unit of work is no longer a clever prompt you typed once; it becomes a stored procedure your whole team can read, run, and improve.",
+      "So the barrier here isn't technical: if you can brief a new colleague on how the job gets done, you can already write a skill."
+    ]},
+    { title: "Who does the work", steps: [
+      "Connect a calendar plugin. Your side keeps the login; the model is only told a tool called `list_events` exists.",
+      "When it wants your calendar, all the model emits is a line of text asking for it.",
+      "Your computer does everything real: signs in, calls the service, retries on failure, cuts 200 events down to tomorrow's six.",
+      "Those six lines go back as a message, and the model reads them like any other text.",
+      "It never held your password or opened a connection. So when a plugin misbehaves, it's the plumbing — not the model."
+    ]}
+  ];
+  ORDER = [15, 16, 17, 1, 2, 3, 10, 13, 4, 7, 11, 18, 5, 19, 21, 22, 8, 12, 6, 9, 14, 20];
+  ACTS = ["Getting oriented", "What the model is", "What it can't do", "Reaching the world", "Agents at work"];
+  RECAP = {
+    15: ["What the model is", "What it can't do", "How it reaches the world", "Agents at work"],
+    16: ["LLM, prompt, token, conversation", "The context window and system prompt", "Hallucination and streaming"],
+    17: ["Harness and tool calls", "Skills versus plugins", "Agents and sub-tasks", "Retrieval and durable artifacts"],
+    1: ["A chat is a list of messages", "The system prompt sits at the top", "The whole list is resent every turn", "The model has no memory beyond the current chat"],
+    2: ["Text is split into tokens", "Roughly four characters each", "Everything is counted in tokens", "Code costs more than prose"],
+    3: ["A fixed box, measured in tokens", "Only what's inside gets sent", "It fills as the chat grows", "Overflow falls out and is forgotten"],
+    10: ["A full window is slow and distractible", "Trim: drop the oldest", "Compact: summarise the old part", "Start fresh: carry over what matters"],
+    13: ["The context window is temporary", "Data and decisions get pushed out as context fills", "Write durable context out to external sources", "A spec stays maintained outside of any chat"],
+    4: ["Trained once, long before you asked", "Frozen weights in a datacenter", "The entire context window is sent to the model", "Tokens stream back, then it forgets", "No internet, no files, no today"],
+    7: ["Model training scored every possible next token", "Picks a likely one, repeats", "A hallucination is the same process", "There's no built-in “I don't know”"],
+    11: ["1 + 1 is recall, not arithmetic", "Big sums aren't in the training text", "So it predicts plausible digits", "A calculator tool fixes it"],
+    18: ["The harness is the app around the model", "It keeps the list and runs the tools", "The model sits outside it", "Same model, different harness"],
+    5: ["Two sides: your computer, the model", "It can't know today's date", "So it asks for a tool", "Your side fetches, it reads text"],
+    19: ["Tool: a capability", "Skill: written instructions", "Plugin: delivers new tools", "Skills teach, plugins add, calls do"],
+    21: ["A skill is a markdown file", "No code, no training", "Added to the context window when the work matches", "Ask the AI to write one for you"],
+    22: ["Your side holds the login", "The model emits one line of text", "Your computer does the fetching", "Plugin trouble is plumbing"],
+    8: ["Documents don't fit, so they aren't sent", "The agent searches them with a tool", "Only the matching pages come back", "It looked; it wasn't trained on them"],
+    12: ["A plain reply is one pass, from training", "An agent loops: look, act, check", "The harness acts; the model only asks", "Checking catches mistakes, but costs a resend", "The loop picks the next step, not you"],
+    6: ["Some jobs won't fit one window", "Split it into sub-tasks", "Each helper gets a fresh window", "Only summaries come back"],
+    9: ["Turn 1 is the system prompt plus your question", "Everything it knows crosses the wire each time", "It keeps nothing between crossings", "A tool call makes one turn cross twice", "Turn 2 opens by resending all of turn 1"],
+    14: ["Your prompt: goal, limits, done", "Skills: reusable playbooks", "Model choice, switchable mid-job", "Nearly all the leverage is text"],
+    20: ["The list", "The box", "The predictor", "The loop"]
+  };
+  META = {
+    15: [0, "what the next twenty-one diagrams cover"],
+    16: [0, "the eight words you'll hear most"],
+    17: [0, "the eight words for the machinery around the model"],
+    1: [1, "a chat is a list of messages — resent in full every time"],
+    2: [1, "tokens: the unit everything is counted in"],
+    3: [1, "the context window is a fixed box, and only what's in it exists"],
+    10: [1, "your three options when the box fills up"],
+    13: [1, "how to keep what matters once the box starts forgetting"],
+    4: [1, "where the model lives, and what it cannot reach"],
+    7: [2, "it predicts the next token — so it can invent things fluently"],
+    11: [2, "recall vs calculation, and why tools fix maths"],
+    18: [3, "the harness: the software doing everything the model doesn't"],
+    5: [3, "tool calls: how the model reaches the real world"],
+    19: [3, "tools vs skills vs plugins — telling the three apart"],
+    21: [3, "what a skill actually is: a markdown file"],
+    22: [3, "how little of the work the model really does"],
+    20: [4, "the four ideas worth remembering"],
+    8: [3, "retrieval: how your own documents get into the window"],
+    12: [4, "what an “agent” actually is"],
+    6: [4, "splitting a job into sub-tasks across fresh windows"],
+    9: [4, "one job followed all the way round the loop"],
+    14: [4, "the three levers you actually control"]
+  };
+  at(i) { return this.D[this.ORDER[i] - 1]; }
+  captionFor(d, step) { const c = this.at(d); return step >= c.steps.length ? "" : (c.steps[step] || ""); }
+  startType() {
+    clearTimeout(this.tOut); clearInterval(this.tInt); this.tInt = null;
+    this._key = this.state.d + ":" + this.state.step;
+    const full = this.captionFor(this.state.d, this.state.step).replace(/`/g, "");
+    this.setState({ typed: 0 });
+    if (!full) return;
+    this.tOut = setTimeout(() => {
+      this.tInt = setInterval(() => this.setState(s => {
+        const n = s.typed + 1;
+        if (n >= full.length) { clearInterval(this.tInt); this.tInt = null; }
+        return { typed: n };
+      }), 34);
+    }, 1000);
+  }
+  actOf(i) { const t = this.ORDER[i % this.ORDER.length]; return (this.META[t] || [0])[0]; }
+  componentDidMount() {
+    this.onKey = (e) => {
+      if (e.key === "ArrowRight") this.go(1);
+      if (e.key === "ArrowLeft") this.go(-1);
+    };
+    window.addEventListener("keydown", this.onKey);
+    const d = Math.min(this.state.d, this.ORDER.length - 1);
+    const step = Math.min(this.state.step, this.at(d).steps.length);
+    if (d !== this.state.d || step !== this.state.step) this.setState({ d, step });
+    this.startType();
+    this.setAuto();
+  }
+  componentDidUpdate() {
+    const key = this.state.d + ":" + this.state.step;
+    if (key !== this._key) { this._key = key; this.startType(); }
+    this.setAuto();
+    try { sessionStorage.setItem(this.KEY, JSON.stringify({ d: this.state.d, step: this.state.step })); } catch (e) {}
+  }
+  setAuto() {
+    const want = !!(this.props.autoPlay ?? false);
+    if (want && !this.timer) this.timer = setInterval(() => this.go(1), 2800);
+    if (!want && this.timer) { clearInterval(this.timer); this.timer = null; }
+  }
+  componentWillUnmount() { window.removeEventListener("keydown", this.onKey); if (this.timer) clearInterval(this.timer); clearTimeout(this.tOut); clearInterval(this.tInt); }
+  go(dir) {
+    this.setState(s => {
+      const n = this.at(s.d).steps.length + 1;
+      let step = s.step + dir, d = s.d;
+      const N = this.ORDER.length;
+      if (step >= n) { d = (s.d + 1) % N; step = 0; }
+      if (step < 0) { d = (s.d + N - 1) % N; step = this.at(d).steps.length; }
+      return { d, step };
+    });
+  }
+  renderVals() {
+    const { d, step } = this.state;
+    const acc = "#89DF00";
+    const cur = this.at(d), N = this.ORDER.length;
+    const now = new Date(), p2 = n => String(n).padStart(2, "0");
+    const nowIso = `${now.getFullYear()}-${p2(now.getMonth() + 1)}-${p2(now.getDate())}, ${p2(now.getHours())}:${p2(now.getMinutes())} local`;
+    const nowLong = now.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    const nowShort = now.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    const isOutro = step >= cur.steps.length;
+    const nd = (d + 1) % N, nextTpl = this.ORDER[nd];
+    const v = {
+      nowIso, nowLong,
+      dnum: String(d + 1).padStart(2, "0"),
+      dstep: String(Math.min(step, cur.steps.length) + 1).padStart(2, "0"),
+      dtitle: cur.title,
+      capParts: (() => {
+        let left = this.state.typed || 0;
+        return (isOutro ? "" : (cur.steps[step] || "")).split("`")
+          .map((t, i) => ({ t, code: i % 2 === 1 }))
+          .filter(s => s.t)
+          .map(s => { const t = s.t.slice(0, Math.max(0, left)); left -= s.t.length; return { t, c: s.code ? "#89DF00" : "inherit" }; })
+          .filter(p => p.t);
+      })(),
+      caret: this.tInt ? 1 : 0,
+      next: () => this.go(1),
+      back: () => this.go(-1),
+      dcount: N,
+      outro: isOutro,
+      recapPoints: (this.RECAP[this.ORDER[d]] || cur.steps).map((s, i) => ({ n: String(i + 1), text: s })),
+      nextTitle: this.D[nextTpl - 1].title,
+      nextTeaches: (this.META[nextTpl] || [0, ""])[1],
+      nextLabel: (isOutro && d === N - 1) ? "Start again →" : "Next →",
+      backOff: (d === 0 && step === 0) ? true : null,
+      backBc: (d === 0 && step === 0) ? "rgba(137,223,0,0.14)" : "rgba(137,223,0,0.40)",
+      backFg: (d === 0 && step === 0) ? "#4A545C" : "#89DF00",
+      backCur: (d === 0 && step === 0) ? "default" : "pointer",
+      tabs: this.ORDER.map((tpl, i) => ({
+        label: String(i + 1).padStart(2, "0") + " " + this.D[tpl - 1].title,
+        act: (this.META[tpl] || [0])[0],
+        pick: () => this.setState({ d: i, step: 0 }),
+        num: String(i + 1).padStart(2, "0"),
+        bg: i === d ? "rgba(137,223,0,0.14)" : "transparent",
+        fg: i === d ? "#89DF00" : "#8B959D",
+        bd: i === d ? "#89DF00" : "#2A3036"
+      })).filter(t => t.act === (this.META[this.ORDER[d]] || [0])[0]),
+      dots: cur.steps.map((_, i) => ({ c: i <= step ? acc : "#2A3036" })).concat([{ c: isOutro ? "#F2F5F6" : "#2A3036" }])
+    };
+    for (let k = 1; k <= this.D.length; k++) { v["d" + k] = false; }
+    v["d" + this.ORDER[d]] = true;
+    const lastStep = cur.steps.length - 1, finale = isOutro;
+    const fin = (from, on) => (finale ? 0 : (on ? 1 : 0.1));
+    v.finaleFlag = finale ? "1" : "0";
+    for (let k = 1; k <= 6; k++) {
+      const on = step >= k - 1;
+      v["s" + k] = finale ? 0 : (on ? 1 : 0);
+      v["y" + k] = on ? "0px" : "12px";
+    }
+    v.warnDisp = (!finale && step >= 3) ? "block" : "none";
+    v.tokChips = [
+      { t: "The", n: "791" }, { t: " spag", n: "83904" }, { t: "hetti", n: "71197" },
+      { t: " was", n: "574" }, { t: " unbel", n: "65847" }, { t: "ievably", n: "98650" },
+      { t: " good", n: "1695" }, { t: ".", n: "13" }
+    ];
+    v.trimH = step >= 3 ? "60px" : "0px";
+    v.histH2 = step >= 2 ? (step >= 3 ? "126px" : "150px") : "0px";
+    v.d3note = ["Think of it as a desk with a fixed surface area — not a filing cabinet.",
+      "Nothing outside the box exists to the model. If it isn't in here, it wasn't said.",
+      "A pasted document can use more of the box than the whole conversation before it.",
+      "Once full, the oldest content is dropped — the model truly forgets it."][Math.min(step, 3)];
+    const st = step;
+    v.b41 = st === 0 ? "#89DF00" : "#2A3036";
+    v.b42 = st === 1 ? "#89DF00" : "#2A3036";
+    v.b43 = st >= 2 ? "#89DF00" : "#2A3036";
+    v.bg43 = st >= 2 ? "rgba(137,223,0,0.08)" : "#1E2327";
+    v.w41 = st >= 1 ? "#89DF00" : "#2A3036";
+    v.w42 = st >= 2 ? "#89DF00" : "#2A3036";
+    v.w41t = st >= 1 ? "#89DF00" : "#8B959D";
+    v.w41l = "the internet";
+    v.preO = st === 0 ? 1 : 0.3;
+    v.preDetail = st === 0 ? 1 : 0;
+    v.preLabel = st === 0 ? "step zero · months before you asked" : "already done, long ago";
+    v.flow1 = d === 3 && st === 1;
+    v.flow2 = d === 3 && st === 2;
+    v.subs = [
+      { n: "A", job: "Read chapters 1–5", doing: "reading · own fresh window", fill: st >= 3 ? "72%" : "18%", used: st >= 3 ? "38k tokens read" : "starting…" },
+      { n: "B", job: "Check the numbers", doing: "reading · own fresh window", fill: st >= 3 ? "54%" : "12%", used: st >= 3 ? "26k tokens read" : "starting…" },
+      { n: "C", job: "Find related sources", doing: "searching · own fresh window", fill: st >= 3 ? "63%" : "15%", used: st >= 3 ? "31k tokens read" : "starting…" }
+    ];
+    v.flowDown = d === 18 && st === 1;
+    v.flowUp = d === 18 && st === 3;
+    v.wireC = st === 1 ? "#8B959D" : (st >= 3 ? acc : "#2A3036");
+    v.wireLabel = st === 1 ? "↓ each gets a short brief" : (st >= 3 ? "↑ summaries only" : "");
+    v.briefs = [
+      { text: "read ch. 1–5", delay: "0s" },
+      { text: "check figures", delay: ".25s" },
+      { text: "find sources", delay: ".5s" }
+    ];
+    v.leadFill = st >= 4 ? 1 : 0;
+    v.leadLines = [
+      { text: "ch. 1–5 argue X · 4 caveats" },
+      { text: "3 of 12 figures don't reconcile" },
+      { text: "6 sources · 2 contradict it" }
+    ];
+    v.flyMsgs = d === 8 && st === 2;
+    v.streaming = d === 8 && st === 3;
+    v.tokenStream = [
+      { text: "Today", delay: "0s" },
+      { text: " is", delay: ".35s" },
+      { text: " Sun", delay: ".7s" },
+      { text: "day", delay: "1.05s" },
+      { text: ".", delay: "1.4s" }
+    ];
+    const busy = st === 3;
+    v.crunchBars = Array.from({ length: 14 }, (_, i) => ({
+      bg: busy ? "rgba(137,223,0,0.72)" : "#3E474E",
+      anim: busy ? ("crunch .7s " + (i * 0.06).toFixed(2) + "s infinite") : "none"
+    }));
+    v.crunchLabel = busy
+      ? "reading all of it, then predicting one token at a time…"
+      : (st >= 4 ? "idle — it kept nothing from your conversation" : "waiting for input");
+    v.crunchFg = busy ? "#B9EC6B" : "#8B959D";
+    const AG = [
+      ["look", "reads the pricing page, finds the broken link"],
+      ["act", "calls a tool to edit the file"],
+      ["check", "loads the page again to confirm it works"]
+    ];
+    const cur2 = st === 2 ? 1 : (st === 3 ? 2 : -1);
+    v.agentStages = AG.map((a, i) => ({
+      name: a[0], doing: a[1],
+      b: i === cur2 ? acc : "#2A3036",
+      bg: i === cur2 ? "#1E2327" : "transparent",
+      tc: i === cur2 ? acc : "#8B959D",
+      dc: i === cur2 ? "#F2F5F6" : "#AEB8BF"
+    }));
+    v.agentNote = st >= 3 ? "still broken → back to “look”, and round again" : "the loop runs until the check passes";
+    v.resendC = (d === 0 && st >= 4) ? acc : "transparent";
+    v.preds = [
+      { word: "Paris", pct: "94%", w: st >= 1 ? "94%" : "0%", c: acc },
+      { word: "Lyon", pct: "3%", w: st >= 1 ? "3%" : "0%", c: "#4A545C" },
+      { word: "the", pct: "2%", w: st >= 1 ? "2%" : "0%", c: "#4A545C" },
+      { word: "Berlin", pct: "1%", w: st >= 1 ? "1%" : "0%", c: "#4A545C" }
+    ];
+    const sentMsgs = [
+      { label: "system prompt", w: "100%", c: "#DCE3E7" },
+      { label: "you: pasta recipe?", w: "78%", c: acc },
+      { label: "assistant: cacio e pepe…", w: "92%", c: "#4A545C" },
+      { label: "you: make it vegetarian?", w: "64%", c: acc },
+      { label: "assistant: swap the…", w: "86%", c: "#4A545C" }
+    ];
+    const shown = Math.min(st + 1, 5);
+    v.sentBars = sentMsgs.map((m, i) => ({ ...m, o: i < shown ? fin(i, true) : 0.12 }));
+    v.sentPhrase = st === 0
+      ? "nothing sent yet — the list is just waiting"
+      : "turn " + Math.ceil(st / 2) + " → " + shown + (shown === 1 ? " message" : " messages") + " sent";
+    v.tokCount = ["120", "1,400", "84,000", "199,600"][Math.min(st, 3)];
+    const lm = [
+      { label: "system prompt", w: "100%", c: "#DCE3E7", from: 0 },
+      { label: "you: “what's today's date?”", w: "72%", c: acc, from: 0 },
+      { label: "model: run get_current_time()", w: "84%", c: "#8B959D", from: 1 },
+      { label: "tool result: " + nowIso.slice(0, 10), w: "60%", c: "rgba(137,223,0,0.62)", from: 2 },
+      { label: "model: “Today is " + nowShort + ".”", w: "90%", c: "#4A545C", from: 4 },
+      { label: "you: “and the day after?”", w: "66%", c: acc, from: 5 }
+    ];
+    const loopFin = finale;
+    v.loopMsgs = lm.map(m => ({
+      label: m.label, w: m.w, c: m.c,
+      o: st >= m.from ? (loopFin && m.from < 5 ? 0 : 1) : 0,
+      y: st >= m.from ? "0px" : "6px"
+    }));
+    const rightActive = st === 1 || st === 3 || st === 4;
+    v.loopWire = (st === 1 || st === 3) ? acc : (st === 4 ? acc : "#2A3036");
+    v.loopArrow = (st === 1 || st === 3) ? "the whole list travels →" : (st >= 4 ? "← the reply comes back" : "");
+    v.loopJustify = (st === 1 || st === 3) ? "flex-end" : "flex-start";
+    v.loopLb = loopFin ? "#242A2F" : (rightActive ? "#2A3036" : "#5C6870");
+    v.loopLbg = rightActive && !loopFin ? "#1E2327" : (loopFin ? "#1E2327" : "#22282D");
+    v.loopLtc = loopFin ? "#3E474E" : (rightActive ? "#6D777E" : "#F2F5F6");
+    v.loopRb = loopFin ? "#242A2F" : (rightActive ? acc : "#2A3036");
+    v.loopRbg = loopFin ? "#1E2327" : (rightActive ? "rgba(137,223,0,0.08)" : "#1E2327");
+    v.loopRtc = loopFin ? "#3E474E" : (rightActive ? acc : "#6D777E");
+    v.loopLact = ["you type the question", "waiting…", "your computer runs the tool", "waiting…", "waiting…", "you reply; the list is resent"][Math.min(st, 5)];
+    v.loopRact = ["nothing here yet", "reads all of it, asks for a tool", "gone — it keeps nothing between crossings", "reads all of it, plus the result", "answers for real", "reads it all again, from scratch"][Math.min(st, 5)];
+    v.loopTok = ["0", "140", "140", "350", "350", "690"][Math.min(st, 5)];
+    const ctlOn = st === 0 ? 0 : (st === 1 ? 1 : (st <= 3 ? 2 : -1));
+    for (let k = 0; k < 3; k++) {
+      v["c" + (k + 1) + "b"] = ctlOn === k ? acc : "#2A3036";
+      v["c" + (k + 1) + "bg"] = ctlOn === k ? "rgba(137,223,0,0.06)" : "transparent";
+    }
+    v.loopTrip = ["turn 1 · your question", "turn 1 · crossing 1", "turn 1 · tool result", "turn 1 · crossing 2", "turn 1 · answered", "turn 2 · resent"][Math.min(st, 5)];
+    const notes = [
+      "Ch. 1–5 argue X · 4 caveats",
+      "3 of 12 figures don't reconcile",
+      "6 sources · 2 contradict the report"
+    ];
+    v.upNotes = notes.map((t, i) => ({ text: t, delay: (i * 0.25) + "s" }));
+    const tpl = this.ORDER[d], meta = this.META[tpl] || [0, ""];
+    v.dteaches = meta[1];
+    const sibs = this.ORDER.filter(t => (this.META[t] || [0])[0] === meta[0]);
+    const posInAct = this.ORDER.slice(0, d + 1).filter(t => (this.META[t] || [0])[0] === meta[0]).length;
+    v.actProgress = posInAct + " of " + sibs.length + " in this part";
+    v.acts = this.ACTS.map((label, i) => ({
+      label: label,
+      bg: i === meta[0] ? "#89DF00" : "#22282D",
+      fg: i === meta[0] ? "#1A1F23" : "#8B959D",
+      pick: () => {
+        const j = this.ORDER.findIndex(t => (this.META[t] || [0])[0] === i);
+        if (j >= 0) this.setState({ d: j, step: 0 });
+      }
+    }));
+    const gA = [
+      ["LLM (large language model)", "The text generator itself. “Large” = trained on an enormous amount of text; “language model” = it models which words tend to follow which. This is the prediction mechanism that allows an AI to generate text via tokens. People say “the model” for short.", "#5C6870"],
+      ["Prompt", "What you send it: the goal, any constraints, and what a good answer looks like.", "#5C6870"],
+      ["Token", "A chunk of text, roughly four characters. The model combines these to form words and language. Everything is measured in these.", acc],
+      ["Messages (the conversation)", "The chat as a numbered list of turns — you'll also hear “message history” or, in code, “the messages array”. The full message list is sent to the model on every turn as the chat progresses.", acc],
+      ["Context window", "The fixed-size box holding everything the model can see right now, measured in tokens.", acc],
+      ["System prompt", "Hidden instructions at the top of that box, written by whoever built the product — not by you. It's why a support bot won't discuss poetry.", "#5C6870"],
+      ["Hallucination", "When the LLM states something false as if it were fact. Not a glitch — a side-effect of how it generates text.", "#EF6B75"],
+      ["Streaming", "The reply arriving token by token, which is why it looks like typing.", "#8B959D"]
+    ];
+    const gB = [
+      ["Harness", "The app around the model — it keeps the list, runs the tools, and decides what to send.", acc],
+      ["Tool call", "The model asking the harness to do something real, then reading the result as text.", acc],
+      ["Skill", "A written playbook for a kind of work. Instructions only — it teaches, it doesn't add powers.", "#5C6870"],
+      ["Plugin / connector", "A package you switch on that gives the harness new skills and tools to offer to the model.", "#5C6870"],
+      ["Agent · agent loop", "A model run in a loop: understand, look, act, check, and repeat until the goal is met.", acc],
+      ["Sub-task · sub-agent", "A job split into independent pieces and delegated to a helper agent by the main agent. Sub-agents get their own fresh context window.", acc],
+      ["Retrieval", "The agent going to look something up — a file, a search, a database — via a tool, then reading what came back. Not a pre-packaged summary; the model decides what to fetch and when.", "#8B959D"],
+      ["Persistent artifact", "Anything saved outside the context window — a file, a spec, a commit — so it survives the forgetting.", "#8B959D"]
+    ];
+    const gmap = (rows) => rows.map((r, i) => {
+      const from = Math.floor(i / 2), on = st >= from;
+      const o = finale ? 0 : (!on ? 0.08 : (from === st ? 1 : 0.28));
+      return { term: r[0], def: r[1], c: r[2], o: o, y: on ? "0px" : "8px" };
+    });
+    v.glossA = gmap(gA);
+    v.glossB = gmap(gB);
+    v.harness = [
+      "keeps the message list",
+      "counts and budgets tokens",
+      "trims or compacts when full",
+      "offers and runs the tools",
+      "loops until the job is done",
+      "streams the reply to your screen"
+    ].map(t => ({ text: t, o: st >= 2 ? fin(2, true) : (st >= 1 ? 0.25 : 0.1), y: st >= 2 ? "0px" : "6px" }));
+    v.artiTrim = st >= 1 ? "repeating-linear-gradient(45deg,#252B30,#252B30 4px,#1E2327 4px,#1E2327 8px)" : "#39424A";
+    v.leadBg = st >= 4 ? "#F2F5F6" : "#1E2327";
+    v.leadFg = st >= 4 ? "#1E2327" : "#F2F5F6";
+    return v;
+  }
+}
+</script>
+</body>
+</html>
