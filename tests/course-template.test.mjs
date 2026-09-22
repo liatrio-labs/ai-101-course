@@ -192,3 +192,9 @@ test('renderVals uses this.state.finished directly rather than forcing finished 
   assert.match(source, /renderVals\(\)\s*\{[\s\S]*?const\s+finished\s*=\s*this\.state\.finished;/);
   assert.doesNotMatch(source, /renderVals\(\)\s*\{[\s\S]*?const\s+finished\s*=\s*this\.state\.finished\s*\|\|\s*\(!!this\.state\.completion/);
 });
+
+test('does not render a redundant Next button inside the slide outro content', () => {
+  const outroBlock = source.match(/<sc-if value="\{\{\s*outro\s*\}\}"[\s\S]*?<\/sc-if>/)?.[0] || '';
+  assert.equal(outroBlock.length > 0, true);
+  assert.doesNotMatch(outroBlock, /<button onClick="\{\{\s*next\s*\}\}"/);
+});
