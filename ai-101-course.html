@@ -133,8 +133,8 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           <div style="display:flex;gap:40px;margin-top:22px;align-items:flex-start;">
             <div style="display:flex;flex-direction:column;gap:12px;width:460px;outline:2px solid {{ resendC }};outline-offset:12px;transition:outline-color .5s;">
               <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s;border:1px solid #3A4046;background:#22282D;padding:12px 16px;">
-                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:4px;">system prompt · hidden</div>
-                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“You are ChefBot. Only discuss cooking — politely decline everything else.”</div>
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:4px;">system prompt · this example</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“You are ChefBot. Only discuss cooking; politely decline everything else.”</div>
               </div>
               <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border:1px solid #89DF00;padding:12px 16px;margin-left:34px;">
                 <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:4px;">you</div>
@@ -142,13 +142,13 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               </div>
               <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:12px 16px;">
                 <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:4px;">assistant</div>
-                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“Try cacio e pepe — three ingredients…”</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“Try cacio e pepe; three ingredients…”</div>
               </div>
               <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;border:1px solid #89DF00;padding:12px 16px;margin-left:34px;">
                 <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:4px;">you</div>
                 <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">“Make it vegetarian?”</div>
               </div>
-              <div style="opacity:{{ s5 }};transition:opacity .5s;text-align:center;font-size:10.5px;color:#89DF00;">↻ every send = this ENTIRE list again, top to bottom</div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;text-align:center;font-size:10.5px;color:#89DF00;">↻ in this example, every send includes this context window</div>
             </div>
             <div style="flex:1;border-left:1px solid #2A3036;padding-left:32px;margin-top:6px;">
               <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">what gets sent on this turn</div>
@@ -161,7 +161,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                 </sc-for>
               </div>
               <div style="font-size:11px;margin-top:12px;color:#89DF00;">{{ sentPhrase }}</div>
-              <div style="opacity:{{ s5 }};transition:opacity .5s;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;margin-top:14px;border-top:1px solid #2A3036;padding-top:12px;">Never just your latest message — the <em>whole list</em>, from the top, every single time. The model has no memory outside this list.</div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;margin-top:14px;border-top:1px solid #2A3036;padding-top:12px;">Never just your latest message: in this stateless example, the <em>current context window</em> is sent from the top. Other products can store or cache conversation state.</div>
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                 <div style="border:1px solid #89DF00;padding:6px 10px;font-size:15px;background:rgba(137,223,0,0.08);white-space:pre;">{{ tk.t }}</div>
               </sc-for>
             </div>
-            <div style="font-size:11px;color:#8B959D;margin-top:8px;">common words = 1 token · rare words get split</div>
+            <div style="font-size:11px;color:#8B959D;margin-top:8px;">tokens are model-specific chunks: words, word parts, punctuation, or bytes</div>
           </div>
           <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:26px;">
             <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:10px;">3 · each token is just a number (ids below are illustrative)</div>
@@ -199,16 +199,16 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           </div></div>
           <div style="opacity:{{ s5 }};transform:translateY({{ y5 }});transition:opacity .5s,transform .5s;margin-top:32px;display:flex;gap:12px;align-items:baseline;font-size:12.5px;">
             <span style="letter-spacing:.1em;text-transform:uppercase;font-size:10px;color:#8B959D;white-space:nowrap;">not all text is equal</span>
-            <span>“good” = <span style="color:#89DF00;">1 token</span> · “unbelievably” splits into <span style="color:#89DF00;">2</span> · and dense code, JSON or logs use roughly <span style="color:#89DF00;">twice as many</span> tokens per character as plain prose</span>
+            <span>English prose is often about <span style="color:#89DF00;">4 characters</span> per token. Code, JSON, and logs can use more, so count with the target model when precision matters.</span>
           </div>
         </div>
       </sc-if>
       <sc-if value="{{ d3 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:36px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The context window — working memory with a hard limit</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The context window: working memory with a hard limit</div>
           <div class="context-layout" style="display:grid;grid-template-columns:520px minmax(0,1fr);gap:40px;align-items:start;margin-top:0;">
             <div style="width:520px;margin-top:26px;">
-              <div style="opacity:{{ s4 }};transition:opacity .5s;border:1px dashed #3B444B;background:repeating-linear-gradient(45deg,#252B30,#252B30 6px,#1E2327 6px,#1E2327 12px);padding:8px 14px;font-size:10.5px;color:#8B959D;display:flex;justify-content:space-between;gap:12px;"><span>oldest messages — pushed out of the box</span><span>still saved in your app · just no longer sent</span></div>
+              <div style="opacity:{{ s4 }};transition:opacity .5s;border:1px dashed #3B444B;background:repeating-linear-gradient(45deg,#252B30,#252B30 6px,#1E2327 6px,#1E2327 12px);padding:8px 14px;font-size:10.5px;color:#8B959D;display:flex;justify-content:space-between;gap:12px;"><span>oldest messages: pushed out of the box</span><span>still saved in your app · just no longer sent</span></div>
               <div style="opacity:{{ s4 }};transition:opacity .5s;text-align:center;font-size:11px;color:#8B959D;line-height:20px;height:20px;">↑ overflow falls out here</div>
               <div style="border:2px solid #5C6870;height:236px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#1E2327;">
                 <div style="opacity:{{ s3 }};transition:opacity .5s,height .6s;background:rgba(137,223,0,0.22);height:{{ histH2 }};display:flex;align-items:center;justify-content:center;font-size:11px;color:#B9EC6B;border-top:1px solid #1A1F23;">…the chat keeps growing…</div>
@@ -218,7 +218,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div style="display:flex;justify-content:space-between;font-size:10.5px;color:#8B959D;margin-top:8px;">
                 <span style="color:#89DF00;white-space:nowrap;">{{ tokCount }} tokens in the box</span><span style="opacity:{{ s1 }};transition:opacity .5s;white-space:nowrap;">a common limit today: ~200,000 tokens</span>
               </div>
-              <div style="opacity:{{ s1 }};transition:opacity .5s;text-align:center;font-size:11px;color:#89DF00;margin-top:6px;">only what's inside the box is sent to the model — nothing else exists for it</div>
+              <div style="opacity:{{ s1 }};transition:opacity .5s;text-align:center;font-size:11px;color:#89DF00;margin-top:6px;">only what's inside the box is sent to the model; nothing else exists for it</div>
             </div>
             <div class="context-key-idea" style="border-left:1px solid #2A3036;padding-left:32px;">
               <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">the key idea</div>
@@ -230,7 +230,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       </sc-if>
       <sc-if value="{{ d4 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Every message you've sent — shipped to a sealed-off model</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">One stateless request: context sent to a sealed-off model</div>
           <div style="display:flex;align-items:stretch;margin-top:24px;">
             <div style="opacity:{{ s1 }};transition:opacity .5s;width:220px;border:1px solid #3A4046;padding:16px;background:#1E2327;">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">Your device</div>
@@ -248,7 +248,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div style="opacity:{{ s2 }};transition:opacity .5s;width:100%;position:relative;height:2px;background:{{ w41 }};">
                 <sc-if value="{{ flow1 }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:-4px;left:40%;width:10px;height:10px;border-radius:50%;background:#89DF00;animation:pulse 1s infinite;"></div></sc-if>
               </div>
-              <div style="opacity:{{ s2 }};transition:opacity .5s;position:absolute;top:calc(50% - 44px);left:0;width:100%;text-align:center;font-size:10.5px;color:#89DF00;">the ENTIRE list →<br>every message, every time</div>
+              <div style="opacity:{{ s2 }};transition:opacity .5s;position:absolute;top:calc(50% - 44px);left:0;width:100%;text-align:center;font-size:10.5px;color:#89DF00;">this context window →<br>sent for this request</div>
               <div style="opacity:{{ s3 }};transition:opacity .5s;position:absolute;top:calc(50% + 18px);left:0;width:100%;text-align:center;font-size:10.5px;color:#8B959D;">← the reply streams back,<br>token by token</div>
               <sc-if value="{{ flyMsgs }}" hint-placeholder-val="{{ false }}">
                 <div style="position:absolute;top:calc(50% - 34px);left:0;width:100%;display:flex;justify-content:center;pointer-events:none;">
@@ -285,7 +285,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div style="opacity:{{ preO }};transition:opacity .6s;text-align:center;font-size:9.5px;color:#89DF00;line-height:16px;height:16px;">↓ baked in once, then sealed</div>
               <div style="opacity:{{ s2 }};transition:opacity .5s;border:1px solid #3A4046;background:#0E1216;color:#F2F5F6;padding:12px 14px;">
                 <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;">The model</div>
-                <div style="font-size:10px;color:#9AA4AB;margin-top:2px;line-height:1.35;">frozen weights on racks of GPUs — a sealed box that reads the list and writes the next reply</div>
+                <div style="font-size:10px;color:#9AA4AB;margin-top:2px;line-height:1.35;">fixed weights for this request; a sealed box that reads the context and writes the next reply</div>
                 <div style="display:flex;align-items:center;gap:7px;margin-top:6px;">
                   <div style="display:flex;align-items:flex-end;gap:2px;height:11px;width:64px;flex:none;">
                     <sc-for list="{{ crunchBars }}" as="c" hint-placeholder-count="14">
@@ -301,12 +301,12 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               </div>
             </div>
           </div>
-          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:14px;border-top:1px solid #2A3036;padding-top:10px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.3;">No memory between turns. No internet. Nothing past its training.</div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:14px;border-top:1px solid #2A3036;padding-top:10px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.3;">In this stateless example: no memory between turns, internet access, or fresh data without a tool.</div>
         </div>
       </sc-if>
       <sc-if value="{{ d5 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:28px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Tool calls — when the model needs the outside world</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Tool calls: when the model needs the outside world</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 48px;margin-top:14px;background:linear-gradient(#2A3036,#2A3036) center top / 1px 100% no-repeat;">
             <div style="grid-row:1;grid-column:1;opacity:{{ s1 }};transition:opacity .5s;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #5C6870;padding-bottom:6px;">on your computer</div>
             <div style="grid-row:1;grid-column:2;opacity:{{ s1 }};transition:opacity .5s;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #5C6870;padding-bottom:6px;text-align:right;">in the datacenter · the model</div>
@@ -328,12 +328,12 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:15px;">← “Today is {{ nowLong }}.”</div>
             </div>
           </div>
-          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:10px;font-size:10.5px;line-height:1.4;color:#8B959D;">the date is the clearest case — nothing in training could contain today. Same shape for your files, live prices, your calendar.</div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:10px;font-size:10.5px;line-height:1.4;color:#8B959D;">the date is the clearest case; nothing in training could contain today. Same shape for your files, live prices, your calendar.</div>
         </div>
       </sc-if>
       <sc-if value="{{ d6 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:36px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Sub-agents — splitting a job too big for one context window</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Sub-agents: splitting a job too big for one context window</div>
           <div style="display:flex;gap:32px;margin-top:26px;align-items:flex-start;">
             <div style="width:490px;">
               <div style="opacity:{{ s1 }};transition:opacity .5s;border:1px solid #3A4046;background:#0E1216;color:#F2F5F6;padding:12px 16px;width:340px;margin:0 auto;">
@@ -376,12 +376,12 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                   </div>
                 </sc-for>
               </div>
-              <div style="opacity:{{ s4 }};transition:opacity .5s;text-align:center;font-size:10px;color:#89DF00;margin-top:10px;">↑ each sub-agent read tens of thousands of tokens — only these few lines climb back into the lead's window</div>
+              <div style="opacity:{{ s4 }};transition:opacity .5s;text-align:center;font-size:10px;color:#89DF00;margin-top:10px;">↑ each sub-agent read tens of thousands of tokens; only these few lines climb back into the lead's window</div>
               <div style="opacity:{{ s5 }};transition:opacity .5s;border:1px solid #3A4046;background:#22282D;padding:10px 16px;margin-top:8px;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;">…which is why the lead can still answer without ever holding the 300 pages</div>
             </div>
             <div style="flex:1;border-left:1px solid #2A3036;padding-left:32px;margin-top:6px;">
               <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">the key idea</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;margin-top:10px;">Three fresh windows instead of one overflowing one. The lead holds only the summaries — that's the real reason to split work, not magic.</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;margin-top:10px;">This example gives helpers fresh windows and the lead only summaries. Other systems may pass filtered or inherited context.</div>
               <div style="opacity:{{ s5 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;margin-top:14px;border-top:1px solid #2A3036;padding-top:12px;">Worth it when the pieces are genuinely independent. For small, tightly connected work one agent is clearer. The lead stays accountable either way.</div>
             </div>
           </div>
@@ -394,7 +394,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
             <div style="width:450px;">
               <div style="opacity:{{ s1 }};transition:opacity .5s;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:23px;">“The capital of France is <span style="border-bottom:2px solid #89DF00;padding:0 22px;"></span>”</div>
               <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;margin-top:22px;">
-                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:10px;">MODEL TRAINING CREATES A DATABASE OF SCORES FOR LIKELY NEXT TOKENS</div>
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:10px;">TRAINING LEARNS WEIGHTS THAT SCORE NEXT TOKENS AT RUNTIME</div>
                 <div style="display:flex;flex-direction:column;gap:7px;">
                   <sc-for list="{{ preds }}" as="p" hint-placeholder-count="4">
                     <div style="display:flex;align-items:center;gap:12px;">
@@ -405,21 +405,21 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                   </sc-for>
                 </div>
               </div>
-              <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:20px;border:1px solid #3A4046;padding:10px 14px;font-size:12.5px;">at runtime, the model picks the most likely token, adds it to the text, and repeats — one token at a time, forever forward</div>
+              <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:20px;border:1px solid #3A4046;padding:10px 14px;font-size:12.5px;">At runtime, the model picks a likely token, adds it to the text, and repeats one token at a time.</div>
             </div>
             <div style="flex:1;border-left:1px solid #2A3036;padding-left:32px;">
               <div style="opacity:{{ s4 }};transition:opacity .5s;">
                 <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">so what's a hallucination?</div>
-                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;margin-top:10px;">The model never knows anything — it only scores. When the pattern is rare, or the window is full of muddled context, the scores still pick a winner — so out comes a confident, fluent, wrong answer.</div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;margin-top:10px;">The model never knows anything. It only scores. When the pattern is rare, or the window is full of muddled context, the scores still pick a winner, so out comes a confident, fluent, wrong answer.</div>
               </div>
-              <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:16px;border-top:1px solid #2A3036;padding-top:12px;font-size:12px;color:#AEB8BF;">There's no built-in “I don't know” — the scoring always produces a next token. Tools, source documents, and a clean context window keep the scores anchored to something real.</div>
+              <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:16px;border-top:1px solid #2A3036;padding-top:12px;font-size:12px;color:#AEB8BF;">A model can say “I don't know,” but it does not reliably know when to abstain. Tools, source documents, and a clean context window ground the answer in something real.</div>
             </div>
           </div>
         </div>
       </sc-if>
       <sc-if value="{{ d8 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">the point: Large file sets are never sent all at once to&nbsp;the model</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">the point: Large file sets are often searched instead of sent all at once</div>
           <div style="display:flex;align-items:center;gap:14px;margin-top:34px;">
             <div style="opacity:{{ s1 }};transition:opacity .5s;width:160px;flex:none;box-sizing:border-box;border:1px solid #2A3036;padding:12px;background:#1E2327;">
               <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:8px;">your insurance policy</div>
@@ -428,12 +428,12 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                 <div style="height:9px;background:#39424A;"></div><div style="height:9px;background:#39424A;width:72%;"></div>
                 <div style="height:9px;background:#39424A;"></div><div style="height:9px;background:#39424A;width:94%;"></div>
               </div>
-              <div style="font-size:11.5px;color:#8B959D;margin-top:8px;line-height:1.35;">300 pages — far too big to send</div>
+              <div style="font-size:11.5px;color:#8B959D;margin-top:8px;line-height:1.35;">300 pages: may be too big to send at once</div>
             </div>
             <div style="opacity:{{ s2 }};transition:opacity .5s;flex:1;min-width:180px;box-sizing:border-box;">
               <div style="border:1px solid #3A4046;padding:9px 11px;font-size:11.5px;background:#1E2327;">you ask: <span style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:15px;">“am I covered for a cracked phone screen?”</span></div>
               <div style="height:2px;background:#89DF00;margin:8px 0;"></div>
-              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;">the agent calls a <span style="color:#89DF00;">search tool</span> against the file — <span style="font-family:var(--font-mono);color:#F2F5F6;">grep “screen|handset|accidental”</span> — reads the hits, and searches again if the first pass missed</div>
+              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;">the agent calls a <span style="color:#89DF00;">search tool</span> against the file; <span style="font-family:var(--font-mono);color:#F2F5F6;">grep “screen|handset|accidental”</span>; reads the hits, and searches again if the first pass missed</div>
             </div>
             <div style="opacity:{{ s3 }};transition:opacity .5s;width:180px;flex:none;box-sizing:border-box;border:1px solid #89DF00;background:rgba(137,223,0,0.08);padding:12px;">
               <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:8px;">what the tool returned</div>
@@ -458,13 +458,13 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           </div>
           <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:26px;border-top:1px solid #2A3036;padding-top:14px;display:flex;gap:32px;">
             <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;">Nothing was “trained on your data”. Three pages were added to the context window, read once, and will be forgotten after the current session. The model is answering from text you handed it a second ago.</div>
-            <div style="width:280px;font-size:11.5px;color:#AEB8BF;">Which explains the failure you'll actually hit: if the search picks the wrong pages, the model may hallucinate an answer based on this potentially relevant but ultimately inaccurate data — and the model has no idea it's missing anything.</div>
+            <div style="width:280px;font-size:11.5px;color:#AEB8BF;">Which explains the failure you'll actually hit: if the search picks the wrong pages, the model may hallucinate an answer based on this potentially relevant but ultimately inaccurate data, and the model has no idea it's missing anything.</div>
           </div>
         </div>
       </sc-if>
       <sc-if value="{{ d9 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Putting it together — one question, two crossings, then the next turn</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Putting it together: one question, two crossings, then the next turn</div>
           <div style="display:grid;grid-template-columns:230px 1fr 230px;gap:16px;margin-top:10px;align-items:start;">
             <div style="border:2px solid {{ loopLb }};background:{{ loopLbg }};padding:12px 14px;height:118px;box-sizing:border-box;display:flex;flex-direction:column;transition:border-color .4s,background .4s;">
               <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">your computer</div>
@@ -490,7 +490,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                     </div>
                   </sc-for>
                 </div>
-                <div style="font-size:9.5px;color:#8B959D;border-top:1px solid #2A3036;padding-top:6px;">it only ever gets longer — every crossing resends all of it</div>
+                <div style="font-size:9.5px;color:#8B959D;border-top:1px solid #2A3036;padding-top:6px;">it only ever gets longer; every crossing resends the current context window</div>
               </div>
             </div>
             <div style="border:2px solid {{ loopRb }};background:{{ loopRbg }};padding:12px 14px;height:118px;box-sizing:border-box;display:flex;flex-direction:column;transition:border-color .4s,background .4s;">
@@ -501,27 +501,27 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           </div>
           <div style="display:flex;align-items:baseline;gap:20px;margin-top:12px;border-top:1px solid #2A3036;padding-top:10px;">
             <div style="font-size:11px;color:#89DF00;white-space:nowrap;">{{ loopTrip }}</div>
-            <div style="font-size:12px;color:#AEB8BF;">Every crossing resends the whole list, so the price of a turn is the size of everything before it.</div>
+            <div style="font-size:12px;color:#AEB8BF;">Every crossing resends the current context window, so the price of a turn is the size of everything in it.</div>
           </div>
         </div>
       </sc-if>
       <sc-if value="{{ d10 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">When the box fills up — your three options</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">When the box fills up: your three options</div>
           <div style="opacity:{{ s1 }};transition:opacity .5s;display:flex;align-items:center;gap:14px;margin-top:20px;">
             <div style="flex:1;height:26px;background:#22282D;position:relative;"><div style="position:absolute;inset:0 8% 0 0;background:rgba(137,223,0,0.25);"></div><div style="position:absolute;left:8px;top:5px;font-size:11px;color:#B9EC6B;white-space:nowrap;">92% full · 40 turns of chat</div></div>
             <div style="font-size:11px;color:#EF6B75;white-space:nowrap;">slower · pricier · easier to distract</div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;">
             <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;">
-                <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">1 · Drop</div>
-                <div style="font-size:11px;color:#8B959D;margin-top:2px;min-height:30px;">drop the oldest messages, keep the newest</div>
-                <div style="display:flex;flex-direction:column;gap:4px;margin-top:10px;"><div style="height:10px;background:#DCE3E7;"></div><div style="height:10px;background:repeating-linear-gradient(45deg,#252B30,#252B30 4px,#1E2327 4px,#1E2327 8px);"></div><div style="height:10px;background:repeating-linear-gradient(45deg,#252B30,#252B30 4px,#1E2327 4px,#1E2327 8px);"></div><div style="height:10px;background:rgba(137,223,0,0.45);"></div><div style="height:10px;background:rgba(137,223,0,0.45);width:80%;"></div></div>
-                <div style="font-size:10.5px;color:#EF6B75;margin-top:10px;">free, automatic — but detail from early on is simply gone</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">1 · Drop</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;min-height:30px;">drop the oldest messages, keep the newest</div>
+              <div style="display:flex;flex-direction:column;gap:4px;margin-top:10px;"><div style="height:10px;background:#DCE3E7;"></div><div style="height:10px;background:repeating-linear-gradient(45deg,#252B30,#252B30 4px,#1E2327 4px,#1E2327 8px);"></div><div style="height:10px;background:repeating-linear-gradient(45deg,#252B30,#252B30 4px,#1E2327 4px,#1E2327 8px);"></div><div style="height:10px;background:rgba(137,223,0,0.45);"></div><div style="height:10px;background:rgba(137,223,0,0.45);width:80%;"></div></div>
+              <div style="font-size:10.5px;color:#EF6B75;margin-top:10px;">free and automatic, but early detail is simply gone</div>
             </div>
             <div style="opacity: {{ s3 }}; transform: translateY({{ y3 }}); transition: opacity .5s,transform .5s; border: 1px solid #2A3036; padding: 14px">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">2 · Compact</div>
-              <div style="font-size:11px;color:#8B959D;margin-top:2px;min-height:30px;">ask the model to summarise the old part, keep the summary</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;min-height:30px;">ask the model to summarize the old part, keep the summary</div>
               <div style="display:flex;flex-direction:column;gap:4px;margin-top:10px;">
                 <div style="height:10px;background:#DCE3E7;"></div>
                 <div style="height:22px;border:1px dashed #89DF00;font-size:9px;color:#9FE626;display:flex;align-items:center;padding-left:5px;">30 turns → one paragraph</div>
@@ -538,7 +538,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                 <div style="height:10px;background:rgba(137,223,0,0.45);width:60%;"></div>
                 <div style="height:42px;border:1px dashed #2A3036;"></div>
               </div>
-              <div style="font-size:10.5px;color:#AEB8BF;margin-top:10px;">cheapest and sharpest — you decide what's worth carrying over</div>
+              <div style="font-size:10.5px;color:#AEB8BF;margin-top:10px;">cheapest and sharpest; you decide what's worth carrying over</div>
             </div>
           </div>
           <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:12px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;">A clean context window that is&nbsp;intentionally constructed&nbsp;beats a big messy one that has evolved over many turns. Everything in the box competes for the model's attention, so irrelevant history actively makes answers worse.</div>
@@ -546,15 +546,15 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       </sc-if>
       <sc-if value="{{ d11 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">So can it do maths? — recall vs. calculation</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Can it do math? Reliability vs. exact calculation</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:22px;">
             <div style="opacity:{{ s1 }};transition:opacity .5s;">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:24px;">“1 + 1 = <span style="color:#89DF00;">2</span>”</div>
-              <div style="border:1px solid #2A3036;padding:10px 12px;margin-top:12px;font-size:12px;">✓ right — but not because it added anything.<div style="color:#8B959D;margin-top:4px;">“1 + 1 =” is followed by “2” countless times in its training text, so “2” is overwhelmingly the likeliest next token. This is recall.</div></div>
+              <div style="border:1px solid #2A3036;padding:10px 12px;margin-top:12px;font-size:12px;">✓ right, but a correct answer does not prove reliable arithmetic.<div style="color:#8B959D;margin-top:4px;">“1 + 1 =” is followed by “2” countless times in training text, so “2” is a likely next token. This is pattern completion.</div></div>
             </div>
             <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:24px;">“4,391 × 7,208 = <span style="color:#EF6B75;">31,648,528</span>”</div>
-              <div style="border:1px solid #E63946;padding:10px 12px;margin-top:12px;font-size:12px;">✕ a typical wrong answer. The true value is <span style="color:#89DF00;">31,650,328</span>.<div style="color:#8B959D;margin-top:4px;">That exact sum appears nowhere in its training data, so it predicts digit by digit: right length, plausible shape, wrong number.</div></div>
+              <div style="border:1px solid #E63946;padding:10px 12px;margin-top:12px;font-size:12px;">✕ a typical wrong answer. The true value is <span style="color:#89DF00;">31,650,328</span>.<div style="color:#8B959D;margin-top:4px;">For exact arithmetic, generated digits can look plausible while still being wrong.</div></div>
             </div>
           </div>
           <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:22px;border-top:1px solid #2A3036;padding-top:16px;display:flex;gap:16px;align-items:center;">
@@ -567,12 +567,12 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div style="border:1px solid #3A4046;padding:7px 10px;">31,650,328</div>
             </div>
           </div>
-          <div style="opacity:{{ s4 }};transition:opacity .5s;margin-top:18px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.45;">The rule of thumb: it's strong at language-shaped tasks it has seen patterns of, and unreliable at anything needing exact computation or live facts — which is precisely what tools are for.</div>
+          <div style="opacity:{{ s4 }};transition:opacity .5s;margin-top:18px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.45;">The rule of thumb: it's strong at language-shaped tasks it has seen patterns of and unreliable at anything needing exact computation or live facts. That is what tools are for.</div>
         </div>
       </sc-if>
       <sc-if value="{{ d20 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Recap — the whole thing in four ideas</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Recap: the whole thing in four ideas</div>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px;">
             <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">The list</div>
@@ -582,7 +582,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                 <div style="height:7px;background:#39424A;width:92%;"></div>
                 <div style="height:7px;background:rgba(137,223,0,0.45);width:70%;"></div>
               </div>
-              <div style="font-size:11.5px;color:#AEB8BF;margin-top:8px;line-height:1.45;">A chat is a list of messages. It's resent in full every turn — that's the only reason it seems to remember.</div>
+              <div style="font-size:11.5px;color:#AEB8BF;margin-top:8px;line-height:1.45;">A chat is a list of messages. Each turn gets the relevant context, either by resending it or by reusing stored state. That's why it seems to remember.</div>
             </div>
             <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;">The box</div>
@@ -617,7 +617,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                   <div style="position:absolute;left:16px;top:calc(100% + 1px);transform:translateX(-50%);color:#89DF00;font-size:10px;line-height:1;">↑</div>
                 </div>
               </div>
-              <div style="font-size:11.5px;color:#AEB8BF;margin-top:8px;line-height:1.45;">Everything else — tools, skills, harness, agents, sub-agents — is software running that loop around the box.</div>
+              <div style="font-size:11.5px;color:#AEB8BF;margin-top:8px;line-height:1.45;">Everything else; tools, skills, harness, agents, sub-agents; is software running that loop around the box.</div>
             </div>
           </div>
           <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:22px;border-top:1px solid #2A3036;padding-top:14px;">
@@ -628,7 +628,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       </sc-if>
       <sc-if value="{{ d21 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">A skill is a text file · nothing more</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">A skill starts with instructions in SKILL.md</div>
           <div style="display:flex;gap:24px;margin-top:20px;align-items:flex-start;">
             <div style="opacity:{{ s1 }};transition:opacity .5s;width:330px;flex:none;box-sizing:border-box;border:1px solid #3A4046;background:#1E2327;">
               <div style="border-bottom:1px solid #2A3036;background:#22282D;padding:6px 10px;font-family:var(--font-mono);font-size:10px;color:#AEB8BF;">SKILL.md</div>
@@ -651,10 +651,10 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               </div>
             </div>
             <div style="flex:1;min-width:180px;">
-              <div style="opacity:{{ s2 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;line-height:1.5;">That's the whole artifact — a plain markdown file written in plain English. No code, no training, no new abilities. When the current work matches the trigger phrasing in the description of the skill, the harness adds the full content of the SKILL.md to the context window. This grants additional knowledge and capability to the model.</div>
+              <div style="opacity:{{ s2 }};transition:opacity .5s;font-size:11.5px;color:#AEB8BF;line-height:1.5;">This is a basic skill: instructions in a Markdown file. A skill can also include scripts, references, and assets. It adds no training or permissions; the host decides discovery and loading.</div>
               <div style="opacity:{{ s3 }};transition:opacity .5s;border:1px solid #2A3036;padding:10px 12px;margin-top:12px;font-size:11px;">
                 <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:4px;">why bother</div>
-                The judgment your best people carry in their heads becomes something the whole team can run — reviewable, correctable, and improving with every pass.
+                The judgment your best people carry in their heads becomes something the whole team can run; reviewable, correctable, and improving with every pass.
               </div>
               <div style="opacity:{{ s4 }};transition:opacity .5s;border:1px solid #89DF00;background:rgba(137,223,0,0.06);padding:10px 12px;margin-top:10px;font-size:11px;">
                 <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;margin-bottom:4px;">and you don't have to write it yourself</div>
@@ -667,7 +667,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       </sc-if>
       <sc-if value="{{ d22 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Who actually does the work — one plugin, step by step</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Who actually does the work: one plugin, step by step</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 44px;margin-top:16px;background:linear-gradient(#2A3036,#2A3036) center top / 1px 100% no-repeat;">
             <div style="grid-row:1;grid-column:1;opacity:{{ s1 }};transition:opacity .5s;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #5C6870;padding-bottom:6px;">your computer · the harness</div>
             <div style="grid-row:1;grid-column:2;opacity:{{ s1 }};transition:opacity .5s;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #5C6870;padding-bottom:6px;text-align:right;">the model</div>
@@ -678,7 +678,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           </div>
           <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:16px;border-top:1px solid #2A3036;padding-top:12px;display:flex;gap:28px;">
             <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.4;">The model never held your password, never opened a connection, never saw the events beyond tomorrow. It asked, in text, and received text back.</div>
-            <div style="width:290px;font-size:11.5px;color:#AEB8BF;">So a “plugin” is just registered local capability. When one misbehaves it's almost always the plumbing — the login, the search, the formatting — not the model.</div>
+            <div style="width:290px;font-size:11.5px;color:#AEB8BF;">This is a client-executed example. A failure can be in the integration, its permissions or data, the tool contract, or the model's request.</div>
           </div>
         </div>
       </sc-if>
@@ -686,7 +686,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
         <div style="position:absolute;inset:0;padding:32px 44px;">
           <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Start here</div>
           <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:30px;line-height:1.15;margin-top:8px;max-width:820px;">How AI Works, end to end</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.35;margin-top:8px;max-width:700px;color:#C9D1D6;">What actually happens between pressing Enter and reading the reply — and why AI behaves the way it does.</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.35;margin-top:8px;max-width:700px;color:#C9D1D6;">What actually happens between pressing Enter and reading the reply, and why AI behaves the way it does.</div>
           
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px;">
             <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
@@ -708,7 +708,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                 <div style="height:9px;background:#4A545C;width:22%;"></div>
                 <div style="height:9px;background:#4A545C;width:12%;"></div>
               </div>
-              <div style="font-size:11px;color:#AEB8BF;margin-top:8px;line-height:1.45;">AI is built around predicting the next word. That's why it can make mistakes, and can't do sums.</div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:8px;line-height:1.45;">AI is built around predicting the next token. It can solve many math problems, but unverified arithmetic can still be wrong.</div>
             </div>
             <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
               <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">part three</div>
@@ -772,7 +772,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       </sc-if>
       <sc-if value="{{ d18 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The harness — the software wrapped around the model</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The harness: the software wrapped around the model</div>
           <div style="display:flex;gap:26px;margin-top:20px;align-items:flex-start;">
             <div style="width:520px;flex:none;box-sizing:border-box;">
               <div style="border:1px dashed #89DF00;background:rgba(137,223,0,0.04);padding:14px;">
@@ -805,24 +805,24 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       </sc-if>
       <sc-if value="{{ d19 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Three words people mix up — tools, skills, plugins</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Three words people mix up; tools, skills, plugins</div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;">
             <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;box-sizing:border-box;">
               <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">a capability</div>
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;margin-top:2px;color:#89DF00;">Tool · tool call</div>
-              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A <span style="color:#F2F5F6;">tool</span> is something the harness can do — read a file, search, run a sum. A <span style="color:#F2F5F6;">tool call</span> is the model asking for one and getting the result back as text.</div>
+              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A <span style="color:#F2F5F6;">tool</span> is something the harness can do: read a file, search, perform a calculation. A <span style="color:#F2F5F6;">tool call</span> is the model asking for one and getting the result back as text.</div>
               <div style="font-size:11px;color:#AEB8BF;margin-top:10px;border-top:1px solid #2A3036;padding-top:8px;">gives it <span style="color:#F2F5F6;">new abilities</span></div>
             </div>
             <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;box-sizing:border-box;">
               <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">instructions</div>
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;margin-top:2px;color:#89DF00;">Skill</div>
-              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A written playbook for a kind of work — “here's how we build a spreadsheet”. Just text, pulled into the window when it's relevant.</div>
+              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A written playbook for a kind of work: “here's how we build a spreadsheet”. Just text, pulled into the window when it's relevant.</div>
               <div style="font-size:11px;color:#AEB8BF;margin-top:10px;border-top:1px solid #2A3036;padding-top:8px;">gives it <span style="color:#F2F5F6;">know-how</span>, no new powers</div>
             </div>
             <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;border:1px solid #2A3036;padding:14px;box-sizing:border-box;">
               <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">plumbing</div>
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;margin-top:2px;color:#89DF00;">Plugin · connector</div>
-              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A package you switch on that hands the harness a bundle of new tools — connect your email, and “search inbox” and “send draft” appear.</div>
+              <div style="font-size:11.5px;color:#AEB8BF;line-height:1.45;margin-top:8px;">A package you switch on that hands the harness a bundle of new tools: connect your email, and “search inbox” and “send draft” appear.</div>
               <div style="font-size:11px;color:#AEB8BF;margin-top:10px;border-top:1px solid #2A3036;padding-top:8px;">delivers <span style="color:#F2F5F6;">more tools</span></div>
             </div>
           </div>
@@ -830,7 +830,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
             <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:20px;white-space:nowrap;">Skills <span style="color:#8B959D;">teach</span> · plugins <span style="color:#8B959D;">add</span> · tool calls <span style="color:#8B959D;">do</span>.</div>
             <div style="font-size:11.5px;color:#AEB8BF;">And none of them change the model itself. The model is always based on its own static training data. Tools, Skills, and Plugins change what's in the context window and what the harness can run.</div>
           </div>
-          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:14px;font-size:11.5px;color:#8B959D;">Products name these differently — “actions”, “connectors”, “extensions”, “MCP servers”. Ask which of the three it is and the confusion clears.</div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:14px;font-size:11.5px;color:#8B959D;">Products name these differently; “actions”, “connectors”, “extensions”, “MCP servers”. Ask which of the three it is and the confusion clears.</div>
         </div>
       </sc-if>
       <sc-if value="{{ d12 }}" hint-placeholder-val="{{ false }}">
@@ -845,7 +845,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
                 <div style="border:1px solid #3A4046;padding:6px 9px;">it answers</div>
                 <div style="color:#8B959D;">■</div>
               </div>
-              <div style="font-size:11px;color:#8B959D;margin-top:12px;">one pass, answered from training data alone — and it reads exactly the same whether it knew or guessed.</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:12px;">one pass, answered from the current context without using tools; it reads exactly the same whether it knew or guessed.</div>
             </div>
             <div style="opacity:{{ s2 }};transition:opacity .5s;border:1px solid #89DF00;background:rgba(137,223,0,0.06);padding:14px;box-sizing:border-box;">
               <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">an agent · same model, run in a loop</div>
@@ -863,14 +863,14 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           </div>
           <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s;margin-top:14px;display:flex;align-items:baseline;gap:12px;">
             <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">“acting” = calling a tool</div>
-            <div style="font-size:11px;color:#AEB8BF;">read a file · run the tests · click through a web app in a real browser · change the file and commit it — each result comes back as text in the window</div>
+            <div style="font-size:11px;color:#AEB8BF;">read a file · run the tests · click through a web app in a real browser · change the file and commit it; each result comes back as text in the window</div>
           </div>
           <div style="opacity:{{ s4 }};transform:translateY({{ y4 }});transition:opacity .5s,transform .5s;margin-top:12px;display:flex;align-items:baseline;gap:12px;">
             <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">the price of looping</div>
-            <div style="font-size:11px;color:#AEB8BF;">3 times round is 3 full resends of a list that grew on every pass — same model, same box, several times the tokens</div>
+            <div style="font-size:11px;color:#AEB8BF;">3 times round is 3 full resends of a list that grew on every pass; same model, same box, several times the tokens</div>
           </div>
           <div style="opacity:{{ s5 }};transform:translateY({{ y5 }});transition:opacity .5s,transform .5s;margin-top:12px;border-top:1px solid #2A3036;padding-top:12px;display:flex;gap:28px;">
-            <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;">Which is why an agent can work for twenty minutes on one instruction — and why that instruction has to say what <em>done</em> looks like.</div>
+            <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:17px;line-height:1.4;">Which is why an agent can work for twenty minutes on one instruction; and why that instruction has to say what <em>done</em> looks like.</div>
           </div>
         </div>
       </sc-if>
@@ -909,20 +909,20 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           </div>
           <div style="opacity:{{ s4 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:14px;display:flex;gap:28px;">
             <div style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:18px;line-height:1.4;">This is why “write the spec first” works so well with agents: the spec is a persistent artifact. It survives every trim, and it gives you and the agent one shared definition of “done”.</div>
-            <div style="width:280px;font-size:11.5px;color:#AEB8BF;opacity:{{ s5 }};transition:opacity .5s;">Rule of thumb: if losing it would hurt, it doesn't belong in the chat — it belongs in a file.</div>
+            <div style="width:280px;font-size:11.5px;color:#AEB8BF;opacity:{{ s5 }};transition:opacity .5s;">Rule of thumb: if losing it would hurt, it doesn't belong in the chat; it belongs in a file.</div>
           </div>
         </div>
       </sc-if>
       <sc-if value="{{ d14 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
-          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">The three things you actually control</div>
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Three important levers you can influence</div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px;">
             <div style="opacity:{{ s1 }};transform:translateY({{ y1 }});transition:opacity .5s,transform .5s,border-color .4s,background .4s;border:1px solid {{ c1b }};background:{{ c1bg }};padding:14px;box-sizing:border-box;">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">1 · Your prompt</div>
               <div style="font-size:11px;color:#8B959D;margin-top:2px;">everything it knows about the job arrives this way</div>
               <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:11.5px;">
-                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">the goal — what you want</div>
-                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">the constraints — what it must respect</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">the goal; what you want</div>
+                <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">the constraints; what it must respect</div>
                 <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">what “done” looks like</div>
               </div>
               <div style="font-size:10.5px;color:#9FE626;margin-top:10px;">leave one out and it will cheerfully invent it</div>
@@ -930,20 +930,20 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
             <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s,border-color .4s,background .4s;border:1px solid {{ c2b }};background:{{ c2bg }};padding:14px;box-sizing:border-box;">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">2 · Skills</div>
               <div style="font-size:11px;color:#8B959D;margin-top:2px;">reusable instruction packs, written once</div>
-              <div style="border:1px solid #333B42;padding:8px 10px;margin-top:12px;font-size:11px;background:#1E2327;">“how we build a spreadsheet”<div style="color:#8B959D;margin-top:3px;">a playbook — steps, conventions, sometimes scripts</div></div>
-              <div style="font-size:11px;color:#AEB8BF;margin-top:10px;">it gets pulled into the window when the work matches, so you don't re-explain the same process every time. It's instructions — not a smarter model.</div>
+              <div style="border:1px solid #333B42;padding:8px 10px;margin-top:12px;font-size:11px;background:#1E2327;">“how we build a spreadsheet”<div style="color:#8B959D;margin-top:3px;">a playbook; steps, conventions, sometimes scripts</div></div>
+              <div style="font-size:11px;color:#AEB8BF;margin-top:10px;">it gets pulled into the window when the work matches, so you don't re-explain the same process every time. It's instructions, not a smarter model.</div>
             </div>
             <div style="opacity:{{ s3 }};transform:translateY({{ y3 }});transition:opacity .5s,transform .5s,border-color .4s,background .4s;border:1px solid {{ c3b }};background:{{ c3bg }};padding:14px;box-sizing:border-box;">
               <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;">3 · Which model</div>
-              <div style="font-size:11px;color:#8B959D;margin-top:2px;">and you can switch part-way</div>
+              <div style="font-size:11px;color:#8B959D;margin-top:2px;">and you can switch partway</div>
               <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:11px;">
                 <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">fast + cheap → sorting, drafting, bulk edits</div>
                 <div style="border:1px solid #333B42;background:#1E2327;padding:6px 8px;">strong reasoning → the tricky bug, the design call, deep analysis, complex reasoning</div>
               </div>
-              <div style="font-size:10.5px;color:#9FE626;margin-top:10px;opacity:{{ s4 }};transition:opacity .5s;">the catch: a new model reads the same window differently — so keep the plan and decisions written down, not implied.</div>
+              <div style="font-size:10.5px;color:#9FE626;margin-top:10px;opacity:{{ s4 }};transition:opacity .5s;">the catch: a new model reads the same window differently; so keep the plan and decisions written down, not implied.</div>
             </div>
           </div>
-          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:14px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.4;">Two of the three are just text you put in the window — and that's where nearly all of your leverage sits. Choosing the model is the only dial that isn't text.</div>
+          <div style="opacity:{{ s5 }};transition:opacity .5s;margin-top:20px;border-top:1px solid #2A3036;padding-top:14px;font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.4;">Two of the three are just text you put in the window; and that's where nearly all of your leverage sits. Choosing the model is the only dial that isn't text.</div>
         </div>
       </sc-if>
       <sc-if value="{{ outro }}" hint-placeholder-val="{{ false }}">
@@ -1027,108 +1027,108 @@ class Component extends DCLogic {
   state = { d: 0, step: 0, finished: false, completion: null, learnerName: '' };
   D = [
     { title: "Messages", steps: [
-      "Every conversation starts with a system prompt — hidden instructions that set the AI's behavior.",
+      "This example starts with a system prompt: product-supplied instructions that set the AI's behavior.",
       "Your message gets added to the list, labeled as coming from you.",
-      "The model's reply is appended too — same list, different label.",
+      "The model's reply is appended too; same list, different label.",
       "Each new turn just adds to the list. A chat is nothing more than this growing list.",
-      "And here's the trick: the whole list is resent with every message. That's how it 'remembers'."
+      "In a stateless request, the app sends the relevant context window. That's how the model 'remembers' this example."
     ]},
     { title: "Tokens", steps: [
-      "Models don't read letters or words — text is first chopped into pieces called tokens.",
-      "Common words are one token; rarer words get split into chunks.",
-      "Each token maps to a number — that's what the model actually processes.",
+      "Models don't read letters or words; text is first chopped into pieces called tokens.",
+      "Tokens are model-specific chunks: whole words, word parts, punctuation, characters, or bytes.",
+      "Each token maps to a number; that's what the model actually processes.",
       "Rule of thumb: a token is about 4 characters. Pricing and limits are all counted in tokens.",
-      "And not all text costs the same — dense code or raw tool output eats far more tokens than plain prose."
+      "And not all text costs the same; code and raw tool output can use more tokens than plain prose."
     ]},
     { title: "Context window", steps: [
-      "The context window is the model's working memory — a fixed-size box measured in tokens.",
+      "The context window is the model's working memory; a fixed-size box measured in tokens.",
       "The system prompt and conversation history take up space inside it. Only what's in the box gets sent.",
       "As the chat grows, the box fills up.",
       "Past the limit the oldest fall out: still on your machine, no longer sent."
     ]},
     { title: "The round trip", steps: [
       "Long before you showed up: a crawl of the web, then months of training.",
-      "What it produced is the model: frozen weights in a datacenter. Sealed — it never learns again after this point.",
-      "Now your turn: a copy of the whole window is sent to the model. That's all it ever sees.",
+      "What it produced is the deployed model: fixed weights for this request, after pretraining and post-training.",
+      "Now your turn: this stateless example sends a copy of the relevant context window. That's all it sees for this request.",
       "It reads all of it, then streams back one token at a time. Then forgets the conversation ever happened.",
       "Notice what's missing: no internet, no files, no idea what today is."
     ]},
     { title: "Tool calls", steps: [
       "Two sides to keep straight: your computer on the left, the model in a datacenter on the right.",
-      "You ask something the model can't possibly know — like today's weather.",
+      "You ask something the model can't possibly know, like today's weather.",
       "Rather than guess, the model sends back a request: 'run get_weather for me'.",
-      "Your computer runs the tool and fetches real data. The model just waits — it never touches the internet.",
-      "The result is appended to the list, everything is resent, and now the model answers for real."
+      "In this client-executed example, your computer runs the tool and fetches real data. The model receives the result.",
+      "The result becomes context, and now the model can answer with current data."
     ]},
     { title: "Sub-agents", steps: [
-      "Some jobs won't fit in one window — researching a 300-page report, for example. This is the lead agent: the one you're talking to.",
-      "It splits the job into sub-tasks and sends each one down as a short brief. Each helper starts with its own empty window.",
-      "They work in parallel, and they burn through real volume — tens of thousands of tokens each.",
+      "Some jobs won't fit in one window; researching a 300-page report, for example. This is the lead agent: the one you're talking to.",
+      "It splits the job into sub-tasks and sends each one down as a short brief. Each helper gets its own configured context.",
+      "They work in parallel, and they burn through real volume; tens of thousands of tokens each.",
       "But watch what climbs back up: a couple of lines each. The raw pages never enter the lead's window.",
       "So the lead never reads all 300 pages. It answers from three short summaries, and its own window stays small."
     ]},
     { title: "Prediction", steps: [
-      "Under the hood the model does one thing: predict the next token based on the model's training.",
-      "Every possible next token has been scored by likelihood via semantic analysis.",
-      "It picks a likely one, appends it, and repeats — that's the whole trick.",
-      "A hallucination isn't a bug in this process, it IS the process: an unusual question, or a cluttered window, and the scoring still picks a winner.",
-      "There's no built-in 'I don't know' — which is exactly why tools and source documents matter."
+      "Under the hood, learned weights score possible next tokens from the current context.",
+      "At runtime, those scores form a probability distribution over possible next tokens.",
+      "It picks a likely one, appends it, and repeats. That's the process.",
+      "A hallucination isn't a separate bug in this process. It is one possible outcome when an unusual question or cluttered window still leads the scoring to pick a winner.",
+      "A model can say 'I don't know,' but it does not reliably know when to abstain. Tools and source documents help."
     ]},
     { title: "Your documents", steps: [
-      "A 300-page policy is far too big to send, so it never goes to the model as a whole.",
-      "Instead the agent is given a tool that can search it, and it decides what to look up: “cracked screen coverage”.",
-      "The tool returns the matching pages, and the agent reads them — searching again if the first pass missed.",
-      "Only those three pages land in the context window, next to your question. That's the entire trick.",
-      "The model was never trained on your documents. It went and looked, and what it found came back as text."
+      "A 300-page policy may be too big to send at once, so it is often searched instead.",
+      "A harness may search it for selected passages, or the model may call a search tool: “cracked screen coverage”.",
+      "The selected passages become context next to your question. The search can run again if the first pass missed.",
+      "This is a common retrieval pattern, not the only way to add document context.",
+      "In this example, the answer is not learned during this session. The model reads retrieved text at runtime."
     ]},
     { title: "The loop", steps: [
       "Turn 1 starts on your side. Nothing exists yet but the system prompt and the question you just typed.",
-      "Everything the model will ever know about this conversation crosses now — there is no earlier session for it to draw on.",
+      "This stateless example sends the conversation context now; other APIs can store or reuse conversation state.",
       "It didn't keep the date it asked for. The only reason it still knows is that the result now sits in the list on your side.",
-      "So the same turn has to cross a second time, carrying everything it carried before — providers cache the unchanged part, but it still has to be sent and re-read.",
-      "Only now does an answer come back: one question from you, two crossings, about 350 tokens billed.",
-      "And turn 2 opens by resending all of turn 1. Every turn you add is a turn that every later turn has to carry."
+      "The same turn can cross a second time with the tool result. An unchanged prefix may be reused from cache.",
+      "Only now does an answer come back: one question from you, two crossings, about 350 tokens in this example.",
+      "Turn 2 uses the conversation context again. Cost depends on the provider, cache, and new input and output."
     ]},
     { title: "Filling up", steps: [
       "Long chats fill the window, and a nearly-full window is slow, expensive, and easy to distract.",
-      "Option 1 — trim: drop the oldest messages. Free and automatic, but early detail is gone for good.",
-      "Option 2 — compact: have the model summarise the old part and keep only the summary.",
-      "Option 3 — start fresh: a new chat, with just the bits worth carrying over pasted back in.",
+      "Option 1: trim. Drop the oldest messages. Free and automatic, but early detail is gone for good.",
+      "Option 2: compact the old part by having the model summarize it and keep only the summary.",
+      "Option 3: start fresh. Open a new chat and paste back only the bits worth carrying over.",
       "Either way the lesson is the same: a small clean window beats a big cluttered one."
     ]},
-    { title: "Can it do maths?", steps: [
-      "Ask it 1 + 1 and it says 2 — correct, but it never added anything. It has simply seen that text a million times.",
-      "Two big numbers, and it fails: that sum isn't in its training text.",
-      "The fix is the usual one — hand the sum to a calculator tool and let the model read the exact result.",
-      "Rule of thumb: strong on language-shaped patterns, unreliable on exact computation and live facts."
+    { title: "Can it do math? Reliability vs. exact calculation", steps: [
+      "Ask it 1 + 1 and it says 2. A correct answer does not prove reliable arithmetic.",
+      "For a large calculation, generated digits can be plausible but wrong.",
+      "Use a calculator tool and let the model read the exact result.",
+      "Rule of thumb: it can solve many math problems, but use a calculator or code tool and verify exact work."
     ]},
     { title: "What's an agent?", steps: [
-      "A plain reply is recalled from training in a single pass. It can't tell you that it never went and looked.",
+      "A plain reply is generated from the current context and learned patterns in a single pass. It can't tell you that it never went and looked.",
       "An agent is that same model in a loop: look, act, check, repeat.",
       "The model still touches nothing itself. It emits a request, the harness does the acting, and the result comes back as more text.",
-      "The `check` is what the loop buys you: it can catch its own mistake and go round again — and it pays for that in tokens every time.",
-      "So the dividing line isn't intelligence, it's autonomy: a chat waits for you between every step, while an agent picks its own next step until the check passes."
+      "The `check` is what the loop buys you: it can catch its own mistake and go round again, and it pays for that in tokens every time.",
+      "A chat usually waits for you between steps. An agent can pick its next step within configured limits until it finishes, hits a limit, needs approval, or is stopped."
     ]},
     { title: "Writing it down", steps: [
-      "The window is temporary by design — you've seen it trim itself.",
-      "A decision from 30 turns ago can vanish — for the model, it never happened.",
+      "The window is temporary by design; you've seen it trim itself.",
+      "A decision from 30 turns ago can vanish; for the model, it never happened.",
       "So anything that matters goes outside it: a file, a spec, a commit, a ticket.",
       "So “write the spec first” works: it survives every trim and defines done.",
-      "Rule of thumb — if losing it would hurt, it belongs in a file, not in the chat."
+      "Rule of thumb: if losing it would hurt, it belongs in a file, not in the chat."
     ]},
-    { title: "What you control", steps: [
-      "Your prompt is the whole briefing: the goal, the constraints, and what “done” looks like. Leave one out and it will invent it.",
+    { title: "What you can influence", steps: [
+      "Your prompt is your briefing: the goal, the constraints, and what “done” looks like. Leave one out and it may invent it.",
       "Skills are written playbooks, pulled in when relevant so you don't re-explain.",
-      "And you choose the model: fast and cheap for bulk work, strong reasoning for the tricky call — you can switch part-way through.",
+      "And you choose the model: fast and cheap for bulk work, strong reasoning for the tricky call; you can switch partway through.",
       "The catch when you switch: a different model reads the same window differently, so keep the plan and decisions explicit.",
-      "Two of the three are text you put in the window, and that's where nearly all of your leverage is. Which model you pick is the one lever that isn't text."
+      "These are important levers. You can also control the tools, approvals, guardrails, budgets, and cancellation behavior around the model."
     ]},
     { title: "Start here", steps: [
       "What happens when you send a message to an AI, from your keyboard to the reply and back.",
-      "Part one: messages, tokens, and the context window — and why it has no memory.",
-      "Part two: it guesses the next word. That explains both the invented facts and the failed sums.",
+      "Part one: messages, tokens, and the context window, and why it has no memory.",
+      "Part two: it predicts the next token. That explains both the invented facts and failed calculations.",
       "Part three: it can't reach anything itself. Tools, documents, and the software that does the reaching.",
-      "Part four: agents — the loop, splitting work up, and the three levers you control."
+      "Part four: agents, the loop, splitting work up, and the levers you can influence."
     ]},
     { title: "Words: the basics", steps: [
       "LLM and prompt: the text generator, and what you send it.",
@@ -1138,43 +1138,43 @@ class Component extends DCLogic {
     ]},
     { title: "Words: the machinery", steps: [
       "Now the machinery. The harness is the app around the model; a tool call is it asking that app to do something.",
-      "Skills are written instructions; plugins are packages that add new tools. Two different things, often confused.",
+      "Skills are written instructions; plugins and connectors can add tools, context, or reusable prompts. These are different things, often confused.",
       "An agent is a model in a loop; sub-tasks are the pieces of a job, which sub-agents can take on.",
       "And two habits: retrieval, for getting your documents in, and persistent artifacts, for keeping what matters."
     ]},
     { title: "The harness", steps: [
       "Here's the thing nobody tells beginners: the model is a small part of what you're using.",
-      "The model sits outside it entirely — reachable only by sending text across.",
+      "The model sits outside it entirely; reachable only by sending text across.",
       "The list, the token budget, trimming, tools, the loop, streaming: all harness.",
-      "So the same model feels different in two products — usually a harness limit.",
+      "So the same model feels different in two products; usually a harness limit.",
       "It also means the forgetting is a choice someone made in software, not a mystery of the model."
     ]},
     { title: "Tools vs skills vs plugins", steps: [
       "A tool is a capability the harness has; a tool call is the model asking for it and reading the result.",
-      "A skill is just written instructions — a playbook for a kind of work. It teaches, it doesn't add powers.",
-      "A plugin or connector is plumbing: switch it on and a bundle of new tools appears.",
-      "Skills teach, plugins add, tool calls do — and none of them change the model itself.",
+      "A skill is written instructions, often with supporting resources: a playbook for a kind of work. It guides, but it doesn't add permissions.",
+      "A plugin or connector is plumbing: switch it on and it may expose tools, context, or reusable prompts.",
+      "Skills teach, plugins add, and tool calls do. None of them change the model itself.",
       "Every product names these differently, so ask which of the three someone means."
     ]},
     { title: "Recap", steps: [
-      "Four ideas carry the whole thing. First: a chat is a list of messages, resent in full every turn.",
+      "Four ideas carry the whole thing. First: a chat is a list of messages, and each turn gets the relevant context.",
       "Second: that list lives in a fixed box measured in tokens. Only what's inside exists.",
-      "Third: the model just predicts the next token — hence the invented facts and the failed sums.",
+      "Third: the model just predicts the next token. That can produce invented facts and failed calculations.",
       "Fourth: everything else is ordinary software running a loop around the box, fetching things on its behalf.",
       "Put together: a frozen text predictor, handed a list in a box, run in a loop by software that does the fetching."
     ]},
     { title: "Skills are files", steps: [
-      "Here's an actual skill. It's a markdown file — plain text with a few headings.",
-      "That's genuinely all it is: no code, no training. Just a simple plain-language workflow dynamically injected into the context window.",
-      "Which means the useful unit of work is no longer a clever prompt you typed once; it becomes a stored procedure your whole team can read, run, and improve.",
+      "Here's an actual skill. It starts with a Markdown instruction file and can include supporting resources.",
+      "It has no training or new permissions. The host decides how and when to load it into context.",
+      "A skill is a workflow your team can read, run, and improve.",
       "So the barrier here isn't technical: if you can brief a new colleague on how the job gets done, you can already write a skill."
     ]},
     { title: "Who does the work", steps: [
-      "Connect a calendar plugin. Your side keeps the login; the model is only told a tool called `list_events` exists.",
-      "When it wants your calendar, all the model emits is a line of text asking for it.",
-      "Your computer does everything real: signs in, calls the service, retries on failure, cuts 200 events down to tomorrow's six.",
-      "Those six lines go back as a message, and the model reads them like any other text.",
-      "It never held your password or opened a connection. So when a plugin misbehaves, it's the plumbing — not the model."
+      "In this client-executed example, your side keeps the login and exposes a tool called `list_events`.",
+      "When it wants your calendar, the model emits a structured tool-call request.",
+      "Your computer signs in, calls the service, retries on failure, and cuts 200 events down to tomorrow's six.",
+      "Those six lines return as a tool result, and the model reads them as context.",
+      "A failure can be in the integration, its permissions or data, the tool contract, or the model's request."
     ]}
   ];
   ORDER = [15, 16, 17, 1, 2, 3, 10, 13, 4, 7, 11, 18, 5, 19, 21, 22, 8, 12, 6, 9, 14, 20];
@@ -1183,49 +1183,49 @@ class Component extends DCLogic {
     15: ["What the model is", "What it can't do", "How it reaches the world", "Agents at work"],
     16: ["LLM, prompt, token, conversation", "The context window and system prompt", "Hallucination and streaming"],
     17: ["Harness and tool calls", "Skills versus plugins", "Agents and sub-tasks", "Retrieval and durable artifacts"],
-    1: ["A chat is a list of messages", "The system prompt sits at the top", "The whole list is resent every turn", "The model has no memory beyond the current chat"],
+    1: ["A chat is a list of messages", "This example includes a system prompt", "Each turn gets relevant context", "The model sees only the context made available to it"],
     2: ["Text is split into tokens", "Roughly four characters each", "Everything is counted in tokens", "Code costs more than prose"],
     3: ["A fixed box, measured in tokens", "Only what's inside gets sent", "It fills as the chat grows", "Overflow falls out and is forgotten"],
-    10: ["A full window is slow and distractible", "Drop: remove the oldest", "Compact: summarise the old part", "Start fresh: carry over what matters"],
+    10: ["A full window is slow and distractible", "Drop: remove the oldest", "Compact: summarize the old part", "Start fresh: carry over what matters"],
     13: ["The context window is temporary", "Data and decisions get pushed out as context fills", "Write durable context out to external sources", "A spec stays maintained outside of any chat"],
-    4: ["Trained once, long before you asked", "Frozen weights in a datacenter", "The entire context window is sent to the model", "Tokens stream back, then it forgets", "No internet, no files, no today"],
-    7: ["Model training scored every possible next token", "Picks a likely one, repeats", "A hallucination is the same process", "There's no built-in “I don't know”"],
-    11: ["1 + 1 is recall, not arithmetic", "Big sums aren't in the training text", "So it predicts plausible digits", "A calculator tool fixes it"],
+    4: ["Trained and post-trained before you asked", "Fixed weights for this request", "Relevant context is made available to the model", "Tokens stream back, then the request ends", "No fresh data without a tool"],
+    7: ["Training learns weights that score next tokens", "Picks a likely one, repeats", "A hallucination can be an outcome of this process", "Uncertainty language is not reliably calibrated"],
+    11: ["A correct answer does not prove reliable arithmetic", "Large calculations can produce plausible digits", "Use a calculator to verify exact work", "A calculator tool provides the exact result"],
     18: ["The harness is the app around the model", "It keeps the list and runs the tools", "The model sits outside it", "Same model, different harness"],
-    5: ["Two sides: your computer, the model", "It can't know today's date", "So it asks for a tool", "Your side fetches, it reads text"],
-    19: ["Tool: a capability", "Skill: written instructions", "Plugin: delivers new tools", "Skills teach, plugins add, calls do"],
-    21: ["A skill is a markdown file", "No code, no training", "Added to the context window when the work matches", "Ask the AI to write one for you"],
-    22: ["Your side holds the login", "The model emits one line of text", "Your computer does the fetching", "Plugin trouble is plumbing"],
-    8: ["Documents don't fit, so they aren't sent", "The agent searches them with a tool", "Only the matching pages come back", "It looked; it wasn't trained on them"],
-    12: ["A plain reply is one pass, from training", "An agent loops: look, act, check", "The harness acts; the model only asks", "Checking catches mistakes, but costs a resend", "The loop picks the next step, not you"],
-    6: ["Some jobs won't fit one window", "Split it into sub-tasks", "Each helper gets a fresh window", "Only summaries come back"],
-    9: ["Turn 1 is the system prompt plus your question", "Everything it knows crosses the wire each time", "It keeps nothing between crossings", "A tool call makes one turn cross twice", "Turn 2 opens by resending all of turn 1"],
-    14: ["Your prompt: goal, limits, done", "Skills: reusable playbooks", "Model choice, switchable mid-job", "Nearly all the leverage is text"],
+    5: ["Two sides in this client-executed example", "It can't know today's date", "So it requests a tool", "The app fetches; the model reads the result"],
+    19: ["Tool: a capability", "Skill: written instructions", "Plugin: tools, context, or prompts", "Skills guide, integrations expose interfaces"],
+    21: ["A skill starts with SKILL.md", "It can include supporting resources", "The host decides discovery and loading", "Ask the AI to help write one"],
+    22: ["Your side holds the login", "The model emits a structured tool-call request", "Your computer does the fetching", "Failures can have several causes"],
+    8: ["Documents may not fit, so they are often searched", "The agent searches them with a tool", "Only the matching pages come back", "It looked; it wasn't trained on them"],
+    12: ["A plain reply is one pass from context and learned patterns", "An agent loops: look, act, check", "The executor acts; the model requests", "Checking can catch mistakes, but costs another call", "The loop works within configured limits"],
+    6: ["Some jobs won't fit one window", "Split it into sub-tasks", "Each helper gets configured context", "Summaries are one common return pattern"],
+    9: ["This stateless example starts with instructions and your question", "Conversation context is sent again", "Other APIs can store or reuse state", "A tool result can require a second model call", "A cached prefix may reduce later processing"],
+    14: ["Your prompt: goal, limits, done", "Skills: reusable playbooks", "Model choice, switchable partway through a job", "Tools, approvals, and budgets matter too"],
     20: ["The list", "The box", "The predictor", "The loop"]
   };
   META = {
     15: [0, "what the next twenty-one diagrams cover"],
     16: [0, "the eight words you'll hear most"],
     17: [0, "the eight words for the machinery around the model"],
-    1: [1, "a chat is a list of messages — resent in full every time"],
+    1: [1, "a chat is a list of messages; each turn gets relevant context"],
     2: [1, "tokens: the unit everything is counted in"],
     3: [1, "the context window is a fixed box, and only what's in it exists"],
     10: [1, "your three options when the box fills up"],
     13: [1, "how to keep what matters once the box starts forgetting"],
     4: [1, "where the model lives, and what it cannot reach"],
-    7: [2, "it predicts the next token — so it can invent things fluently"],
-    11: [2, "recall vs calculation, and why tools fix maths"],
+    7: [2, "it predicts the next token, so it can invent things fluently"],
+    11: [2, "reliability versus exact calculation, and why tools verify math"],
     18: [3, "the harness: the software doing everything the model doesn't"],
     5: [3, "tool calls: how the model reaches the real world"],
-    19: [3, "tools vs skills vs plugins — telling the three apart"],
+    19: [3, "tools vs skills vs plugins; telling the three apart"],
     21: [3, "what a skill actually is: a markdown file"],
     22: [3, "how little of the work the model really does"],
     20: [4, "the four ideas worth remembering"],
     8: [3, "retrieval: how your own documents get into the window"],
     12: [4, "what an “agent” actually is"],
-    6: [4, "splitting a job into sub-tasks across fresh windows"],
+    6: [4, "splitting a job into sub-tasks with configured context"],
     9: [4, "one job followed all the way round the loop"],
-    14: [4, "the three levers you actually control"]
+    14: [4, "important levers you can influence"]
   };
   at(i) { return this.D[this.ORDER[i] - 1]; }
   course() {
@@ -1369,8 +1369,8 @@ class Component extends DCLogic {
     const cur = this.at(d), N = this.ORDER.length;
     const now = new Date(), p2 = n => String(n).padStart(2, "0");
     const nowIso = `${now.getFullYear()}-${p2(now.getMonth() + 1)}-${p2(now.getDate())}, ${p2(now.getHours())}:${p2(now.getMinutes())} local`;
-    const nowLong = now.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-    const nowShort = now.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    const nowLong = now.toLocaleDateString("en-US", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    const nowShort = now.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
     const isOutro = step >= cur.steps.length;
     const nd = (d + 1) % N, nextTpl = this.ORDER[nd];
     const v = {
@@ -1419,7 +1419,7 @@ class Component extends DCLogic {
     const record = HowAiWorksCourseState.completionRecord({ completion: this.state.completion, learnerName: this.state.learnerName });
     v.recordLearnerName = record ? record.learnerName : "Course learner";
     v.recordId = record ? record.completionId : "";
-    v.recordCompletedAt = record ? new Date(record.completedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
+    v.recordCompletedAt = record ? new Date(record.completedAt).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }) : "";
     for (let k = 1; k <= this.D.length; k++) { v["d" + k] = false; }
     v["d" + this.ORDER[d]] = true;
     const lastStep = cur.steps.length - 1, finale = isOutro;
@@ -1438,10 +1438,10 @@ class Component extends DCLogic {
     ];
     v.trimH = step >= 3 ? "60px" : "0px";
     v.histH2 = step >= 2 ? (step >= 3 ? "126px" : "150px") : "0px";
-    v.d3note = ["Think of it as a desk with a fixed surface area — not a filing cabinet.",
+    v.d3note = ["Think of it as a desk with a fixed surface area, not a filing cabinet.",
       "Nothing outside the box exists to the model. If it isn't in here, it wasn't said.",
       "A pasted document can use more of the box than the whole conversation before it.",
-      "Once full, the oldest content is dropped — the model truly forgets it."][Math.min(step, 3)];
+      "Once full, the oldest content is dropped; the model truly forgets it."][Math.min(step, 3)];
     const st = step;
     v.b41 = st === 0 ? "#89DF00" : "#2A3036";
     v.b42 = st === 1 ? "#89DF00" : "#2A3036";
@@ -1457,9 +1457,9 @@ class Component extends DCLogic {
     v.flow1 = d === 3 && st === 1;
     v.flow2 = d === 3 && st === 2;
     v.subs = [
-      { n: "A", job: "Read chapters 1–5", doing: "reading · own fresh window", fill: st >= 3 ? "72%" : "18%", used: st >= 3 ? "38k tokens read" : "starting…" },
-      { n: "B", job: "Check the numbers", doing: "reading · own fresh window", fill: st >= 3 ? "54%" : "12%", used: st >= 3 ? "26k tokens read" : "starting…" },
-      { n: "C", job: "Find related sources", doing: "searching · own fresh window", fill: st >= 3 ? "63%" : "15%", used: st >= 3 ? "31k tokens read" : "starting…" }
+      { n: "A", job: "Read chapters 1–5", doing: "reading · configured context", fill: st >= 3 ? "72%" : "18%", used: st >= 3 ? "38k tokens read" : "starting…" },
+      { n: "B", job: "Check the numbers", doing: "reading · configured context", fill: st >= 3 ? "54%" : "12%", used: st >= 3 ? "26k tokens read" : "starting…" },
+      { n: "C", job: "Find related sources", doing: "searching · configured context", fill: st >= 3 ? "63%" : "15%", used: st >= 3 ? "31k tokens read" : "starting…" }
     ];
     v.flowDown = d === 18 && st === 1;
     v.flowUp = d === 18 && st === 3;
@@ -1492,7 +1492,7 @@ class Component extends DCLogic {
     }));
     v.crunchLabel = busy
       ? "reading all of it, then predicting one token at a time…"
-      : (st >= 4 ? "idle — it kept nothing from your conversation" : "waiting for input");
+      : (st >= 4 ? "idle; it kept nothing from your conversation" : "waiting for input");
     v.crunchFg = busy ? "#B9EC6B" : "#8B959D";
     const AG = [
       ["look", "reads the pricing page, finds the broken link"],
@@ -1507,7 +1507,7 @@ class Component extends DCLogic {
       tc: i === cur2 ? acc : "#8B959D",
       dc: i === cur2 ? "#F2F5F6" : "#AEB8BF"
     }));
-    v.agentNote = st >= 3 ? "still broken → back to “look”, and round again" : "the loop runs until the check passes";
+    v.agentNote = st >= 3 ? "still broken → back to “look”, and round again" : "the loop runs until it finishes, hits a limit, needs approval, or is stopped";
     v.resendC = (d === 0 && st >= 4) ? acc : "transparent";
     v.preds = [
       { word: "Paris", pct: "94%", w: st >= 1 ? "94%" : "0%", c: acc },
@@ -1525,7 +1525,7 @@ class Component extends DCLogic {
     const shown = Math.min(st + 1, 5);
     v.sentBars = sentMsgs.map((m, i) => ({ ...m, o: i < shown ? fin(i, true) : 0.12 }));
     v.sentPhrase = st === 0
-      ? "nothing sent yet — the list is just waiting"
+      ? "nothing sent yet; the list is just waiting"
       : "turn " + Math.ceil(st / 2) + " → " + shown + (shown === 1 ? " message" : " messages") + " sent";
     v.tokCount = ["120", "1,400", "84,000", "199,600"][Math.min(st, 3)];
     const lm = [
@@ -1544,7 +1544,7 @@ class Component extends DCLogic {
     }));
     const rightActive = st === 1 || st === 3 || st === 4;
     v.loopWire = (st === 1 || st === 3) ? acc : (st === 4 ? acc : "#2A3036");
-    v.loopArrow = (st === 1 || st === 3) ? "the whole list travels →" : (st >= 4 ? "← the reply comes back" : "");
+    v.loopArrow = (st === 1 || st === 3) ? "this example sends context →" : (st >= 4 ? "← the reply comes back" : "");
     v.loopJustify = (st === 1 || st === 3) ? "flex-end" : "flex-start";
     v.loopLb = loopFin ? "#242A2F" : (rightActive ? "#2A3036" : "#5C6870");
     v.loopLbg = rightActive && !loopFin ? "#1E2327" : (loopFin ? "#1E2327" : "#22282D");
@@ -1553,7 +1553,7 @@ class Component extends DCLogic {
     v.loopRbg = loopFin ? "#1E2327" : (rightActive ? "rgba(137,223,0,0.08)" : "#1E2327");
     v.loopRtc = loopFin ? "#3E474E" : (rightActive ? acc : "#6D777E");
     v.loopLact = ["you type the question", "waiting…", "your computer runs the tool", "waiting…", "waiting…", "you reply; the list is resent"][Math.min(st, 5)];
-    v.loopRact = ["nothing here yet", "reads all of it, asks for a tool", "gone — it keeps nothing between crossings", "reads all of it, plus the result", "answers for real", "reads it all again, from scratch"][Math.min(st, 5)];
+    v.loopRact = ["nothing here yet", "reads all of it, asks for a tool", "gone; it keeps nothing between crossings", "reads all of it, plus the result", "answers for real", "reads it all again, from scratch"][Math.min(st, 5)];
     v.loopTok = ["0", "140", "140", "350", "350", "690"][Math.min(st, 5)];
     const ctlOn = st === 0 ? 0 : (st === 1 ? 1 : (st <= 3 ? 2 : -1));
     for (let k = 0; k < 3; k++) {
@@ -1582,24 +1582,24 @@ class Component extends DCLogic {
       }
     }));
     const gA = [
-      ["LLM (large language model)", "The text generator itself. “Large” = trained on an enormous amount of text; “language model” = it models which words tend to follow which. This is the prediction mechanism that allows an AI to generate text via tokens. People say “the model” for short.", "#5C6870"],
+      ["LLM (large language model)", "The text generator itself. “Large” = trained on an enormous amount of text; “language model” = it models which tokens tend to follow which. This is the prediction mechanism that allows an AI to generate text via tokens. People say “the model” for short.", "#5C6870"],
       ["Prompt", "What you send it: the goal, any constraints, and what a good answer looks like.", "#5C6870"],
       ["Token", "A chunk of text, roughly four characters. The model combines these to form words and language. Everything is measured in these.", acc],
-      ["Messages (the conversation)", "The chat as a numbered list of turns — you'll also hear “message history” or, in code, “the messages array”. The full message list is sent to the model on every turn as the chat progresses.", acc],
+      ["Messages (the conversation)", "The chat as a numbered list of turns; you'll also hear “message history” or, in code, “the messages array”. Each turn makes relevant conversation context available to the model.", acc],
       ["Context window", "The fixed-size box holding everything the model can see right now, measured in tokens.", acc],
-      ["System prompt", "Hidden instructions at the top of that box, written by whoever built the product — not by you. It's why a support bot won't discuss poetry.", "#5C6870"],
-      ["Hallucination", "When the LLM states something false as if it were fact. Not a glitch — a side-effect of how it generates text.", "#EF6B75"],
+      ["System prompt", "Product-supplied instructions that may be placed before user messages. They can set behavior, such as keeping a support bot on topic.", "#5C6870"],
+      ["Hallucination", "When the LLM states something false as if it were fact. Not a glitch; a side-effect of how it generates text.", "#EF6B75"],
       ["Streaming", "The reply arriving token by token, which is why it looks like typing.", "#8B959D"]
     ];
     const gB = [
-      ["Harness", "The app around the model — it keeps the list, runs the tools, and decides what to send.", acc],
+      ["Harness", "The app around the model; it keeps the list, runs the tools, and decides what to send.", acc],
       ["Tool call", "The model asking the harness to do something real, then reading the result as text.", acc],
-      ["Skill", "A written playbook for a kind of work. Instructions only — it teaches, it doesn't add powers.", "#5C6870"],
-      ["Plugin / connector", "A package you switch on that gives the harness new skills and tools to offer to the model.", "#5C6870"],
+      ["Skill", "A written playbook for a kind of work, often with supporting resources. It guides, but it doesn't add permissions.", "#5C6870"],
+      ["Plugin / connector", "An integration you switch on that may expose tools, context, or reusable prompts to the model.", "#5C6870"],
       ["Agent · agent loop", "A model run in a loop: understand, look, act, check, and repeat until the goal is met.", acc],
-      ["Sub-task · sub-agent", "A job split into independent pieces and delegated to a helper agent by the main agent. Sub-agents get their own fresh context window.", acc],
-      ["Retrieval", "The agent going to look something up — a file, a search, a database — via a tool, then reading what came back. Not a pre-packaged summary; the model decides what to fetch and when.", "#8B959D"],
-      ["Persistent artifact", "Anything saved outside the context window — a file, a spec, a commit — so it survives the forgetting.", "#8B959D"]
+      ["Sub-task · sub-agent", "A job split into independent pieces and delegated to a helper agent by the main agent. Each helper gets configured context.", acc],
+      ["Retrieval", "A system finding relevant content from a file, search, or database and adding it to context. The harness or the model may initiate the retrieval.", "#8B959D"],
+      ["Persistent artifact", "Anything saved outside the context window; a file, a spec, a commit; so it survives the forgetting.", "#8B959D"]
     ];
     const gmap = (rows) => rows.map((r, i) => {
       const from = Math.floor(i / 2), on = st >= from;
