@@ -14,15 +14,15 @@ Refer to a course slide by its **section.slide** number, such as `01.03`, `07.04
 
 Use this format when sharing feedback, discussing a lesson, or linking a change to a specific piece of course content.
 
-## Preview locally
+## Preview locally with hot reload
 
 From this repository, run:
 
 ```sh
-python3 -m http.server 8765 --directory .
+npx --yes browser-sync start --server --files "**/*" --ignore ".git/**" --startPath /ai-101-course.html --host 127.0.0.1 --port 8090 --no-open
 ```
 
-Then open [http://127.0.0.1:8765/ai-101-course.html](http://127.0.0.1:8765/ai-101-course.html).
+Then open [http://127.0.0.1:8090/ai-101-course.html](http://127.0.0.1:8090/ai-101-course.html). BrowserSync watches the project files (excluding `.git/`) and reloads connected browsers whenever a file changes.
 
 ## Local learner progress
 
