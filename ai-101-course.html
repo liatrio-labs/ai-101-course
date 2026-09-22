@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./course-state.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -29,30 +30,93 @@ x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
 100%{opacity:0;visibility:hidden;-webkit-mask-image:none;mask-image:none}
 }
 [data-finale="1"] > div:not([data-outro]){animation:disintegrate .85s ease-out both;pointer-events:none;}
+[data-finale="1"] > div[data-course-finished]{animation:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;}
+[data-finale="1"]:has([data-course-finished]){height:620px!important;}
 @keyframes caretBlink{0%,100%{background:#89DF00}50%{background:transparent}}
 @keyframes outroIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
+.completion-shell{gap:14px;overflow:auto;}
+.completion-record{width:min(100%,680px);box-sizing:border-box;border:1px solid #89DF00;background:#1A1F23;padding:22px 24px;box-shadow:inset 0 0 0 1px rgba(137,223,0,.08);}
+.completion-record__eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#89DF00;}
+.completion-record__title{font-size:28px;font-weight:500;letter-spacing:-.025em;line-height:1.1;margin:8px 0 20px;}
+.completion-record__grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;border-top:1px solid #2A3036;padding-top:14px;}
+.completion-record__label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;}
+.completion-record__value{font-size:14px;color:#F2F5F6;margin-top:4px;overflow-wrap:anywhere;}
+.completion-record__notice{font-size:11px;line-height:1.45;color:#AEB8BF;border-top:1px solid #2A3036;margin-top:18px;padding-top:12px;}
+.completion-name{font-family:'Space Grotesk',sans-serif;font-size:14px;color:#F2F5F6;width:100%;max-width:360px;box-sizing:border-box;border:1px solid #5C6870;background:#1A1F23;padding:10px 12px;outline:none;}
+.completion-name:focus,.completion-action:focus-visible{outline:2px solid #89DF00;outline-offset:3px;}
+.completion-action{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.04em;padding:10px 16px;border:1px solid #89DF00;background:#89DF00;color:#1A1F23;cursor:pointer;}
+.completion-action--quiet{background:transparent;color:#89DF00;}
+button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+@media (max-width:767px){
+  html,body{max-width:100%;overflow-x:hidden;}
+  .course-shell{zoom:1!important;min-height:100dvh!important;}
+  .course-header{align-items:flex-start!important;padding:18px 18px 0!important;gap:12px!important;}
+  .course-brand{gap:10px!important;min-width:0;}
+  .course-brand img{height:16px!important;}
+  .course-brand-title{font-size:20px!important;line-height:1.1;}
+  .course-position{font-size:9px!important;letter-spacing:.1em!important;max-width:112px;white-space:normal!important;text-align:right;line-height:1.3;}
+  .course-rule{width:calc(100% - 36px)!important;margin-top:14px!important;}
+  .course-act-nav{position:relative;width:auto!important;max-width:none!important;margin:0!important;padding:40px 18px 2px!important;box-sizing:border-box!important;overflow-x:auto!important;overscroll-behavior-x:contain;scroll-snap-type:x proximity;border-bottom:1px solid #2A3036;}
+  .course-act-nav::before{content:'Swipe to browse all acts →';position:absolute;top:10px;left:18px;display:flex;align-items:center;min-height:20px;color:#8B959D;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;pointer-events:none;}
+  .course-act-nav button{min-height:44px!important;padding:9px 12px!important;scroll-snap-align:start;}
+  .course-main{width:auto!important;max-width:none!important;margin:0!important;padding:14px 18px calc(92px + env(safe-area-inset-bottom))!important;box-sizing:border-box!important;}
+  .course-caption{min-height:42px!important;margin-bottom:10px!important;align-items:flex-start!important;}
+  .course-caption > div{font-size:15px!important;line-height:1.35!important;}
+  .course-canvas{height:auto!important;min-height:490px;border-radius:0!important;overflow:visible!important;}
+  .course-canvas > div:not(.completion-shell){position:relative!important;inset:auto!important;padding:24px!important;min-height:490px;box-sizing:border-box;}
+  .course-canvas [style*="display:flex"]{flex-wrap:wrap;}
+  .course-canvas > div > [style*="display:flex"]{flex-direction:column!important;gap:20px!important;}
+  .course-canvas [style*="width:"]{max-width:100%!important;min-width:0!important;box-sizing:border-box;}
+  .course-canvas [style*="grid-template-columns"]{grid-template-columns:1fr!important;}
+  .course-canvas [style*="border-left"]{border-left:0!important;border-top:1px solid #2A3036;padding-left:0!important;padding-top:18px!important;}
+  .course-canvas [style*="margin-left"]{margin-left:0!important;}
+  .course-progress{display:grid!important;grid-template-columns:minmax(0,1fr) auto;gap:8px!important;align-items:center!important;margin-top:14px!important;}
+  .course-progress-title{min-width:0!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap!important;}
+  .course-progress-tabs{grid-column:1 / -1;overflow-x:auto!important;padding-bottom:2px;}
+  .course-progress-tabs button{min-width:44px!important;height:44px!important;}
+  .course-progress-copy{display:none!important;}
+  .course-controls{position:sticky;bottom:0;z-index:4;margin:14px -18px 0!important;padding:10px 18px max(10px,env(safe-area-inset-bottom))!important;background:rgba(26,31,35,.96);backdrop-filter:blur(8px);}
+  .course-controls button{min-height:44px!important;padding:10px 16px!important;}
+  .completion-shell{position:relative!important;inset:auto!important;min-height:490px!important;padding:24px!important;justify-content:flex-start!important;box-sizing:border-box;}
+  .completion-shell > div[style*="font-size:32px"]{font-size:26px!important;line-height:1.15;}
+  .completion-record{padding:18px!important;}
+  .completion-record__grid{grid-template-columns:1fr!important;gap:12px!important;}
+  .completion-action{min-height:44px;}
+}
+@media print{
+  @page{margin:16mm;}
+  html,body{height:240mm!important;overflow:hidden!important;}
+  body{background:#fff!important;color:#111!important;}
+  body > div{height:240mm!important;min-height:0!important;max-height:240mm!important;overflow:hidden!important;zoom:1!important;}
+  body *{visibility:hidden!important;}
+  .completion-record,.completion-record *{visibility:visible!important;}
+  .completion-record{position:fixed;inset:0;width:auto;min-height:0;padding:0;border:1px solid #111!important;background:#fff!important;color:#111!important;box-shadow:none!important;break-inside:avoid;page-break-inside:avoid;}
+  .completion-record__eyebrow{color:#315c00!important;}.completion-record__title,.completion-record__value{color:#111!important;}.completion-record__label,.completion-record__notice{color:#333!important;}.completion-record__grid,.completion-record__notice{border-color:#777!important;}
+  .print-hide{display:none!important;}
+}
 </style>
 </helmet>
-<div style="zoom:1.25;min-height:80vh;display:flex;flex-direction:column;font-family:'Space Grotesk',sans-serif;color:#F2F5F6;">
-  <header style="display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
-    <div style="display:flex;align-items:center;gap:16px;">
+<div class="course-shell" style="zoom:1.25;min-height:80vh;display:flex;flex-direction:column;font-family:'Space Grotesk',sans-serif;color:#F2F5F6;">
+  <header class="course-header" style="display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
+    <div class="course-brand" style="display:flex;align-items:center;gap:16px;">
       <img src="logo_Liatrio_reverse-color.png" alt="Liatrio" style="height:20px;width:auto;display:block;">
       <div style="width:1px;height:20px;background:#2A3036;"></div>
-      <div style="font-size:26px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6fff;">How AI works</div>
+      <div class="course-brand-title" style="font-size:26px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6fff;">How AI works</div>
     </div>
-    <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">{{ dnum }} / {{ dcount }} · {{ dtitle }}</div>
+    <div class="course-position" style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">{{ dnum }} / {{ dcount }} · {{ dtitle }}</div>
   </header>
-  <div style="height:1px;max-width:1060px;width:calc(100% - 80px);margin:18px auto 0;background:linear-gradient(90deg,#C068F9 0%,#C6F135 100%);"></div>
-  <nav style="display:flex;gap:4px;padding:16px 40px 0;max-width:1060px;width:calc(100% - 80px);margin:0 auto;box-sizing:content-box;">
+  <div class="course-rule" style="height:1px;max-width:1060px;width:calc(100% - 80px);margin:18px auto 0;background:linear-gradient(90deg,#C068F9 0%,#C6F135 100%);"></div>
+  <nav class="course-act-nav" aria-label="Course acts" style="display:flex;gap:4px;padding:16px 40px 0;max-width:1060px;width:calc(100% - 80px);margin:0 auto;box-sizing:content-box;">
     <sc-for list="{{ acts }}" as="a" hint-placeholder-count="5">
       <button onClick="{{ a.pick }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;border:none;cursor:pointer;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;background:{{ a.bg }};color:{{ a.fg }};transition:all .3s;white-space:nowrap;">{{ a.label }}</button>
     </sc-for>
   </nav>
-  <main style="flex:1;display:flex;flex-direction:column;padding:14px 40px 28px;max-width:1060px;width:calc(100% - 80px);margin:0 auto;box-sizing:content-box;">
-    <div style="display:flex;align-items:center;min-height:24px;margin-bottom:12px;">
+  <main class="course-main" style="flex:1;display:flex;flex-direction:column;padding:14px 40px 28px;max-width:1060px;width:calc(100% - 80px);margin:0 auto;box-sizing:content-box;">
+    <div class="course-caption" style="display:flex;align-items:center;min-height:24px;margin-bottom:12px;">
       <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:16px;line-height:1.3;color:#C9D1D6;flex:1;text-wrap:pretty;"><sc-for list="{{ capParts }}" as="p" hint-placeholder-count="1"><span style="color:{{ p.c }};">{{ p.t }}</span></sc-for><sc-if value="{{ caret }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;width:8px;height:15px;margin-left:2px;vertical-align:-2px;background:#89DF00;"></span></sc-if></div>
     </div>
-    <div data-finale="{{ finaleFlag }}" style="position:relative;height:480px;border:1px solid #2A3036;background:#1E2327;border-radius:12px;overflow:hidden;">
+    <div class="course-canvas" data-finale="{{ finaleFlag }}" style="position:relative;height:480px;border:1px solid #2A3036;background:#1E2327;border-radius:12px;overflow:hidden;">
 
       <sc-if value="{{ d1 }}" hint-placeholder-val="{{ true }}">
         <div style="position:absolute;inset:0;padding:36px 44px;">
@@ -900,21 +964,45 @@ x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
           </div>
         </div>
       </sc-if>
+      <sc-if value="{{ finished }}" hint-placeholder-val="{{ false }}">
+        <div data-course-finished="1" class="completion-shell" style="position:absolute;inset:0;padding:32px 44px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;background:#1E2327;">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">course finished</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:32px;margin-top:8px;">You completed How AI works.</div>
+          <div class="print-hide" style="font-size:13px;color:#C9D1D6;line-height:1.45;max-width:620px;">Add a name if you want it on this browser-only record. Your name stays in this browser with your course progress.</div>
+          <label class="print-hide" for="completion-name" style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-top:2px;">Name (optional)</label>
+          <input class="completion-name print-hide" id="completion-name" type="text" value="{{ learnerName }}" onInput="{{ setLearnerName }}" autocomplete="name" placeholder="Course learner">
+          <section class="completion-record" data-completion-record="1" aria-label="Personal completion record">
+            <div class="completion-record__eyebrow">Personal completion record</div>
+            <div class="completion-record__title">How AI works</div>
+            <div class="completion-record__grid">
+              <div><div class="completion-record__label">Learner</div><div class="completion-record__value">{{ recordLearnerName }}</div></div>
+              <div><div class="completion-record__label">Completed locally</div><div class="completion-record__value">{{ recordCompletedAt }}</div></div>
+              <div style="grid-column:1 / -1;"><div class="completion-record__label">Local record ID</div><div class="completion-record__value">{{ recordId }}</div></div>
+            </div>
+            <div class="completion-record__notice">Locally generated personal completion record; not independently verified or a formal credential.</div>
+          </section>
+          <div class="print-hide" style="display:flex;gap:10px;align-items:center;">
+            <button class="completion-action" onClick="{{ printRecord }}">Print / save as PDF</button>
+            <button class="completion-action completion-action--quiet" onClick="{{ startAgain }}">Start again</button>
+          </div>
+        </div>
+      </sc-if>
     </div>
-    <div style="display:flex;align-items:center;gap:12px;margin-top:14px;">
-      <div style="font-size:11.5px;color:#F2F5F6;white-space:nowrap;">{{ dnum }}.{{ dstep }} · {{ dtitle }}</div>
-      <div style="display:flex;gap:5px;align-items:center;flex:none;">
+    <div class="course-progress" style="display:flex;align-items:center;gap:12px;margin-top:14px;">
+      <div class="course-progress-title" style="font-size:11.5px;color:#F2F5F6;white-space:nowrap;">{{ dnum }}.{{ dstep }} · {{ dtitle }}</div>
+      <div class="course-progress-tabs" style="display:flex;gap:5px;align-items:center;flex:none;">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
           <button onClick="{{ t.pick }}" title="{{ t.label }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:11px;letter-spacing:.04em;min-width:32px;height:26px;padding:0 8px;cursor:pointer;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};transition:all .25s;" style-hover="border-color:#89DF00;color:#F2F5F6;background:rgba(137,223,0,0.10);">{{ t.num }}</button>
         </sc-for>
       </div>
-      <div style="font-size:10.5px;color:#8B959D;white-space:nowrap;">{{ actProgress }}</div>
-      <div style="font-size:11px;color:#AEB8BF;border-left:1px solid #2A3036;padding-left:12px;">teaches: <span style="color:#F2F5F6;">{{ dteaches }}</span></div>
+      <div class="course-progress-copy" style="font-size:10.5px;color:#8B959D;white-space:nowrap;">{{ actProgress }}</div>
+      <div class="course-progress-copy" style="font-size:11px;color:#AEB8BF;border-left:1px solid #2A3036;padding-left:12px;">teaches: <span style="color:#F2F5F6;">{{ dteaches }}</span></div>
     </div>
-    <div style="display:flex;align-items:center;gap:16px;margin-top:14px;border-top:1px solid #2A3036;padding-top:14px;">
+    <div class="course-controls" style="display:flex;align-items:center;gap:16px;margin-top:14px;border-top:1px solid #2A3036;padding-top:14px;">
       <div style="display:flex;gap:8px;flex:none;">
         <button onClick="{{ back }}" disabled="{{ backOff }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;padding:10px 18px;border:1px solid {{ backBc }};background:rgba(137,223,0,0.10);color:{{ backFg }};cursor:{{ backCur }};white-space:nowrap;transition:all .25s;" style-hover="background:rgba(137,223,0,0.18);">← Back</button>
-        <button onClick="{{ next }}" style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:10px 18px;border:1px solid #89DF00;background:#89DF00;color:#1A1F23;cursor:pointer;white-space:nowrap;transition:all .2s;" style-hover="background:rgba(137,223,0,0.88);border-color:rgba(137,223,0,0.88);">{{ nextLabel }}</button>
+        <sc-if value="{{ notFinished }}" hint-placeholder-val="{{ true }}"><button onClick="{{ next }}" style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:10px 18px;border:1px solid #89DF00;background:#89DF00;color:#1A1F23;cursor:pointer;white-space:nowrap;transition:all .2s;" style-hover="background:rgba(137,223,0,0.88);border-color:rgba(137,223,0,0.88);">{{ nextLabel }}</button></sc-if>
+        <sc-if value="{{ finished }}" hint-placeholder-val="{{ false }}"><button onClick="{{ startAgain }}" style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:10px 18px;border:1px solid #89DF00;background:#89DF00;color:#1A1F23;cursor:pointer;white-space:nowrap;transition:all .2s;">Start again</button></sc-if>
       </div>
       <div style="display:flex;gap:6px;flex:none;">
         <sc-for list="{{ dots }}" as="dot" hint-placeholder-count="5">
@@ -927,17 +1015,9 @@ x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;autoPlay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Playback&quot;}}">
 class Component extends DCLogic {
-  KEY = "howAIWorks.progress";
-  state = (() => {
-    try {
-      const raw = sessionStorage.getItem("howAIWorks.progress");
-      if (raw) {
-        const p = JSON.parse(raw);
-        if (Number.isInteger(p.d) && Number.isInteger(p.step) && p.d >= 0) return { d: p.d, step: Math.max(0, p.step) };
-      }
-    } catch (e) {}
-    return { d: 0, step: 0 };
-  })();
+  KEY = HowAiWorksCourseState.STORAGE_KEY;
+  LEGACY_KEY = "howAIWorks.progress";
+  state = { d: 0, step: 0, finished: false, completion: null, learnerName: '' };
   D = [
     { title: "Messages", steps: [
       "Every conversation starts with a system prompt — hidden instructions that set the AI's behavior.",
@@ -1141,6 +1221,69 @@ class Component extends DCLogic {
     14: [4, "the three levers you actually control"]
   };
   at(i) { return this.D[this.ORDER[i] - 1]; }
+  course() {
+    return {
+      lessonCount: this.ORDER.length,
+      stepCounts: this.ORDER.map((_lesson, index) => this.at(index).steps.length + 1)
+    };
+  }
+  restoreProgress() {
+    const course = this.course();
+    try {
+      const raw = localStorage.getItem(this.KEY);
+      if (raw !== null) return HowAiWorksCourseState.restore(raw, course);
+    } catch (e) {
+      return HowAiWorksCourseState.defaultState();
+    }
+
+    try {
+      const legacy = JSON.parse(sessionStorage.getItem(this.LEGACY_KEY));
+      const state = HowAiWorksCourseState.fromPosition({ lesson: legacy.d, step: legacy.step }, course);
+      if (!state) return HowAiWorksCourseState.defaultState();
+      localStorage.setItem(this.KEY, HowAiWorksCourseState.serialize(state, course));
+      sessionStorage.removeItem(this.LEGACY_KEY);
+      return state;
+    } catch (e) {
+      return HowAiWorksCourseState.defaultState();
+    }
+  }
+  persistProgress() {
+    try {
+      const course = this.course();
+      const state = HowAiWorksCourseState.withPosition(
+        this.courseState || { ...HowAiWorksCourseState.defaultState(), completion: this.state.completion, learnerName: this.state.learnerName },
+        { lesson: this.state.d, step: this.state.step },
+        course
+      );
+      if (state) {
+        this.courseState = state;
+        localStorage.setItem(this.KEY, HowAiWorksCourseState.serialize(state, course));
+      }
+    } catch (e) {}
+  }
+  setLearnerName(event) {
+    try {
+      const state = HowAiWorksCourseState.withLearnerName(
+        this.courseState || { ...HowAiWorksCourseState.defaultState(), position: { lesson: this.state.d, step: this.state.step }, completion: this.state.completion, learnerName: this.state.learnerName },
+        event && event.target ? event.target.value : '',
+        this.course()
+      );
+      this.courseState = state;
+      localStorage.setItem(this.KEY, HowAiWorksCourseState.serialize(state, this.course()));
+      this.setState({ learnerName: state.learnerName, completion: state.completion });
+    } catch (e) {}
+  }
+  startAgain() {
+    try {
+      const state = HowAiWorksCourseState.reset();
+      this.courseState = state;
+      localStorage.setItem(this.KEY, HowAiWorksCourseState.serialize(state, this.course()));
+    } catch (e) {
+      this.courseState = HowAiWorksCourseState.reset();
+    }
+    this.setState({ d: 0, step: 0, finished: false, completion: null, learnerName: '' });
+  }
+  printRecord() { window.print(); }
   captionFor(d, step) { const c = this.at(d); return step >= c.steps.length ? "" : (c.steps[step] || ""); }
   startType() {
     clearTimeout(this.tOut); clearInterval(this.tInt); this.tInt = null;
@@ -1163,9 +1306,12 @@ class Component extends DCLogic {
       if (e.key === "ArrowLeft") this.go(-1);
     };
     window.addEventListener("keydown", this.onKey);
-    const d = Math.min(this.state.d, this.ORDER.length - 1);
-    const step = Math.min(this.state.step, this.at(d).steps.length);
-    if (d !== this.state.d || step !== this.state.step) this.setState({ d, step });
+    const restored = this.restoreProgress();
+    this.courseState = restored;
+    const d = Math.min(restored.position.lesson, this.ORDER.length - 1);
+    const step = Math.min(restored.position.step, this.at(d).steps.length);
+    const finished = !!restored.completion && HowAiWorksCourseState.isTerminalPosition(restored.position, this.course());
+    if (d !== this.state.d || step !== this.state.step || finished !== this.state.finished || restored.learnerName !== this.state.learnerName || restored.completion !== this.state.completion) this.setState({ d, step, finished, completion: restored.completion, learnerName: restored.learnerName });
     this.startType();
     this.setAuto();
   }
@@ -1173,7 +1319,7 @@ class Component extends DCLogic {
     const key = this.state.d + ":" + this.state.step;
     if (key !== this._key) { this._key = key; this.startType(); }
     this.setAuto();
-    try { sessionStorage.setItem(this.KEY, JSON.stringify({ d: this.state.d, step: this.state.step })); } catch (e) {}
+    this.persistProgress();
   }
   setAuto() {
     const want = !!(this.props.autoPlay ?? false);
@@ -1182,17 +1328,32 @@ class Component extends DCLogic {
   }
   componentWillUnmount() { window.removeEventListener("keydown", this.onKey); if (this.timer) clearInterval(this.timer); clearTimeout(this.tOut); clearInterval(this.tInt); }
   go(dir) {
+    const isCompleted = this.state.finished || (!!this.state.completion && HowAiWorksCourseState.isTerminalPosition({ lesson: this.state.d, step: this.state.step }, this.course()));
+    if (isCompleted) {
+      if (dir < 0) this.setState({ finished: false });
+      return;
+    }
     this.setState(s => {
       const n = this.at(s.d).steps.length + 1;
       let step = s.step + dir, d = s.d;
       const N = this.ORDER.length;
-      if (step >= n) { d = (s.d + 1) % N; step = 0; }
+      if (step >= n) {
+        if (HowAiWorksCourseState.isTerminalPosition({ lesson: d, step: s.step }, this.course())) {
+          this.courseState = HowAiWorksCourseState.complete(
+            this.courseState || { ...HowAiWorksCourseState.fromPosition({ lesson: d, step: s.step }, this.course()), learnerName: s.learnerName || '' }
+          );
+          return { finished: true, completion: this.courseState.completion };
+        }
+        d = s.d + 1;
+        step = 0;
+      }
       if (step < 0) { d = (s.d + N - 1) % N; step = this.at(d).steps.length; }
       return { d, step };
     });
   }
   renderVals() {
     const { d, step } = this.state;
+    const finished = this.state.finished || (!!this.state.completion && HowAiWorksCourseState.isTerminalPosition({ lesson: d, step }, this.course()));
     const acc = "#89DF00";
     const cur = this.at(d), N = this.ORDER.length;
     const now = new Date(), p2 = n => String(n).padStart(2, "0");
@@ -1218,11 +1379,17 @@ class Component extends DCLogic {
       next: () => this.go(1),
       back: () => this.go(-1),
       dcount: N,
-      outro: isOutro,
+      outro: isOutro && !finished,
+      finished,
       recapPoints: (this.RECAP[this.ORDER[d]] || cur.steps).map((s, i) => ({ n: String(i + 1), text: s })),
       nextTitle: this.D[nextTpl - 1].title,
       nextTeaches: (this.META[nextTpl] || [0, ""])[1],
-      nextLabel: (isOutro && d === N - 1) ? "Start again →" : "Next →",
+      nextLabel: (isOutro && d === N - 1) ? "Finish course →" : "Next →",
+      notFinished: !finished,
+      startAgain: () => this.startAgain(),
+      printRecord: () => this.printRecord(),
+      setLearnerName: (event) => this.setLearnerName(event),
+      learnerName: this.state.learnerName || "",
       backOff: (d === 0 && step === 0) ? true : null,
       backBc: (d === 0 && step === 0) ? "rgba(137,223,0,0.14)" : "rgba(137,223,0,0.40)",
       backFg: (d === 0 && step === 0) ? "#4A545C" : "#89DF00",
@@ -1230,7 +1397,7 @@ class Component extends DCLogic {
       tabs: this.ORDER.map((tpl, i) => ({
         label: String(i + 1).padStart(2, "0") + " " + this.D[tpl - 1].title,
         act: (this.META[tpl] || [0])[0],
-        pick: () => this.setState({ d: i, step: 0 }),
+        pick: () => this.setState({ d: i, step: 0, finished: false }),
         num: String(i + 1).padStart(2, "0"),
         bg: i === d ? "rgba(137,223,0,0.14)" : "transparent",
         fg: i === d ? "#89DF00" : "#8B959D",
@@ -1238,6 +1405,10 @@ class Component extends DCLogic {
       })).filter(t => t.act === (this.META[this.ORDER[d]] || [0])[0]),
       dots: cur.steps.map((_, i) => ({ c: i <= step ? acc : "#2A3036" })).concat([{ c: isOutro ? "#F2F5F6" : "#2A3036" }])
     };
+    const record = HowAiWorksCourseState.completionRecord({ completion: this.state.completion, learnerName: this.state.learnerName });
+    v.recordLearnerName = record ? record.learnerName : "Course learner";
+    v.recordId = record ? record.completionId : "";
+    v.recordCompletedAt = record ? new Date(record.completedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
     for (let k = 1; k <= this.D.length; k++) { v["d" + k] = false; }
     v["d" + this.ORDER[d]] = true;
     const lastStep = cur.steps.length - 1, finale = isOutro;
