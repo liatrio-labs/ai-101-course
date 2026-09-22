@@ -3,7 +3,7 @@ FROM python:3.13-slim
 WORKDIR /srv
 
 COPY ai-101-course.html index.html
-COPY course-state.js support.js logo_Liatrio_reverse-color.png ./
+COPY course-state.js support.js logo_Liatrio_reverse-color.png logomark_Liatrio_background.png ./
 COPY _ds ./_ds
 
 EXPOSE 8080

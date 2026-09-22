@@ -69,10 +69,13 @@ test('preserves valid completion metadata and a display name when restoring', ()
     learnerName: 'Ada Lovelace'
   });
 
-  assert.deepEqual(CourseState.restore(raw, course), JSON.parse(raw));
+  assert.deepEqual(CourseState.restore(raw, course), {
+    ...JSON.parse(raw),
+    learnerName: 'Ada Lovelace'
+  });
 });
 
-test('serializes only validated course state for localStorage', () => {
+test('serializes only validated course state without altering a learner name in progress', () => {
   const serialized = CourseState.serialize({
     version: 1,
     position: { lesson: 3, step: 2 },
@@ -85,7 +88,7 @@ test('serializes only validated course state for localStorage', () => {
     version: 1,
     position: { lesson: 3, step: 2 },
     completion: null,
-    learnerName: 'Ada Lovelace'
+    learnerName: '  Ada Lovelace  '
   });
 });
 
@@ -130,7 +133,7 @@ test('creates one stable personal completion record without claiming verificatio
   assert.equal(Object.hasOwn(first.completion, 'verified'), false);
 });
 
-test('persists a trimmed learner name alongside a stable completion record', () => {
+test('persists a learner name verbatim alongside a stable completion record', () => {
   const completed = CourseState.complete(CourseState.defaultState(), {
     uuidFactory: () => 'stable-completion-id',
     clock: () => new Date('2026-09-21T12:00:00.000Z')
@@ -138,11 +141,18 @@ test('persists a trimmed learner name alongside a stable completion record', () 
   const named = CourseState.withLearnerName(completed, '  Ada Lovelace  ', course);
   const restored = CourseState.restore(CourseState.serialize(named, course), course);
 
-  assert.equal(restored.learnerName, 'Ada Lovelace');
+  assert.equal(restored.learnerName, '  Ada Lovelace  ');
   assert.deepEqual(restored.completion, {
     id: 'stable-completion-id',
     completedAt: '2026-09-21T12:00:00.000Z'
   });
+});
+
+test('preserves learner-name whitespace while a learner is still typing', () => {
+  const named = CourseState.withLearnerName(CourseState.defaultState(), 'Jane ', course);
+
+  assert.equal(named.learnerName, 'Jane ');
+  assert.equal(CourseState.restore(CourseState.serialize(named, course), course).learnerName, 'Jane ');
 });
 
 test('builds a personal completion record with a neutral learner fallback and stable metadata', () => {
@@ -152,7 +162,7 @@ test('builds a personal completion record with a neutral learner fallback and st
   });
 
   assert.deepEqual(CourseState.completionRecord(completed), {
-    courseTitle: 'How AI works',
+    courseTitle: 'How AI Works',
     learnerName: 'Course learner',
     completionId: 'stable-completion-id',
     completedAt: '2026-09-21T12:00:00.000Z'

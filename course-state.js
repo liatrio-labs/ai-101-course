@@ -46,7 +46,7 @@
         id: completion.id,
         completedAt: completion.completedAt
       },
-      learnerName: typeof state.learnerName === 'string' ? state.learnerName.trim() : ''
+      learnerName: typeof state.learnerName === 'string' ? state.learnerName : ''
     };
   }
 
@@ -105,13 +105,13 @@
 
   function withLearnerName(state, learnerName, course) {
     const current = normalize(state, course) || defaultState();
-    return normalize({ ...current, learnerName: typeof learnerName === 'string' ? learnerName.trim() : '' }, course);
+    return normalize({ ...current, learnerName: typeof learnerName === 'string' ? learnerName : '' }, course);
   }
 
   function completionRecord(state) {
     if (!state || !state.completion) return null;
     return {
-      courseTitle: 'How AI works',
+      courseTitle: 'How AI Works',
       learnerName: typeof state.learnerName === 'string' && state.learnerName.trim() ? state.learnerName.trim() : 'Course learner',
       completionId: state.completion.id,
       completedAt: state.completion.completedAt
