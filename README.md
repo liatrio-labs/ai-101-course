@@ -8,6 +8,12 @@ A standalone interactive course for learning how modern AI systems behave. It co
 4. **Reaching the world** — harnesses, tools, documents, skills, and plugins.
 5. **Agents at work** — loops, sub-agents, durable artifacts, and the choices people control.
 
+## Referencing slides
+
+Refer to a course slide by its **section.slide** number, such as `01.03`, `07.04`, or `12.02`. This identifier appears at the bottom left of every slide. The first two digits identify the course section, and the final two digits identify the slide within that section.
+
+Use this format when sharing feedback, discussing a lesson, or linking a change to a specific piece of course content.
+
 ## Preview locally
 
 From this repository, run:
