@@ -1,0 +1,4 @@
+issuer: https://token.actions.githubusercontent.com
+subject_pattern: "repo:liatrio-labs/ai-101-course:ref:refs/heads/main"
+permissions:
+  contents: write

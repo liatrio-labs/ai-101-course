@@ -28,16 +28,23 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+      id-token: write
     concurrency:
       group: semantic-release-main
       cancel-in-progress: false
     steps:
+      - uses: octo-sts/action@f603d3be9d8dd9871a265776e625a27b00effe05 # v1.1.1
+        id: octo-sts
+        with:
+          scope: ${{ github.repository }}
+          identity: main-semantic-release
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
+          token: ${{ steps.octo-sts.outputs.token }}
       - uses: python-semantic-release/python-semantic-release@9a026e9303981c866c3425723009becb2437c757 # v10.6.2
         with:
           config_file: .releaserc.toml
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ steps.octo-sts.outputs.token }}
           build: false

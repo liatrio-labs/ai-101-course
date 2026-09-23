@@ -44,7 +44,15 @@ node --check support.js
 git diff --check
 ```
 
-After checks pass on `main`, [Python Semantic Release](https://python-semantic-release.readthedocs.io/) reads [Conventional Commits](https://www.conventionalcommits.org/) to create a `v*` tag, `CHANGELOG.md`, and a GitHub Release. Use `feat:` for a minor release and `fix:` for a patch; breaking changes in `0.x` also produce a minor release. A `1.0.0` release requires a deliberate major-version override. Commits that do not warrant a release (for example, `docs:` or `chore:`) do not bump the version. There is no Python package or application version file: Git tags are the source of truth. The release job uses GitHub's built-in token, not a personal access token or Octo STS.
+After checks pass on `main`, [Python Semantic Release](https://python-semantic-release.readthedocs.io/) reads [Conventional Commits](https://www.conventionalcommits.org/) to create a `v*` tag, `CHANGELOG.md`, and a GitHub Release. Use `feat:` for a minor release and `fix:` for a patch; breaking changes in `0.x` also produce a minor release. A `1.0.0` release requires a deliberate major-version override. Commits that do not warrant a release (for example, `docs:` or `chore:`) do not bump the version. There is no Python package or application version file: Git tags are the source of truth. The release job uses a short-lived Octo STS GitHub App token, scoped to pushes from this repository's `main` branch by `.github/chainguard/main-semantic-release.sts.yaml`.
+
+### Branch protection rollout
+
+`.github/ruleset-config.json` is a **non-enforcing proposal** (`evaluate`), not an active GitHub setting. The repository is at `liatrio-labs/ai-101-course` and remains internal. The `liatrio-labs-maintainers` team has explicit write access, but CODEOWNERS does not take effect until this file lands on the default branch. Before enforcing the ruleset:
+
+1. The Octo STS GitHub App is installed for all `liatrio-labs` repositories with `contents: write` available. Its `main-semantic-release` identity cannot be exercised until this trust policy is on the default branch. Merging this workflow to `main` may produce the first `v0.1.0` release; approve that separately before merging.
+2. Verify a real release run. Add **only** the Octo STS GitHub App as a ruleset bypass actor for release commits; do not grant blanket repository-role or team bypass. Review the resulting ruleset and switch it from `evaluate` to `active` in GitHub only after testing the app's push path. The JSON file does not synchronize GitHub settings by itself.
+3. Public visibility requires a separate review of license, assets, and repository history.
 
 ## Development note
 
