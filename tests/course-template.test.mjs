@@ -25,9 +25,18 @@ test('uses the selected split-index AI 101 lockup across course and help surface
   assert.doesNotMatch(source, /data-title-variant|URLSearchParams\(location\.search\)/);
 });
 
-test('renders the chosen right-aligned teaching detail without a left divider or temporary variant scaffolding', () => {
-  assert.match(source, /class="course-progress-copy" style="font-size:11px;color:#AEB8BF;margin-left:auto;text-align:right;white-space:nowrap;">teaches:/);
+test('renders the right-aligned teaching detail with static layout without temporary variant scaffolding', () => {
+  assert.match(source, /class="course-progress-copy" style="font-size:11px;color:#AEB8BF;margin-left:auto;text-align:left;width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">teaches:/);
   assert.doesNotMatch(source, /vibe-var-vibe_1790060618395_qb6lgitob/);
+});
+
+test('scaffolds section.slide visual treatment variants with static title width', () => {
+  assert.match(source, /class="course-progress-title vibe-var-vibe_1790183537767_05uy4enj4"\s+data-vibe-active="1"/);
+  assert.match(source, /width:260px;min-width:260px;flex:none;/);
+  const variantBlock = source.match(/class="course-progress-title vibe-var-vibe_1790183537767_05uy4enj4"[^>]*>([\s\S]*?)<\/div>\s*<div class="course-progress-tabs"/);
+  assert.ok(variantBlock);
+  const variants = variantBlock[1].match(/class="vibe-variant"/g) || [];
+  assert.equal(variants.length, 3);
 });
 
 test('uses the canonical Liatrio logomark as the same-origin favicon', () => {
