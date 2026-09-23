@@ -25,14 +25,18 @@ test('uses the selected split-index AI 101 lockup across course and help surface
   assert.doesNotMatch(source, /data-title-variant|URLSearchParams\(location\.search\)/);
 });
 
-test('renders the right-aligned teaching detail with static layout without temporary variant scaffolding', () => {
-  assert.match(source, /class="course-progress-copy" style="font-size:11px;color:#AEB8BF;margin-left:auto;text-align:left;width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">teaches:/);
+test('renders the right-aligned teaching detail with static layout without ellipsis truncation or temporary variant scaffolding', () => {
+  assert.match(source, /class="course-progress-copy"[^>]*width:400px;min-width:400px;flex:none;min-height:38px;[^>]*><span style="[^"]*">teaches:<\/span><span style="color:#F2F5F6;overflow-wrap:break-word;">\{\{\s*dteaches\s*\}\}<\/span><\/div>/);
   assert.doesNotMatch(source, /vibe-var-vibe_1790060618395_qb6lgitob/);
 });
 
-test('renders the chosen section.slide visual treatment with muted monospace and lime dot without temporary variant scaffolding', () => {
-  assert.match(source, /class="course-progress-title"[^>]*width:260px;min-width:260px;flex:none;[^>]*><span style="[^"]*color:#8B959D[^"]*">\{\{\s*dnum\s*\}\}\.\{\{\s*dstep\s*\}\}<\/span><span style="color:#89DF00;margin:0 7px;">·<\/span><span style="color:#F2F5F6;font-weight:500;">\{\{\s*dtitle\s*\}\}<\/span><\/div>/);
+test('renders the section.slide visual treatment with monospace tabular digits, lime dot, and wrapping title without temporary variant scaffolding', () => {
+  assert.match(source, /class="course-progress-title"[^>]*width:320px;min-width:320px;flex:none;min-height:38px;[^>]*><span style="[^"]*ui-monospace[^"]*width:38px;flex:none;font-variant-numeric:tabular-nums;[^"]*">\{\{\s*dnum\s*\}\}\.\{\{\s*dstep\s*\}\}<\/span><span style="color:#89DF00;margin:0 8px;flex:none;">·<\/span><span style="color:#F2F5F6;font-weight:500;overflow-wrap:break-word;">\{\{\s*dtitle\s*\}\}<\/span><\/div>/);
   assert.doesNotMatch(source, /vibe-var-vibe_1790183537767_05uy4enj4/);
+});
+
+test('renders the course header position with title on the left and tabular count on the right in a static location', () => {
+  assert.match(source, /class="course-position"[^>]*><span>\{\{\s*dtitle\s*\}\}<\/span><span[^>]*>·<\/span><span style="[^"]*tabular-nums;[^"]*ui-monospace[^"]*">\{\{\s*dnum\s*\}\}\s*\/\s*\{\{\s*dcount\s*\}\}<\/span><\/div>/);
 });
 
 test('uses the canonical Liatrio logomark as the same-origin favicon', () => {
