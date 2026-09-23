@@ -25,14 +25,18 @@ test('uses the selected split-index AI 101 lockup across course and help surface
   assert.doesNotMatch(source, /data-title-variant|URLSearchParams\(location\.search\)/);
 });
 
-test('renders the right-aligned teaching detail with static layout without ellipsis truncation or temporary variant scaffolding', () => {
-  assert.match(source, /class="course-progress-copy"[^>]*flex:1;max-width:500px;min-height:38px;[^>]*><span style="[^"]*">teaches:<\/span><span style="color:#F2F5F6;overflow-wrap:break-word;">\{\{\s*dteaches\s*\}\}<\/span><\/div>/);
+test('renders the right-aligned teaching detail with compact single-line layout without ellipsis truncation or temporary variant scaffolding', () => {
+  assert.match(source, /class="course-progress-copy"[^>]*margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:6px;[^>]*><span style="[^"]*">teaches:<\/span><span style="color:#F2F5F6;">\{\{\s*dteaches\s*\}\}<\/span><\/div>/);
   assert.doesNotMatch(source, /vibe-var-vibe_1790060618395_qb6lgitob/);
 });
 
-test('renders the section.slide visual treatment with monospace tabular digits, lime dot, and wrapping title without temporary variant scaffolding', () => {
-  assert.match(source, /class="course-progress-title"[^>]*flex:1;max-width:500px;min-height:38px;[^>]*><span style="[^"]*ui-monospace[^"]*width:38px;flex:none;font-variant-numeric:tabular-nums;[^"]*">\{\{\s*dnum\s*\}\}\.\{\{\s*dstep\s*\}\}<\/span><span style="color:#89DF00;margin:0 8px;flex:none;">·<\/span><span style="color:#F2F5F6;font-weight:500;overflow-wrap:break-word;">\{\{\s*dtitle\s*\}\}<\/span><\/div>/);
+test('renders the section.slide visual treatment with monospace tabular digits and precisely centered lime dot without temporary variant scaffolding', () => {
+  assert.match(source, /class="course-progress-title"[^>]*white-space:nowrap;display:flex;align-items:center;gap:8px;flex:none;[^>]*><span style="[^"]*ui-monospace[^"]*font-variant-numeric:tabular-nums;flex:none;">\{\{\s*dnum\s*\}\}\.\{\{\s*dstep\s*\}\}<\/span><span style="color:#89DF00;flex:none;">·<\/span><span style="color:#F2F5F6;font-weight:500;">\{\{\s*dtitle\s*\}\}<\/span><\/div>/);
   assert.doesNotMatch(source, /vibe-var-vibe_1790183537767_05uy4enj4/);
+});
+
+test('arranges the AI 101 badge on the left and How AI Works on the right across title lockup surfaces', () => {
+  assert.match(source, /\.title-lockup\{display:inline-flex;flex-direction:row;align-items:center;gap:10px;/);
 });
 
 test('starts typing captions quickly with a third of a second delay', () => {
@@ -200,7 +204,7 @@ test('does not contain invalid 9-digit hex colors', () => {
 });
 
 test('gives the completion canvas enough room for the split title and actions', () => {
-  assert.match(source, /(?:\[data-finale="1"\]|\.course-canvas):has\(\[data-course-finished\]\)\s*\{\s*height:\s*700px!important;/);
+  assert.match(source, /(?:\[data-finale="1"\]|\.course-canvas):has\(\[data-course-finished\]\)\s*\{\s*height:\s*auto!important;\s*min-height:\s*840px!important;/);
 });
 
 test('scales course shell zoom to 1 on desktop viewports with height under 900px', () => {
