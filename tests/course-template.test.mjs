@@ -39,12 +39,9 @@ test('starts typing captions quickly with a third of a second delay', () => {
   assert.match(source, /this\.tOut = setTimeout\(\(\) => \{[\s\S]*?\}, 330\);/);
 });
 
-test('scaffolds top act navigation variants with nested section indicators', () => {
-  assert.match(source, /class="course-act-nav vibe-var-vibe_1790185615201_kw9jyfnkt"\s+data-vibe-active="1"/);
-  const variantBlock = source.match(/class="course-act-nav vibe-var-vibe_1790185615201_kw9jyfnkt"[^>]*>([\s\S]*?)<\/nav>/);
-  assert.ok(variantBlock);
-  const variants = variantBlock[1].match(/class="vibe-variant"/g) || [];
-  assert.equal(variants.length, 3);
+test('renders the finalized connected track top act navigation with nested section indicators and high-contrast labels without temporary variant scaffolding', () => {
+  assert.match(source, /class="course-act-nav"[^>]*>[\s\S]*?<sc-for list="\{\{\s*acts\s*\}\}" as="a"[\s\S]*?<span[^>]*color:\{\{\s*a\.numColor\s*\}\};[^>]*>\{\{\s*a\.actNum\s*\}\}<\/span>[\s\S]*?<span[^>]*color:\{\{\s*a\.labelColor\s*\}\};[^>]*>\{\{\s*a\.label\s*\}\}<\/span>/);
+  assert.doesNotMatch(source, /vibe-var-vibe_1790185615201_kw9jyfnkt/);
 });
 
 test('renders the course header position with title on the left and tabular count on the right in a static location', () => {
