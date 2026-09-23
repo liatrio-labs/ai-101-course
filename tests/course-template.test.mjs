@@ -30,13 +30,9 @@ test('renders the right-aligned teaching detail with static layout without tempo
   assert.doesNotMatch(source, /vibe-var-vibe_1790060618395_qb6lgitob/);
 });
 
-test('scaffolds section.slide visual treatment variants with static title width', () => {
-  assert.match(source, /class="course-progress-title vibe-var-vibe_1790183537767_05uy4enj4"\s+data-vibe-active="1"/);
-  assert.match(source, /width:260px;min-width:260px;flex:none;/);
-  const variantBlock = source.match(/class="course-progress-title vibe-var-vibe_1790183537767_05uy4enj4"[^>]*>([\s\S]*?)<\/div>\s*<div class="course-progress-tabs"/);
-  assert.ok(variantBlock);
-  const variants = variantBlock[1].match(/class="vibe-variant"/g) || [];
-  assert.equal(variants.length, 3);
+test('renders the chosen section.slide visual treatment with muted monospace and lime dot without temporary variant scaffolding', () => {
+  assert.match(source, /class="course-progress-title"[^>]*width:260px;min-width:260px;flex:none;[^>]*><span style="[^"]*color:#8B959D[^"]*">\{\{\s*dnum\s*\}\}\.\{\{\s*dstep\s*\}\}<\/span><span style="color:#89DF00;margin:0 7px;">·<\/span><span style="color:#F2F5F6;font-weight:500;">\{\{\s*dtitle\s*\}\}<\/span><\/div>/);
+  assert.doesNotMatch(source, /vibe-var-vibe_1790183537767_05uy4enj4/);
 });
 
 test('uses the canonical Liatrio logomark as the same-origin favicon', () => {

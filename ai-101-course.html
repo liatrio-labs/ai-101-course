@@ -74,11 +74,6 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
 .course-help-trigger:hover,.course-help-trigger:focus-visible{border-color:#89DF00;color:#89DF00;background:rgba(137,223,0,0.12);outline:none;}
 .course-modal-backdrop{position:fixed;inset:0;z-index:999;background:rgba(10,13,16,0.78);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
 .course-modal{width:min(100%,540px);max-height:90vh;overflow-y:auto;background:#1E2327;border:1px solid #3A4046;border-radius:12px;padding:28px 32px;box-sizing:border-box;box-shadow:0 20px 48px rgba(0,0,0,0.7);display:flex;flex-direction:column;gap:18px;}
-/* vibe-annotations:scaffold vibe_1790183537767_05uy4enj4 — DO NOT EDIT, removed on finalize */
-.vibe-var-vibe_1790183537767_05uy4enj4 > .vibe-variant { display: none; }
-.vibe-var-vibe_1790183537767_05uy4enj4[data-vibe-active="1"] > [data-variant="1"] { display: block; }
-.vibe-var-vibe_1790183537767_05uy4enj4[data-vibe-active="2"] > [data-variant="2"] { display: block; }
-.vibe-var-vibe_1790183537767_05uy4enj4[data-vibe-active="3"] > [data-variant="3"] { display: block; }
 @media (min-width: 768px) and (max-height: 899px) {
   .course-shell { zoom: 1 !important; }
 }
@@ -1036,18 +1031,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       </sc-if>
     </div>
     <div class="course-progress" style="display:flex;align-items:center;gap:12px;margin-top:14px;">
-      <!-- vibe-annotations:scaffold vibe_1790183537767_05uy4enj4 -->
-      <div class="course-progress-title vibe-var-vibe_1790183537767_05uy4enj4" data-vibe-active="1" style="width:260px;min-width:260px;flex:none;">
-        <div class="vibe-variant" data-variant="1" style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-          <span style="font-family:'Space Grotesk',monospace;font-size:10.5px;font-weight:600;color:#89DF00;background:rgba(137,223,0,0.12);border:1px solid rgba(137,223,0,0.35);padding:1px 6px;border-radius:4px;margin-right:8px;">{{ dnum }}.{{ dstep }}</span><span style="color:#F2F5F6;">{{ dtitle }}</span>
-        </div>
-        <div class="vibe-variant" data-variant="2" style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-          <span style="font-family:'Space Grotesk',monospace;font-size:11px;font-weight:500;color:#8B959D;letter-spacing:0.04em;">{{ dnum }}.{{ dstep }}</span><span style="color:#89DF00;margin:0 7px;">·</span><span style="color:#F2F5F6;font-weight:500;">{{ dtitle }}</span>
-        </div>
-        <div class="vibe-variant" data-variant="3" style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-          <span style="background:#22282D;border:1px solid #3A4046;font-size:10.5px;font-weight:600;color:#F2F5F6;padding:2px 7px;border-radius:3px;margin-right:8px;letter-spacing:0.03em;">{{ dnum }}.{{ dstep }}</span><span style="color:#C9D1D6;">{{ dtitle }}</span>
-        </div>
-      </div>
+      <div class="course-progress-title" style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:260px;min-width:260px;flex:none;"><span style="font-family:'Space Grotesk',monospace;font-size:11px;font-weight:500;color:#8B959D;letter-spacing:0.04em;">{{ dnum }}.{{ dstep }}</span><span style="color:#89DF00;margin:0 7px;">·</span><span style="color:#F2F5F6;font-weight:500;">{{ dtitle }}</span></div>
       <div class="course-progress-tabs" style="display:flex;gap:5px;align-items:center;flex:none;">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
           <button onClick="{{ t.pick }}" title="{{ t.label }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:11px;letter-spacing:.04em;min-width:32px;height:26px;padding:0 8px;cursor:pointer;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};transition:all .25s;" style-hover="border-color:#89DF00;color:#F2F5F6;background:rgba(137,223,0,0.10);">{{ t.num }}</button>
