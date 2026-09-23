@@ -54,6 +54,10 @@ x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
 .completion-action--quiet{background:transparent;color:#89DF00;}
 
 button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offset:3px;}
+.course-help-trigger{margin-left:auto;width:30px;height:30px;border-radius:50%;border:1px solid #3A4046;background:#22282D;color:#AEB8BF;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.course-help-trigger:hover,.course-help-trigger:focus-visible{border-color:#89DF00;color:#89DF00;background:rgba(137,223,0,0.12);outline:none;}
+.course-modal-backdrop{position:fixed;inset:0;z-index:999;background:rgba(10,13,16,0.78);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+.course-modal{width:min(100%,540px);max-height:90vh;overflow-y:auto;background:#1E2327;border:1px solid #3A4046;border-radius:12px;padding:28px 32px;box-sizing:border-box;box-shadow:0 20px 48px rgba(0,0,0,0.7);display:flex;flex-direction:column;gap:18px;}
 @media (min-width: 768px) and (max-height: 899px) {
   .course-shell { zoom: 1 !important; }
 }
@@ -93,6 +97,8 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
   .completion-record{padding:18px!important;}
   .completion-record__grid{grid-template-columns:1fr!important;gap:12px!important;}
   .completion-action{min-height:44px;}
+  .course-help-trigger{min-width:44px!important;min-height:44px!important;}
+  .course-modal{padding:20px!important;width:100%!important;}
 }
 @media print{
   @page{size:landscape;margin:0;}
@@ -1018,15 +1024,56 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           <div style="width:7px;height:7px;border-radius:50%;background:{{ dot.c }};transition:background .3s;"></div>
         </sc-for>
       </div>
+      <button class="course-help-trigger" onClick="{{ toggleHelp }}" aria-label="Help and course guide" title="Help and course guide">?</button>
     </div>
   </main>
+  <sc-if value="{{ showHelp }}" hint-placeholder-val="{{ false }}">
+    <div class="course-modal-backdrop print-hide" onClick="{{ closeHelp }}">
+      <div class="course-modal" role="dialog" aria-modal="true" aria-labelledby="help-title" onClick="{{ stopPropagation }}">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
+          <div>
+            <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#89DF00;">Getting started</div>
+            <div id="help-title" style="font-size:24px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6;margin-top:4px;">How to Use the Course</div>
+          </div>
+          <button onClick="{{ closeHelp }}" aria-label="Close help modal" style="width:32px;height:32px;border:1px solid #2A3036;background:#22282D;color:#AEB8BF;border-radius:6px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex:none;" style-hover="border-color:#89DF00;color:#F2F5F6;">×</button>
+        </div>
+
+        <div style="font-size:13.5px;line-height:1.55;color:#C9D1D6;">
+          This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works. It breaks modern large language models into five core areas—messages, tokens, context limits, tools, and autonomous agents—demystifying the mechanics behind prompts and responses.
+        </div>
+
+        <div style="border-top:1px solid #2A3036;padding-top:14px;">
+          <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:8px;">Keyboard Shortcuts &amp; Navigation</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:#C9D1D6;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <kbd style="font-family:monospace;background:#2A3036;border:1px solid #3A4046;border-radius:4px;padding:3px 8px;color:#89DF00;font-size:12px;">→</kbd>
+              <span>or <strong style="color:#F2F5F6;">Next →</strong> advances to the next step or lesson</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <kbd style="font-family:monospace;background:#2A3036;border:1px solid #3A4046;border-radius:4px;padding:3px 8px;color:#89DF00;font-size:12px;">←</kbd>
+              <span>or <strong style="color:#F2F5F6;">← Back</strong> returns to the previous step or lesson</span>
+            </div>
+            <div style="font-size:11.5px;color:#8B959D;margin-top:4px;">
+              You can also click any Act title at the top or Lesson number tab above the controls to jump directly to any topic.
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid #2A3036;padding-top:14px;margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+          <button onClick="{{ resetFromHelp }}" style="background:transparent;border:1px solid #3A4046;color:#AEB8BF;font-family:'Space Grotesk',sans-serif;font-size:11.5px;padding:8px 14px;border-radius:6px;cursor:pointer;transition:all .2s;" style-hover="border-color:#F85149;color:#F85149;">Reset Progress</button>
+          <button onClick="{{ closeHelp }}" style="background:#89DF00;border:1px solid #89DF00;color:#1A1F23;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;padding:8px 18px;border-radius:6px;cursor:pointer;transition:all .2s;" style-hover="background:rgba(137,223,0,0.88);">Got it</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;autoPlay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Playback&quot;}}">
 class Component extends DCLogic {
   KEY = HowAiWorksCourseState.STORAGE_KEY;
   LEGACY_KEY = "howAIWorks.progress";
-  state = { d: 0, step: 0, finished: false, completion: null, learnerName: '' };
+  HELP_KEY = "howAIWorks.helpSeen.v1";
+  state = { d: 0, step: 0, finished: false, completion: null, learnerName: '', showHelp: false };
   D = [
     { title: "Messages", steps: [
       "This example starts with a system prompt: product-supplied instructions that set the AI's behavior.",
@@ -1309,9 +1356,29 @@ class Component extends DCLogic {
     }, 1000);
   }
   actOf(i) { const t = this.ORDER[i % this.ORDER.length]; return (this.META[t] || [0])[0]; }
+  openHelp() {
+    this.setState({ showHelp: true });
+  }
+  closeHelp() {
+    try {
+      localStorage.setItem(this.HELP_KEY, "1");
+    } catch (e) {}
+    this.setState({ showHelp: false });
+  }
+  resetFromHelp() {
+    if (window.confirm("Reset your course progress and start over from the beginning?")) {
+      this.startAgain();
+      this.closeHelp();
+    }
+  }
   componentDidMount() {
     this.onKey = (e) => {
       if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) return;
+      if (e.key === "Escape" && this.state.showHelp) {
+        this.closeHelp();
+        return;
+      }
+      if (this.state.showHelp) return;
       if (e.key === "ArrowRight") this.go(1);
       if (e.key === "ArrowLeft") this.go(-1);
     };
@@ -1321,7 +1388,11 @@ class Component extends DCLogic {
     const d = Math.min(restored.position.lesson, this.ORDER.length - 1);
     const step = Math.min(restored.position.step, this.at(d).steps.length);
     const finished = !!restored.completion && HowAiWorksCourseState.isTerminalPosition(restored.position, this.course());
-    if (d !== this.state.d || step !== this.state.step || finished !== this.state.finished || restored.learnerName !== this.state.learnerName || restored.completion !== this.state.completion) this.setState({ d, step, finished, completion: restored.completion, learnerName: restored.learnerName });
+    let showHelp = false;
+    try {
+      showHelp = !localStorage.getItem(this.HELP_KEY);
+    } catch (e) {}
+    if (d !== this.state.d || step !== this.state.step || finished !== this.state.finished || restored.learnerName !== this.state.learnerName || restored.completion !== this.state.completion || showHelp !== this.state.showHelp) this.setState({ d, step, finished, completion: restored.completion, learnerName: restored.learnerName, showHelp });
     this.startType();
     this.setAuto();
   }
@@ -1419,6 +1490,12 @@ class Component extends DCLogic {
       printRecord: () => this.printRecord(),
       setLearnerName: (event) => this.setLearnerName(event),
       learnerName: this.state.learnerName || "",
+      showHelp: !!this.state.showHelp,
+      openHelp: () => this.openHelp(),
+      closeHelp: () => this.closeHelp(),
+      toggleHelp: () => (this.state.showHelp ? this.closeHelp() : this.openHelp()),
+      resetFromHelp: () => this.resetFromHelp(),
+      stopPropagation: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
       backOff: (d === 0 && step === 0) ? true : null,
       backBc: (d === 0 && step === 0) ? "rgba(137,223,0,0.14)" : "rgba(137,223,0,0.40)",
       backFg: (d === 0 && step === 0) ? "#4A545C" : "#89DF00",

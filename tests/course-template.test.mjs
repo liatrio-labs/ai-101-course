@@ -198,3 +198,21 @@ test('does not render a redundant Next button inside the slide outro content', (
   assert.equal(outroBlock.length > 0, true);
   assert.doesNotMatch(outroBlock, /<button onClick="\{\{\s*next\s*\}\}"/);
 });
+
+test('renders a help trigger button in the bottom-right corner of course controls across from Back and Next', () => {
+  assert.match(source, /class="course-controls"[\s\S]*?class="course-help-trigger"[^>]*onClick="\{\{\s*(?:toggleHelp|openHelp)\s*\}\}"/);
+  assert.match(source, /aria-label="Help and course guide"/);
+});
+
+test('renders a Help and Getting Started modal with title How to Use the Course, Liatrio purpose, and shortcuts', () => {
+  assert.match(source, />How to Use the Course<\/div>/);
+  assert.match(source, /This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works\./);
+  assert.match(source, /Keyboard Shortcuts &amp; Navigation/);
+  assert.match(source, /onClick="\{\{\s*resetFromHelp\s*\}\}"[^>]*>Reset Progress<\/button>/);
+});
+
+test('manages help modal lifecycle with first-time display, Escape dismissal, and persistence key', () => {
+  assert.match(source, /HELP_KEY\s*=\s*["']howAIWorks\.helpSeen\.v1["']/);
+  assert.match(source, /if\s*\(e\.key\s*===\s*["']Escape["']\s*&&\s*this\.state\.showHelp\)\s*\{?\s*this\.closeHelp\(\)/);
+  assert.match(source, /if\s*\(this\.state\.showHelp\)\s*return;/);
+});
