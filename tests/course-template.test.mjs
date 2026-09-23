@@ -92,7 +92,7 @@ test('uses the chosen completion-heading treatment without variant scaffolding',
 
 test('finalizes the selected context-overflow terminology without variant scaffolding', () => {
   assert.match(source, />1 · Drop<\/div>/);
-  assert.doesNotMatch(source, /vibe-annotations:scaffold vibe_1790063496072_u6nh0d0gf|vibe-var-vibe_1790063496072_u6nh0d0gf|vibe-variant|data-vibe-active|data-variant/);
+  assert.doesNotMatch(source, /vibe-annotations:scaffold vibe_1790063496072_u6nh0d0gf|vibe-var-vibe_1790063496072_u6nh0d0gf/);
 });
 
 test('aligns the token facts with the top of their right-side column', () => {
@@ -215,4 +215,17 @@ test('manages help modal lifecycle with first-time display, Escape dismissal, an
   assert.match(source, /HELP_KEY\s*=\s*["']howAIWorks\.helpSeen\.v1["']/);
   assert.match(source, /if\s*\(e\.key\s*===\s*["']Escape["']\s*&&\s*this\.state\.showHelp\)\s*\{?\s*this\.closeHelp\(\)/);
   assert.match(source, /if\s*\(this\.state\.showHelp\)\s*return;/);
+});
+
+test('renders Liatrio logomark and GitHub suggestion link in help modal', () => {
+  assert.match(source, /class="course-modal"[\s\S]*?<img src="logomark_Liatrio_background\.png" alt="Liatrio"/);
+  assert.match(source, /href="https:\/\/github\.com\/liatrio\/ai-101-course"[^>]*>Go to our repo<\/a>/);
+  assert.match(source, /Have a suggestion or found a bug\?/);
+});
+
+test('scaffolds modal text variants without em dashes', () => {
+  assert.match(source, /class="vibe-var-vibe_1790180026441_b1t90s3rh"\s+data-vibe-active="1"/);
+  const variantBlock = source.match(/class="vibe-var-vibe_1790180026441_b1t90s3rh"[\s\S]*?<\/div>\s*<\/div>/)?.[0] || '';
+  assert.doesNotMatch(variantBlock, /—/);
+  assert.match(source, /\.vibe-var-vibe_1790180026441_b1t90s3rh > \.vibe-variant\s*\{\s*display:\s*none;\s*\}/);
 });
