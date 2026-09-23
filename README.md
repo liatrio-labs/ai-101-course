@@ -1,4 +1,4 @@
-# AI-101: How AI Works
+# AI 101: How AI Works
 
 A standalone interactive course for learning how modern AI systems behave. It covers five conceptual areas:
 

@@ -118,7 +118,7 @@
   function completionRecord(state) {
     if (!state || !state.completion) return null;
     return {
-      courseTitle: 'How AI Works',
+      courseTitle: 'AI 101: How AI Works',
       learnerName: typeof state.learnerName === 'string' && state.learnerName.trim() ? state.learnerName.trim() : 'Course learner',
       completionId: state.completion.id,
       completedAt: state.completion.completedAt

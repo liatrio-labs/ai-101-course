@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 101: How AI Works</title>
 <link rel="icon" type="image/png" href="logomark_Liatrio_background.png">
 <script src="./course-state.js"></script>
 <script src="./support.js"></script>
@@ -14,6 +15,21 @@
 <script src="_ds/liatrio-design-system-019dd485-a9ab-7b37-9403-944d981aaea9/_ds_bundle.js"></script>
 <style>
 body{margin:0;background:#1A1F23;font-size:16px;line-height:normal;}
+.title-lockup{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;line-height:1.15;}
+.course-series-badge{display:inline-flex;align-items:center;align-self:flex-start;gap:0;white-space:nowrap;border:1px solid #5A676F;background:#242B30;font-size:11px;font-weight:700;line-height:1.15;letter-spacing:0;text-transform:uppercase;}
+.course-series-ai{padding:5px 6px;color:#F2F5F6;}
+.course-series-number{padding:5px 7px;background:#89DF00;color:#1A1F23;font-variant-numeric:tabular-nums;}
+.title-how{color:#F2F5F6;}
+.course-brand-title .title-how{font-size:23px;font-weight:600;letter-spacing:-.02em;white-space:nowrap;}
+.title-display{margin-top:8px;max-width:820px;}
+.title-display .title-how{font-size:33px;font-weight:500;letter-spacing:-.015em;}
+.title-display__tagline{font-size:19px;line-height:1.35;margin-top:3px;max-width:700px;color:#C9D1D6;}
+.completion-heading{font-size:32px;font-weight:500;letter-spacing:-.015em;margin-top:8px;line-height:1.18;}
+.completion-heading__name{margin-top:9px;}
+.completion-heading__name .title-how{font-size:30px;color:#89DF00;}
+.completion-record__title .title-how{font-size:28px;}
+.help-course-title{flex-direction:row;align-items:center;gap:10px;}
+.help-course-title .title-how{font-size:12px;font-weight:600;letter-spacing:.01em;}
 a{color:#89DF00;border-bottom:1px solid rgba(137,223,0,.35);} a:hover{color:#F2F5F6;border-bottom-color:#F2F5F6;}
 x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
@@ -32,7 +48,7 @@ x-dc *{transition-timing-function:cubic-bezier(.22,1,.36,1);}
 }
 [data-finale="1"] > div:not([data-outro]){animation:disintegrate .85s ease-out both;pointer-events:none;}
 [data-finale="1"] > div[data-course-finished]{animation:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;}
-[data-finale="1"]:has([data-course-finished]), .course-canvas:has([data-course-finished]){height:640px!important;}
+[data-finale="1"]:has([data-course-finished]), .course-canvas:has([data-course-finished]){height:700px!important;}
 @keyframes caretBlink{0%,100%{background:#89DF00}50%{background:transparent}}
 @keyframes outroIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
 .completion-shell{gap:14px;overflow:auto;}
@@ -61,14 +77,22 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
 @media (min-width: 768px) and (max-height: 899px) {
   .course-shell { zoom: 1 !important; }
 }
+@media (min-width: 768px) and (min-height: 900px) {
+  .course-modal { max-height: 72vh; } /* Course shell is zoomed 1.25; keep the modal within the visual viewport. */
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
 @media (max-width:767px){
-  html,body{max-width:100%;overflow-x:hidden;}
+  html,body{max-width:100%;overflow-x:clip;}
   .course-shell{zoom:1!important;min-height:100dvh!important;}
   .course-header{align-items:flex-start!important;padding:18px 18px 0!important;gap:12px!important;}
   .course-brand{gap:10px!important;min-width:0;}
   .course-brand img{height:16px!important;}
   .course-brand-title{font-size:20px!important;line-height:1.1;}
+  .course-brand-title .title-how{font-size:16px;}
+  .title-display .title-how{font-size:27px;}
+  .title-display__tagline{font-size:16px;}
+  .completion-heading{font-size:26px;}
+  .completion-heading__name .title-how{font-size:25px;}
   .course-position{font-size:9px!important;letter-spacing:.1em!important;max-width:112px;white-space:normal!important;text-align:right;line-height:1.3;}
   .course-rule{width:calc(100% - 36px)!important;margin-top:14px!important;}
   .course-act-nav{position:relative;width:auto!important;max-width:none!important;margin:0!important;padding:40px 18px 2px!important;box-sizing:border-box!important;overflow-x:auto!important;overscroll-behavior-x:contain;scroll-snap-type:x proximity;border-bottom:1px solid #2A3036;}
@@ -78,6 +102,8 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
   .course-caption{min-height:42px!important;margin-bottom:10px!important;align-items:flex-start!important;}
   .course-caption > div{font-size:15px!important;line-height:1.35!important;}
   .course-canvas{height:auto!important;min-height:490px;border-radius:0!important;overflow:visible!important;}
+  .course-canvas:has(.completion-shell){height:auto!important;}
+  .course-canvas:has(.completion-shell) > div:not(.completion-shell){display:none!important;}
   .course-canvas > div:not(.completion-shell){position:relative!important;inset:auto!important;padding:24px!important;min-height:490px;box-sizing:border-box;}
   .course-canvas [style*="display:flex"]{flex-wrap:wrap;}
   .course-canvas > div > [style*="display:flex"]{flex-direction:column!important;gap:20px!important;}
@@ -91,6 +117,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
   .course-progress-tabs button{min-width:44px!important;height:44px!important;}
   .course-progress-copy{display:none!important;}
   .course-controls{position:sticky;bottom:0;z-index:4;margin:14px -18px 0!important;padding:10px 18px max(10px,env(safe-area-inset-bottom))!important;background:rgba(26,31,35,.96);backdrop-filter:blur(8px);}
+  .course-main:has(.completion-shell) .course-controls{position:static;}
   .course-controls button{min-height:44px!important;padding:10px 16px!important;}
   .completion-shell{position:relative!important;inset:auto!important;min-height:490px!important;padding:24px!important;justify-content:flex-start!important;box-sizing:border-box;}
   .completion-shell > div[style*="font-size:32px"]{font-size:26px!important;line-height:1.15;}
@@ -120,7 +147,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
     <div class="course-brand" style="display:flex;align-items:center;gap:16px;">
       <img src="logo_Liatrio_reverse-color.png" alt="Liatrio" style="height:20px;width:auto;display:block;">
       <div style="width:1px;height:20px;background:#2A3036;"></div>
-      <div class="course-brand-title" style="font-size:26px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6;">How AI Works</div>
+      <div class="course-brand-title title-lockup"><span class="course-series-badge"><span class="course-series-ai">AI</span> <span class="course-series-number">101</span></span><span class="title-how">How AI Works</span></div>
     </div>
     <div class="course-position" style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8B959D;white-space:nowrap;">{{ dnum }} / {{ dcount }} · {{ dtitle }}</div>
   </header>
@@ -694,8 +721,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       <sc-if value="{{ d15 }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;inset:0;padding:32px 44px;">
           <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;">Start here</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:30px;line-height:1.15;margin-top:8px;max-width:820px;">How AI Works, end to end</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:19px;line-height:1.35;margin-top:8px;max-width:700px;color:#C9D1D6;">What actually happens between pressing Enter and reading the reply, and why AI behaves the way it does.</div>
+          <div class="title-display title-lockup"><span class="course-series-badge"><span class="course-series-ai">AI</span> <span class="course-series-number">101</span></span><span class="title-how">How AI Works</span><span class="title-display__tagline">What actually happens between pressing Enter and reading the reply, and why AI behaves the way it does.</span></div>
           
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px;">
             <div style="opacity:{{ s2 }};transform:translateY({{ y2 }});transition:opacity .5s,transform .5s;border-top:2px solid #5C6870;padding-top:10px;">
@@ -979,7 +1005,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
       <sc-if value="{{ finished }}" hint-placeholder-val="{{ false }}">
         <div data-course-finished="1" class="completion-shell" style="position:absolute;inset:0;padding:32px 44px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;background:#1E2327;">
           <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#89DF00;">course finished</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.015em;font-size:32px;margin-top:8px;">Completed: <span style="color:#89DF00;">How AI Works</span>.</div>
+          <div class="completion-heading">Completed:<span class="completion-heading__name title-lockup"><span class="course-series-badge"><span class="course-series-ai">AI</span> <span class="course-series-number">101</span></span><span class="title-how">How AI Works</span></span></div>
           <div class="print-hide" style="font-size:13px;color:#C9D1D6;line-height:1.45;max-width:620px;">Add a name if you want it on this browser-only record. Your name stays in this browser with your course progress.</div>
           <label class="print-hide" for="completion-name" style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-top:2px;">Name (optional)</label>
           <input class="completion-name print-hide" id="completion-name" type="text" value="{{ learnerName }}" onInput="{{ setLearnerName }}" autocomplete="name" placeholder="Course learner">
@@ -989,7 +1015,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div class="completion-record__links"><a href="https://www.liatrio.ai/" target="_blank" rel="noreferrer">liatrio.ai</a><span aria-hidden="true">·</span><a href="https://ai-101-course.lab.liatr.io/" target="_blank" rel="noreferrer">ai-101-course.lab.liatr.io</a></div>
             </div>
             <div class="completion-record__eyebrow">Personal completion record</div>
-            <div class="completion-record__title">How AI Works</div>
+            <div class="completion-record__title title-lockup"><span class="course-series-badge"><span class="course-series-ai">AI</span> <span class="course-series-number">101</span></span><span class="title-how">How AI Works</span></div>
             <div class="completion-record__grid">
               <div><div class="completion-record__label">Learner</div><div class="completion-record__value">{{ recordLearnerName }}</div></div>
               <div><div class="completion-record__label">Completed locally</div><div class="completion-record__value">{{ recordCompletedAt }}</div></div>
@@ -1034,7 +1060,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
               <img src="logomark_Liatrio_background.png" alt="Liatrio" style="height:18px;width:auto;border-radius:3px;display:block;">
-              <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#89DF00;">Getting started</div>
+              <div class="help-course-title title-lockup"><span class="course-series-badge"><span class="course-series-ai">AI</span> <span class="course-series-number">101</span></span><span class="title-how">How AI Works</span></div>
             </div>
             <div id="help-title" style="font-size:24px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6;">How to Use the Course</div>
           </div>

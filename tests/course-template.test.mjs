@@ -12,6 +12,19 @@ test('uses title case for every learner-facing course title in the template', ()
   assert.doesNotMatch(source, />How AI works(?:[.,<])/);
 });
 
+test('uses the selected split-index AI 101 lockup across course and help surfaces', () => {
+  const badge = '<span class="course-series-badge"><span class="course-series-ai">AI</span> <span class="course-series-number">101</span></span>';
+  assert.equal(source.split(badge).length - 1, 5, 'header, opening, completion, record, and help each show the same badge');
+  for (const surface of ['course-brand-title', 'title-display', 'completion-heading__name', 'completion-record__title', 'help-course-title']) {
+    const start = source.indexOf(`class="${surface} title-lockup"`);
+    assert.ok(start >= 0, `${surface} contains the chosen title lockup`);
+    assert.ok(source.slice(start, start + 420).includes(badge), `${surface} shows the split index`);
+  }
+  assert.ok(source.includes('<title>AI 101: How AI Works</title>'), 'browser title uses the full course name');
+  assert.ok(source.includes('.course-series-number{'), 'the number half has its own visual treatment');
+  assert.doesNotMatch(source, /data-title-variant|URLSearchParams\(location\.search\)/);
+});
+
 test('renders the chosen right-aligned teaching detail without a left divider or temporary variant scaffolding', () => {
   assert.match(source, /class="course-progress-copy" style="font-size:11px;color:#AEB8BF;margin-left:auto;text-align:right;white-space:nowrap;">teaches:/);
   assert.doesNotMatch(source, /vibe-var-vibe_1790060618395_qb6lgitob/);
@@ -86,7 +99,7 @@ test('uses lime accents for tools, skills, and plugins', () => {
 });
 
 test('uses the chosen completion-heading treatment without variant scaffolding', () => {
-  assert.match(source, /Completed: <span style="color:#89DF00;">How AI Works<\/span>\./);
+  assert.ok(source.includes('class="completion-heading__name title-lockup"'), 'completion heading uses the chosen lockup');
   assert.doesNotMatch(source, /vibe_1790062612536_djijc6r80|vibe-var-vibe_1790062612536_djijc6r80/);
 });
 
@@ -168,8 +181,8 @@ test('does not contain invalid 9-digit hex colors', () => {
   assert.doesNotMatch(source, /#F2F5F6fff/);
 });
 
-test('sets completion canvas height to 640px to eliminate desktop vertical scrollbars', () => {
-  assert.match(source, /(?:\[data-finale="1"\]|\.course-canvas):has\(\[data-course-finished\]\)\s*\{\s*height:\s*640px!important;/);
+test('gives the completion canvas enough room for the split title and actions', () => {
+  assert.match(source, /(?:\[data-finale="1"\]|\.course-canvas):has\(\[data-course-finished\]\)\s*\{\s*height:\s*700px!important;/);
 });
 
 test('scales course shell zoom to 1 on desktop viewports with height under 900px', () => {

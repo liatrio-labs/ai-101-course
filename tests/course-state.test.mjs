@@ -162,7 +162,7 @@ test('builds a personal completion record with a neutral learner fallback and st
   });
 
   assert.deepEqual(CourseState.completionRecord(completed), {
-    courseTitle: 'How AI Works',
+    courseTitle: 'AI 101: How AI Works',
     learnerName: 'Course learner',
     completionId: 'stable-completion-id',
     completedAt: '2026-09-21T12:00:00.000Z'
