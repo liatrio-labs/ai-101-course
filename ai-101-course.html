@@ -74,6 +74,11 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
 .course-help-trigger:hover,.course-help-trigger:focus-visible{border-color:#89DF00;color:#89DF00;background:rgba(137,223,0,0.12);outline:none;}
 .course-modal-backdrop{position:fixed;inset:0;z-index:999;background:rgba(10,13,16,0.78);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
 .course-modal{width:min(100%,540px);max-height:90vh;overflow-y:auto;background:#1E2327;border:1px solid #3A4046;border-radius:12px;padding:28px 32px;box-sizing:border-box;box-shadow:0 20px 48px rgba(0,0,0,0.7);display:flex;flex-direction:column;gap:18px;}
+/* vibe-annotations:scaffold vibe_1790185615201_kw9jyfnkt — DO NOT EDIT, removed on finalize */
+.vibe-var-vibe_1790185615201_kw9jyfnkt > .vibe-variant { display: none; }
+.vibe-var-vibe_1790185615201_kw9jyfnkt[data-vibe-active="1"] > [data-variant="1"] { display: block; }
+.vibe-var-vibe_1790185615201_kw9jyfnkt[data-vibe-active="2"] > [data-variant="2"] { display: block; }
+.vibe-var-vibe_1790185615201_kw9jyfnkt[data-vibe-active="3"] > [data-variant="3"] { display: block; }
 @media (min-width: 768px) and (max-height: 899px) {
   .course-shell { zoom: 1 !important; }
 }
@@ -152,10 +157,56 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
     <div class="course-position" style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8B959D;white-space:nowrap;display:flex;align-items:center;gap:8px;"><span>{{ dtitle }}</span><span style="color:#5C6870;">·</span><span style="font-variant-numeric:tabular-nums;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Courier New',monospace;color:#F2F5F6;display:inline-block;min-width:48px;text-align:right;">{{ dnum }} / {{ dcount }}</span></div>
   </header>
   <div class="course-rule" style="height:1px;max-width:1060px;width:calc(100% - 80px);margin:18px auto 0;background:linear-gradient(90deg,#C068F9 0%,#C6F135 100%);"></div>
-  <nav class="course-act-nav" aria-label="Course acts" style="display:flex;gap:4px;padding:16px 40px 0;max-width:1060px;width:calc(100% - 80px);margin:0 auto;box-sizing:content-box;">
-    <sc-for list="{{ acts }}" as="a" hint-placeholder-count="5">
-      <button onClick="{{ a.pick }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;border:none;cursor:pointer;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;background:{{ a.bg }};color:{{ a.fg }};transition:all .3s;white-space:nowrap;">{{ a.label }}</button>
-    </sc-for>
+  <!-- vibe-annotations:scaffold vibe_1790185615201_kw9jyfnkt -->
+  <nav class="course-act-nav vibe-var-vibe_1790185615201_kw9jyfnkt" data-vibe-active="1" aria-label="Course acts" style="max-width:1060px;width:calc(100% - 80px);margin:0 auto;padding:16px 40px 0;box-sizing:content-box;">
+    <!-- Variant 1: Card Grid with Nested Squares -->
+    <div class="vibe-variant" data-variant="1" style="width:100%;">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:100%;">
+        <sc-for list="{{ acts }}" as="a" hint-placeholder-count="5">
+          <div style="background:{{ a.cardBg }};border:1px solid {{ a.cardBd }};border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;transition:all .2s;">
+            <button onClick="{{ a.pick }}" style="font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:{{ a.fg }};background:transparent;border:none;cursor:pointer;padding:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ a.label }}</button>
+            <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+              <sc-for list="{{ a.lessons }}" as="t">
+                <button onClick="{{ t.pick }}" title="{{ t.title }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:10px;font-weight:600;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};border-radius:3px;cursor:pointer;padding:0;transition:all .2s;">{{ t.num }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <!-- Variant 2: Connected Track with Underline Bars -->
+    <div class="vibe-variant" data-variant="2" style="width:100%;">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+        <sc-for list="{{ acts }}" as="a" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:6px;border-bottom:2px solid {{ a.bd }};padding-bottom:5px;cursor:pointer;" onClick="{{ a.pick }}">
+              <span style="font-family:ui-monospace,monospace;font-size:9px;font-weight:700;color:{{ a.fg }};">{{ a.actNum }}</span>
+              <span style="font-size:9.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:{{ a.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ a.label }}</span>
+            </div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+              <sc-for list="{{ a.lessons }}" as="t">
+                <button onClick="{{ t.pick }}" title="{{ t.title }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:9.5px;font-weight:600;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};border-radius:2px;cursor:pointer;padding:0;transition:all .2s;">{{ t.num }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <!-- Variant 3: Minimalist Grouped Tiles -->
+    <div class="vibe-variant" data-variant="3" style="width:100%;">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:100%;">
+        <sc-for list="{{ acts }}" as="a" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:{{ a.fg }};font-weight:600;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" onClick="{{ a.pick }}">{{ a.actNum }} · {{ a.label }}</div>
+            <div style="display:flex;gap:3px;flex-wrap:wrap;align-items:center;">
+              <sc-for list="{{ a.lessons }}" as="t">
+                <button onClick="{{ t.pick }}" title="{{ t.title }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:10px;font-weight:600;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};border-radius:4px;cursor:pointer;padding:0;transition:all .2s;">{{ t.num }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
   </nav>
   <main class="course-main" style="flex:1;display:flex;flex-direction:column;padding:14px 40px 28px;max-width:1060px;width:calc(100% - 80px);margin:0 auto;box-sizing:content-box;">
     <div class="course-caption" style="display:flex;align-items:center;min-height:24px;margin-bottom:12px;">
@@ -1030,14 +1081,9 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
         </div>
       </sc-if>
     </div>
-    <div class="course-progress" style="display:flex;align-items:flex-start;gap:12px;margin-top:14px;min-height:38px;">
-      <div class="course-progress-title" style="font-size:11.5px;line-height:1.35;width:320px;min-width:320px;flex:none;min-height:38px;display:flex;align-items:flex-start;"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Courier New',monospace;font-size:11px;font-weight:600;color:#8B959D;letter-spacing:0.02em;display:inline-block;width:38px;flex:none;font-variant-numeric:tabular-nums;">{{ dnum }}.{{ dstep }}</span><span style="color:#89DF00;margin:0 8px;flex:none;">·</span><span style="color:#F2F5F6;font-weight:500;overflow-wrap:break-word;">{{ dtitle }}</span></div>
-      <div class="course-progress-tabs" style="display:flex;gap:5px;align-items:center;flex:none;align-self:flex-start;height:26px;margin-top:4px;">
-        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
-          <button onClick="{{ t.pick }}" title="{{ t.label }}" style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:11px;letter-spacing:.04em;min-width:32px;height:26px;padding:0 8px;cursor:pointer;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};transition:all .25s;" style-hover="border-color:#89DF00;color:#F2F5F6;background:rgba(137,223,0,0.10);">{{ t.num }}</button>
-        </sc-for>
-      </div>
-      <div class="course-progress-copy" style="font-size:11px;line-height:1.35;color:#AEB8BF;margin-left:auto;text-align:left;width:400px;min-width:400px;flex:none;min-height:38px;display:flex;align-items:flex-start;gap:6px;"><span style="color:#8B959D;flex:none;text-transform:uppercase;font-size:10px;letter-spacing:0.08em;margin-top:1px;">teaches:</span><span style="color:#F2F5F6;overflow-wrap:break-word;">{{ dteaches }}</span></div>
+    <div class="course-progress" style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-top:14px;min-height:38px;">
+      <div class="course-progress-title" style="font-size:11.5px;line-height:1.35;flex:1;max-width:500px;min-height:38px;display:flex;align-items:flex-start;"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Courier New',monospace;font-size:11px;font-weight:600;color:#8B959D;letter-spacing:0.02em;display:inline-block;width:38px;flex:none;font-variant-numeric:tabular-nums;">{{ dnum }}.{{ dstep }}</span><span style="color:#89DF00;margin:0 8px;flex:none;">·</span><span style="color:#F2F5F6;font-weight:500;overflow-wrap:break-word;">{{ dtitle }}</span></div>
+      <div class="course-progress-copy" style="font-size:11px;line-height:1.35;color:#AEB8BF;text-align:left;flex:1;max-width:500px;min-height:38px;display:flex;align-items:flex-start;gap:6px;"><span style="color:#8B959D;flex:none;text-transform:uppercase;font-size:10px;letter-spacing:0.08em;margin-top:1px;">teaches:</span><span style="color:#F2F5F6;overflow-wrap:break-word;">{{ dteaches }}</span></div>
     </div>
     <div class="course-controls" style="display:flex;align-items:center;gap:16px;margin-top:14px;border-top:1px solid #2A3036;padding-top:14px;">
       <div style="display:flex;gap:8px;flex:none;">
@@ -1424,7 +1470,7 @@ class Component extends DCLogic {
         if (n >= full.length) { clearInterval(this.tInt); this.tInt = null; }
         return { typed: n };
       }), 34);
-    }, 1000);
+    }, 330);
   }
   actOf(i) { const t = this.ORDER[i % this.ORDER.length]; return (this.META[t] || [0])[0]; }
   openHelp() {
@@ -1737,15 +1783,34 @@ class Component extends DCLogic {
     const sibs = this.ORDER.filter(t => (this.META[t] || [0])[0] === meta[0]);
     const posInAct = this.ORDER.slice(0, d + 1).filter(t => (this.META[t] || [0])[0] === meta[0]).length;
 
-    v.acts = this.ACTS.map((label, i) => ({
-      label: label,
-      bg: i === meta[0] ? "#89DF00" : "#22282D",
-      fg: i === meta[0] ? "#1A1F23" : "#8B959D",
-      pick: () => {
-        const j = this.ORDER.findIndex(t => (this.META[t] || [0])[0] === i);
-        if (j >= 0) this.setState({ d: j, step: 0, finished: false });
-      }
-    }));
+    v.acts = this.ACTS.map((label, i) => {
+      const isCurrentAct = i === meta[0];
+      const lessons = this.ORDER.map((tpl, idx) => ({
+        num: String(idx + 1).padStart(2, "0"),
+        title: this.D[tpl - 1].title,
+        act: (this.META[tpl] || [0])[0],
+        active: idx === d,
+        pick: () => this.setState({ d: idx, step: 0, finished: false }),
+        bg: idx === d ? "rgba(137,223,0,0.18)" : "#22282D",
+        fg: idx === d ? "#89DF00" : "#8B959D",
+        bd: idx === d ? "#89DF00" : "#2A3036"
+      })).filter(l => l.act === i);
+      return {
+        label: label,
+        actNum: String(i + 1).padStart(2, "0"),
+        active: isCurrentAct,
+        bg: isCurrentAct ? "#89DF00" : "#22282D",
+        fg: isCurrentAct ? "#1A1F23" : "#8B959D",
+        bd: isCurrentAct ? "#89DF00" : "#2A3036",
+        cardBg: isCurrentAct ? "rgba(137,223,0,0.06)" : "#1E2327",
+        cardBd: isCurrentAct ? "rgba(137,223,0,0.4)" : "#2A3036",
+        pick: () => {
+          const j = this.ORDER.findIndex(t => (this.META[t] || [0])[0] === i);
+          if (j >= 0) this.setState({ d: j, step: 0, finished: false });
+        },
+        lessons
+      };
+    });
     const gA = [
       ["LLM (large language model)", "The text generator itself. “Large” = trained on an enormous amount of text; “language model” = it models which tokens tend to follow which. This is the prediction mechanism that allows an AI to generate text via tokens. People say “the model” for short.", "#5C6870"],
       ["Prompt", "What you send it: the goal, any constraints, and what a good answer looks like.", "#5C6870"],

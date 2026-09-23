@@ -26,13 +26,25 @@ test('uses the selected split-index AI 101 lockup across course and help surface
 });
 
 test('renders the right-aligned teaching detail with static layout without ellipsis truncation or temporary variant scaffolding', () => {
-  assert.match(source, /class="course-progress-copy"[^>]*width:400px;min-width:400px;flex:none;min-height:38px;[^>]*><span style="[^"]*">teaches:<\/span><span style="color:#F2F5F6;overflow-wrap:break-word;">\{\{\s*dteaches\s*\}\}<\/span><\/div>/);
+  assert.match(source, /class="course-progress-copy"[^>]*flex:1;max-width:500px;min-height:38px;[^>]*><span style="[^"]*">teaches:<\/span><span style="color:#F2F5F6;overflow-wrap:break-word;">\{\{\s*dteaches\s*\}\}<\/span><\/div>/);
   assert.doesNotMatch(source, /vibe-var-vibe_1790060618395_qb6lgitob/);
 });
 
 test('renders the section.slide visual treatment with monospace tabular digits, lime dot, and wrapping title without temporary variant scaffolding', () => {
-  assert.match(source, /class="course-progress-title"[^>]*width:320px;min-width:320px;flex:none;min-height:38px;[^>]*><span style="[^"]*ui-monospace[^"]*width:38px;flex:none;font-variant-numeric:tabular-nums;[^"]*">\{\{\s*dnum\s*\}\}\.\{\{\s*dstep\s*\}\}<\/span><span style="color:#89DF00;margin:0 8px;flex:none;">·<\/span><span style="color:#F2F5F6;font-weight:500;overflow-wrap:break-word;">\{\{\s*dtitle\s*\}\}<\/span><\/div>/);
+  assert.match(source, /class="course-progress-title"[^>]*flex:1;max-width:500px;min-height:38px;[^>]*><span style="[^"]*ui-monospace[^"]*width:38px;flex:none;font-variant-numeric:tabular-nums;[^"]*">\{\{\s*dnum\s*\}\}\.\{\{\s*dstep\s*\}\}<\/span><span style="color:#89DF00;margin:0 8px;flex:none;">·<\/span><span style="color:#F2F5F6;font-weight:500;overflow-wrap:break-word;">\{\{\s*dtitle\s*\}\}<\/span><\/div>/);
   assert.doesNotMatch(source, /vibe-var-vibe_1790183537767_05uy4enj4/);
+});
+
+test('starts typing captions quickly with a third of a second delay', () => {
+  assert.match(source, /this\.tOut = setTimeout\(\(\) => \{[\s\S]*?\}, 330\);/);
+});
+
+test('scaffolds top act navigation variants with nested section indicators', () => {
+  assert.match(source, /class="course-act-nav vibe-var-vibe_1790185615201_kw9jyfnkt"\s+data-vibe-active="1"/);
+  const variantBlock = source.match(/class="course-act-nav vibe-var-vibe_1790185615201_kw9jyfnkt"[^>]*>([\s\S]*?)<\/nav>/);
+  assert.ok(variantBlock);
+  const variants = variantBlock[1].match(/class="vibe-variant"/g) || [];
+  assert.equal(variants.length, 3);
 });
 
 test('renders the course header position with title on the left and tabular count on the right in a static location', () => {
