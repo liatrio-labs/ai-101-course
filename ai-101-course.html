@@ -58,11 +58,6 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
 .course-help-trigger:hover,.course-help-trigger:focus-visible{border-color:#89DF00;color:#89DF00;background:rgba(137,223,0,0.12);outline:none;}
 .course-modal-backdrop{position:fixed;inset:0;z-index:999;background:rgba(10,13,16,0.78);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
 .course-modal{width:min(100%,540px);max-height:90vh;overflow-y:auto;background:#1E2327;border:1px solid #3A4046;border-radius:12px;padding:28px 32px;box-sizing:border-box;box-shadow:0 20px 48px rgba(0,0,0,0.7);display:flex;flex-direction:column;gap:18px;}
-/* vibe-annotations:scaffold vibe_1790180026441_b1t90s3rh — DO NOT EDIT, removed on finalize */
-.vibe-var-vibe_1790180026441_b1t90s3rh > .vibe-variant { display: none; }
-.vibe-var-vibe_1790180026441_b1t90s3rh[data-vibe-active="1"] > [data-variant="1"] { display: block; }
-.vibe-var-vibe_1790180026441_b1t90s3rh[data-vibe-active="2"] > [data-variant="2"] { display: block; }
-.vibe-var-vibe_1790180026441_b1t90s3rh[data-vibe-active="3"] > [data-variant="3"] { display: block; }
 @media (min-width: 768px) and (max-height: 899px) {
   .course-shell { zoom: 1 !important; }
 }
@@ -1046,32 +1041,61 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
           <button onClick="{{ closeHelp }}" aria-label="Close help modal" style="width:32px;height:32px;border:1px solid #2A3036;background:#22282D;color:#AEB8BF;border-radius:6px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex:none;" style-hover="border-color:#89DF00;color:#F2F5F6;">×</button>
         </div>
 
-        <!-- vibe-annotations:scaffold vibe_1790180026441_b1t90s3rh -->
-        <div class="vibe-var-vibe_1790180026441_b1t90s3rh" data-vibe-active="1">
-          <div class="vibe-variant" data-variant="1" style="font-size:13.5px;line-height:1.55;color:#C9D1D6;">
-            This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works. It breaks modern large language models into five core areas: messages, tokens, context limits, tools, and autonomous agents, demystifying the mechanics behind prompts and responses without technical jargon.
-          </div>
-          <div class="vibe-variant" data-variant="2" style="font-size:13.5px;line-height:1.55;color:#C9D1D6;">
-            This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works. Built for engineers and technology leaders alike, it unpacks how modern models process information, where their boundaries lie, and how tools and agents enable real-world workflows.
-          </div>
-          <div class="vibe-variant" data-variant="3" style="font-size:13.5px;line-height:1.55;color:#C9D1D6;">
-            This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works. Whether you write code, design workflows, or manage delivery, this guide provides a grounded mental model of generative models, tools, and agent loops.
+        <div style="font-size:13.5px;line-height:1.55;color:#C9D1D6;display:flex;flex-direction:column;gap:10px;">
+          <div>This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works. Whether you write code, design workflows, or manage delivery, this guide provides a grounded mental model of generative models, tools, and agent loops.</div>
+          <div>
+            <div>The course demystifies the mechanics behind prompts and responses without technical jargon, breaking down the technology into five core areas:</div>
+            <ul style="margin:6px 0 0 0;padding-left:20px;display:flex;flex-direction:column;gap:3px;color:#AEB8BF;font-size:13px;">
+              <li>messages</li>
+              <li>tokens</li>
+              <li>context limits</li>
+              <li>tools</li>
+              <li>autonomous agents</li>
+            </ul>
           </div>
         </div>
 
         <div style="border-top:1px solid #2A3036;padding-top:14px;">
-          <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:8px;">Keyboard Shortcuts &amp; Navigation</div>
-          <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:#C9D1D6;">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <kbd style="font-family:monospace;background:#2A3036;border:1px solid #3A4046;border-radius:4px;padding:3px 8px;color:#89DF00;font-size:12px;">→</kbd>
-              <span>or <strong style="color:#F2F5F6;">Next →</strong> advances to the next step or lesson</span>
+          <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B959D;margin-bottom:10px;">Course Structure &amp; Navigation</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;color:#C9D1D6;">
+            <div style="background:#22282D;border:1px solid #2A3036;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;background:#89DF00;color:#1A1F23;border-radius:3px;">Act</span>
+                <span style="color:#F2F5F6;font-size:12px;">Top navigation tabs grouping the course into 5 broad thematic areas</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:10px;font-weight:600;padding:2px 7px;border:1px solid #89DF00;color:#89DF00;background:rgba(137,223,0,0.12);border-radius:3px;">01</span>
+                <span style="color:#F2F5F6;font-size:12px;">Numbered lesson tabs within the current act</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="display:inline-flex;align-items:center;gap:4px;">
+                  <span style="width:7px;height:7px;border-radius:50%;background:#89DF00;display:inline-block;"></span>
+                  <span style="width:7px;height:7px;border-radius:50%;background:#89DF00;display:inline-block;"></span>
+                  <span style="width:7px;height:7px;border-radius:50%;background:#2A3036;display:inline-block;"></span>
+                </span>
+                <span style="color:#F2F5F6;font-size:12px;">Step dots representing animated teaching beats in each lesson</span>
+              </div>
             </div>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <kbd style="font-family:monospace;background:#2A3036;border:1px solid #3A4046;border-radius:4px;padding:3px 8px;color:#89DF00;font-size:12px;">←</kbd>
-              <span>or <strong style="color:#F2F5F6;">← Back</strong> returns to the previous step or lesson</span>
+
+            <div style="background:#22282D;border:1px solid #2A3036;border-radius:8px;padding:12px;display:flex;align-items:center;gap:14px;">
+              <div style="flex:none;text-align:center;">
+                <div style="font-family:'Space Grotesk',monospace;font-size:15px;font-weight:600;color:#89DF00;background:#1A1F23;border:1px solid #3A4046;padding:4px 10px;border-radius:4px;">05.02</div>
+                <div style="font-size:9px;color:#8B959D;margin-top:3px;text-transform:uppercase;letter-spacing:.08em;">section.slide</div>
+              </div>
+              <div style="font-size:12px;line-height:1.45;color:#C9D1D6;">
+                <strong style="color:#F2F5F6;">Referencing slides:</strong> Use the <span style="color:#89DF00;">section.slide</span> number in the bottom-left of the course controls (e.g. <code style="color:#89DF00;font-size:11px;">05.02</code> or <code style="color:#89DF00;font-size:11px;">12.01</code>) to point to specific course content in discussions, questions, and feedback.
+              </div>
             </div>
-            <div style="font-size:11.5px;color:#8B959D;margin-top:4px;">
-              You can also click any Act title at the top or Lesson number tab above the controls to jump directly to any topic.
+
+            <div style="display:flex;flex-direction:column;gap:6px;margin-top:2px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <kbd style="font-family:monospace;background:#2A3036;border:1px solid #3A4046;border-radius:4px;padding:3px 8px;color:#89DF00;font-size:12px;">→</kbd>
+                <span>or <strong style="color:#F2F5F6;">Next →</strong> advances to the next step or lesson</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <kbd style="font-family:monospace;background:#2A3036;border:1px solid #3A4046;border-radius:4px;padding:3px 8px;color:#89DF00;font-size:12px;">←</kbd>
+                <span>or <strong style="color:#F2F5F6;">← Back</strong> returns to the previous step or lesson</span>
+              </div>
             </div>
           </div>
         </div>

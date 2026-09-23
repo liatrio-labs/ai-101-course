@@ -207,7 +207,7 @@ test('renders a help trigger button in the bottom-right corner of course control
 test('renders a Help and Getting Started modal with title How to Use the Course, Liatrio purpose, and shortcuts', () => {
   assert.match(source, />How to Use the Course<\/div>/);
   assert.match(source, /This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works\./);
-  assert.match(source, /Keyboard Shortcuts &amp; Navigation/);
+  assert.match(source, /Course Structure &amp; Navigation/);
   assert.match(source, /onClick="\{\{\s*resetFromHelp\s*\}\}"[^>]*>Reset Progress<\/button>/);
 });
 
@@ -223,9 +223,15 @@ test('renders Liatrio logomark and GitHub suggestion link in help modal', () => 
   assert.match(source, /Have a suggestion or found a bug\?/);
 });
 
-test('scaffolds modal text variants without em dashes', () => {
-  assert.match(source, /class="vibe-var-vibe_1790180026441_b1t90s3rh"\s+data-vibe-active="1"/);
-  const variantBlock = source.match(/class="vibe-var-vibe_1790180026441_b1t90s3rh"[\s\S]*?<\/div>\s*<\/div>/)?.[0] || '';
-  assert.doesNotMatch(variantBlock, /—/);
-  assert.match(source, /\.vibe-var-vibe_1790180026441_b1t90s3rh > \.vibe-variant\s*\{\s*display:\s*none;\s*\}/);
+test('explains slide referencing convention and structural terms in help modal', () => {
+  assert.match(source, /section\.slide/);
+  assert.match(source, />05\.02</);
+  assert.match(source, /<li>messages<\/li>/);
+  assert.match(source, /<li>autonomous agents<\/li>/);
+});
+
+test('finalizes the chosen modal intro variant without variant scaffolding', () => {
+  assert.match(source, /Whether you write code, design workflows, or manage delivery, this guide provides a grounded mental model of generative models, tools, and agent loops\./);
+  assert.match(source, /The course demystifies the mechanics behind prompts and responses without technical jargon, breaking down the technology into five core areas:/);
+  assert.doesNotMatch(source, /vibe-annotations:scaffold vibe_1790180026441_b1t90s3rh|vibe-var-vibe_1790180026441_b1t90s3rh/);
 });
