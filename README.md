@@ -32,6 +32,20 @@ At completion, you may optionally add a name to a local personal completion reco
 
 Choose **Reset Progress & Restart** to clear the local course position, name, and completion record.
 
+## Checks and releases
+
+Pull requests and pushes to `main` run the course's Node tests and syntax checks in GitHub Actions. Run the same checks locally with:
+
+```sh
+node --test tests/course-state.test.mjs
+node --test tests/course-template.test.mjs
+node --check course-state.js
+node --check support.js
+git diff --check
+```
+
+After checks pass on `main`, [Python Semantic Release](https://python-semantic-release.readthedocs.io/) reads [Conventional Commits](https://www.conventionalcommits.org/) to create a `v*` tag, `CHANGELOG.md`, and a GitHub Release. Use `feat:` for a minor release and `fix:` for a patch; breaking changes in `0.x` also produce a minor release. A `1.0.0` release requires a deliberate major-version override. Commits that do not warrant a release (for example, `docs:` or `chore:`) do not bump the version. There is no Python package or application version file: Git tags are the source of truth. The release job uses GitHub's built-in token, not a personal access token or Octo STS.
+
 ## Development note
 
 `support.js` is generated runtime source and should not be edited. The page behavior together with `course-state.js` owns learner state.
