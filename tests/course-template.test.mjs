@@ -280,7 +280,7 @@ test('renders a Help and Getting Started modal with title How to Use the Course,
 });
 
 test('Help offers the agreed 45–60 minute course duration', () => {
-  const help = source.slice(source.indexOf('id="help-title"'), source.indexOf('Have a suggestion or found a bug?'));
+  const help = source.slice(source.indexOf('id="help-title"'), source.indexOf('Course Structure &amp; Navigation'));
   assert.match(help, /Allow 45–60 minutes to read and work through the course\./);
   assert.doesNotMatch(help, /35 minutes|guaranteed/);
 });
@@ -291,11 +291,10 @@ test('manages help modal lifecycle with first-time display, Escape dismissal, an
   assert.match(source, /if\s*\(this\.state\.showHelp\)\s*return;/);
 });
 
-test('renders Liatrio logomark and GitHub suggestion link in help modal', () => {
+test('renders Liatrio logomark without a public link to the internal repository', () => {
   assert.match(source, /class="course-modal"[\s\S]*?<img src="logomark_Liatrio_background\.png" alt="Liatrio"/);
-  assert.match(source, /href="https:\/\/github\.com\/liatrio-labs\/ai-101-course"[^>]*>Go to our repo<\/a>/);
-  assert.doesNotMatch(source, /href="https:\/\/github\.com\/liatrio\/ai-101-course"/);
-  assert.match(source, /Have a suggestion or found a bug\?/);
+  assert.doesNotMatch(source, /href="https:\/\/github\.com\/(?:liatrio|liatrio-labs)\/ai-101-course"/);
+  assert.doesNotMatch(source, /Have a suggestion or found a bug\?/);
 });
 
 test('explains slide referencing convention and structural terms in help modal', () => {

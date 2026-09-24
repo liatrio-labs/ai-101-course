@@ -56,6 +56,6 @@ git diff --check
 
 The hooks cover file hygiene, secrets, maintained Markdown, Conventional Commits, and fast course checks. Review and restage any formatter changes. CI runs the same checks on pull requests even if local hooks are absent. Releases follow Conventional Commits: see the [changelog](CHANGELOG.md) and [GitHub Releases](https://github.com/liatrio-labs/ai-101-course/releases).
 
-## License and reuse
+## Repository status
 
-Liatrio has not yet approved public reuse terms for this repository's course software, teaching material, and bundled design-system material. No repository-wide license is granted while that review is pending. Liatrio names and marks are not offered for general reuse; the bundled Space Grotesk font identifies its own SIL Open Font License 1.1 terms. Do not assume that access to the hosted course grants permission to redistribute its source or assets.
+This source repository is internal to Liatrio; the hosted course is accessible separately. Liatrio-authored source, teaching material, design-system material, and marks are not offered for public reuse. The bundled Space Grotesk font retains its separate SIL Open Font License 1.1 terms.
