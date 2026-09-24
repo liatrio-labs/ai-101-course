@@ -51,7 +51,7 @@ node --check support.js
 git diff --check
 ```
 
-After checks pass on `main`, [Python Semantic Release](https://python-semantic-release.readthedocs.io/) reads [Conventional Commits](https://www.conventionalcommits.org/) to create a `v*` tag, `CHANGELOG.md`, and a GitHub Release. Use `feat:` for a minor release and `fix:` for a patch; breaking changes in `0.x` also produce a minor release. A `1.0.0` release requires a deliberate major-version override. Commits that do not warrant a release (for example, `docs:` or `chore:`) do not bump the version. There is no Python package or application version file: Git tags are the source of truth. The release job uses a short-lived Octo STS GitHub App token, scoped to pushes from this repository's `main` branch by `.github/chainguard/main-semantic-release.sts.yaml`.
+After checks pass on `main`, [Python Semantic Release](https://python-semantic-release.readthedocs.io/) reads [Conventional Commits](https://www.conventionalcommits.org/) to create a `v*` tag, `CHANGELOG.md`, and a GitHub Release. With no existing version tag, the first releasable change produces `v1.0.0`; subsequent `feat:` commits bump the minor version, `fix:` commits bump the patch version, and breaking changes bump the major version. Commits that do not warrant a release (for example, `docs:` or `chore:`) do not bump the version. There is no Python package or application version file: Git tags are the source of truth. The release job uses a short-lived Octo STS GitHub App token, scoped to pushes from this repository's `main` branch by `.github/chainguard/main-semantic-release.sts.yaml`.
 
 ## Development note
 
