@@ -38,6 +38,11 @@
       "actor_type": "Integration",
       "actor_id": 801323,
       "bypass_mode": "always"
+    },
+    {
+      "actor_type": "Team",
+      "actor_id": 13706563,
+      "bypass_mode": "always"
     }
   ]
 }
