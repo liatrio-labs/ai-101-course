@@ -46,14 +46,6 @@ git diff --check
 
 After checks pass on `main`, [Python Semantic Release](https://python-semantic-release.readthedocs.io/) reads [Conventional Commits](https://www.conventionalcommits.org/) to create a `v*` tag, `CHANGELOG.md`, and a GitHub Release. Use `feat:` for a minor release and `fix:` for a patch; breaking changes in `0.x` also produce a minor release. A `1.0.0` release requires a deliberate major-version override. Commits that do not warrant a release (for example, `docs:` or `chore:`) do not bump the version. There is no Python package or application version file: Git tags are the source of truth. The release job uses a short-lived Octo STS GitHub App token, scoped to pushes from this repository's `main` branch by `.github/chainguard/main-semantic-release.sts.yaml`.
 
-### Branch protection rollout
-
-`.github/ruleset-config.json` describes the **non-enforcing** (`evaluate`) ruleset now present in GitHub. It proposes squash-only merges, fresh approval after changes, code-owner review, and standing bypass for the Octo STS GitHub App and `liatrio-labs-maintainers` team. Team members can skip the PR and check requirements when the ruleset is active; organization owners have no separate bypass entry. The `Detect Ruleset Drift` PR job compares the rest with GitHub's API and fails if the ruleset is missing or differs. It ignores API-added defaults and field order; GitHub redacts bypass actors from a read-only PR token, so **this job cannot audit bypass permissions**. The drift job only blocks merges once an active ruleset requires its status. The repository remains internal. The team has explicit write access, but CODEOWNERS does not take effect until this file lands on the default branch. Before enforcing the ruleset:
-
-1. The Octo STS GitHub App is installed for all `liatrio-labs` repositories with `contents: write` available. Its `main-semantic-release` identity cannot be exercised until this trust policy is on the default branch. Merging this workflow to `main` may produce the first `v0.1.0` release; approve that separately before merging.
-2. Verify a real release run. Audit both live bypass entries with an appropriately authorized identity. Coordinate the committed config and live ruleset when switching from `evaluate` to `active`, then verify both checks are required. The JSON file does not synchronize GitHub settings by itself, and CI cannot force GitHub to require a check if someone removes that requirement.
-3. Public visibility requires a separate review of license, assets, and repository history.
-
 ## Development note
 
 `support.js` is generated runtime source and should not be edited. The page behavior together with `course-state.js` owns learner state.

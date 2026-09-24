@@ -31,9 +31,25 @@
           { "context": "Detect Ruleset Drift" }
         ]
       }
-    }
+    },
+    { "type": "required_linear_history" }
   ],
   "bypass_actors": [
+    {
+      "actor_type": "OrganizationAdmin",
+      "actor_id": null,
+      "bypass_mode": "always"
+    },
+    {
+      "actor_type": "RepositoryRole",
+      "actor_id": 2,
+      "bypass_mode": "always"
+    },
+    {
+      "actor_type": "RepositoryRole",
+      "actor_id": 5,
+      "bypass_mode": "always"
+    },
     {
       "actor_type": "Integration",
       "actor_id": 801323,

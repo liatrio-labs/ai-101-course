@@ -25,13 +25,104 @@ jobs:
   ruleset-drift:
     name: Detect Ruleset Drift
     runs-on: ubuntu-latest
+    # This job is read-only. The JSON files declare intended GitHub settings;
+    # checking them does not apply them. GitHub must require this status to make
+    # drift block merges (the current ruleset is still in evaluate mode).
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - run: python3 -m unittest discover -s tests -p 'test_ruleset_drift.py'
-      - name: Compare committed ruleset with GitHub
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/ruleset_drift.py
+      - name: Compare branch ruleset with GitHub
+        # Compare only declared fields, so API-added metadata/defaults do not
+        # cause false alarms. Preserve all live array entries so extra rules
+        # or required checks do cause a failure. RepositoryRole bypass IDs 2
+        # and 5 mean maintain and admin in GitHub's GraphQL API. PR tokens
+        # cannot see bypass actors reliably; audit them as an admin separately.
+        run: |
+          python3 - <<'PY'
+          import difflib
+          import json
+          import os
+          import subprocess
+          import sys
+
+          def api(path):
+              return json.loads(subprocess.check_output(['gh', 'api', path], text=True))
+
+          def project(live, desired):
+              if isinstance(desired, dict):
+                  if not isinstance(live, dict):
+                      return live
+                  return {key: project(live.get(key), value) for key, value in desired.items()}
+              if isinstance(desired, list):
+                  if not isinstance(live, list):
+                      return live
+                  if desired and isinstance(desired[0], dict):
+                      if 'type' in desired[0]:
+                          specs = {item['type']: item for item in desired}
+                          live = [project(item, specs.get(item.get('type'), {'type': item.get('type')}))
+                                  if isinstance(item, dict) else item for item in live]
+                      else:
+                          live = [project(item, desired[0]) for item in live]
+                  return sorted(live, key=lambda item: json.dumps(item, sort_keys=True))
+              return live
+
+          with open('.github/ruleset-config.json') as config:
+              desired = json.load(config)
+          desired.pop('bypass_actors', None)  # Not returned to read-only PR tokens.
+          endpoint = f"repos/{os.environ['GITHUB_REPOSITORY']}/rulesets"
+          matches = [item for item in api(endpoint)
+                     if item['name'] == desired['name'] and item['target'] == desired['target']]
+          if len(matches) != 1:
+              sys.exit(f"Expected one matching GitHub ruleset; found {len(matches)}")
+          wanted = project(desired, desired)
+          actual = project(api(f"{endpoint}/{matches[0]['id']}"), desired)
+          if wanted != actual:
+              print('\n'.join(difflib.unified_diff(
+                  json.dumps(wanted, indent=2, sort_keys=True).splitlines(),
+                  json.dumps(actual, indent=2, sort_keys=True).splitlines(),
+                  fromfile='committed ruleset', tofile='GitHub ruleset', lineterm='')))
+              sys.exit('Branch ruleset differs from .github/ruleset-config.json')
+          print('Branch ruleset matches (bypass actors require a separate admin audit).')
+          PY
+
+      - name: Compare General settings with GitHub
+        # General settings live on multiple APIs, not the branch ruleset API.
+        # Read the selected fields from REST, GraphQL, and immutable releases;
+        # fail on missing fields or mismatches. No settings are changed here.
+        # To apply approved changes manually: PATCH /repos/{owner}/{repo},
+        # GraphQL updateRepository, or PUT/DELETE immutable-releases.
+        # Visibility, commit comments, LFS archives, push limits, and linked-
+        # issue auto-close are intentionally outside this verified API subset.
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import subprocess
+          import sys
+
+          def api(*args):
+              return json.loads(subprocess.check_output(['gh', 'api', *args], text=True))
+
+          with open('.github/repository-settings.json') as config:
+              desired = json.load(config)
+          owner, name = os.environ['GITHUB_REPOSITORY'].split('/')
+          repo = api(f'repos/{owner}/{name}')
+          query = ('query($owner:String!,$name:String!){repository(owner:$owner,name:$name)'
+                   '{issueCreationPolicy pullRequestCreationPolicy hasSponsorshipsEnabled}}')
+          graphql = api('graphql', '-f', f'query={query}', '-f', f'owner={owner}',
+                        '-f', f'name={name}')['data']['repository']
+          immutable = api(f'repos/{owner}/{name}/immutable-releases')
+          sources = {'rest': repo, 'graphql': graphql, 'immutable_releases': immutable}
+          drift = [(f'{source}.{key}', expected, sources[source].get(key, '<missing>'))
+                   for source, fields in desired.items() for key, expected in fields.items()
+                   if sources[source].get(key, '<missing>') != expected]
+          for field, expected, actual in drift:
+              print(f'{field}: committed={expected!r}, GitHub={actual!r}')
+          if drift:
+              sys.exit('General settings differ from .github/repository-settings.json')
+          print('Tracked General settings match GitHub.')
+          PY
 
   release:
     name: Semantic release
@@ -45,6 +136,9 @@ jobs:
       group: semantic-release-main
       cancel-in-progress: false
     steps:
+      # Octo STS exchanges this main-branch job's OIDC identity for a short-lived
+      # GitHub App token. Unlike the read-only drift job, releasing must write a
+      # changelog commit/tag on main and create a GitHub Release.
       - uses: octo-sts/action@f603d3be9d8dd9871a265776e625a27b00effe05 # v1.1.1
         id: octo-sts
         with:
