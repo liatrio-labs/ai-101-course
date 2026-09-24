@@ -89,7 +89,8 @@ jobs:
       - name: Compare General settings with GitHub
         # General settings live on multiple APIs, not the branch ruleset API.
         # Read selected fields from REST and GraphQL; fail on missing fields
-        # or mismatches. No settings are changed here.
+        # or mismatches. The Actions token's REST response omits merge policy,
+        # so those fields are read through GraphQL. No settings are changed.
         # To apply approved changes manually: PATCH /repos/{owner}/{repo},
         # GraphQL updateRepository. The immutable-releases endpoint returned
         # 403 to the read-only Actions token; an admin can inspect it separately.
@@ -110,7 +111,10 @@ jobs:
           owner, name = os.environ['GITHUB_REPOSITORY'].split('/')
           repo = api(f'repos/{owner}/{name}')
           query = ('query($owner:String!,$name:String!){repository(owner:$owner,name:$name)'
-                   '{issueCreationPolicy pullRequestCreationPolicy hasSponsorshipsEnabled}}')
+                   '{issueCreationPolicy pullRequestCreationPolicy hasSponsorshipsEnabled '
+                   'mergeCommitAllowed squashMergeAllowed squashMergeCommitTitle '
+                   'squashMergeCommitMessage rebaseMergeAllowed autoMergeAllowed '
+                   'allowUpdateBranch deleteBranchOnMerge}}')
           graphql = api('graphql', '-f', f'query={query}', '-f', f'owner={owner}',
                         '-f', f'name={name}')['data']['repository']
           sources = {'rest': repo, 'graphql': graphql}
