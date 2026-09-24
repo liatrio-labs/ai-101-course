@@ -293,7 +293,8 @@ test('manages help modal lifecycle with first-time display, Escape dismissal, an
 
 test('renders Liatrio logomark and GitHub suggestion link in help modal', () => {
   assert.match(source, /class="course-modal"[\s\S]*?<img src="logomark_Liatrio_background\.png" alt="Liatrio"/);
-  assert.match(source, /href="https:\/\/github\.com\/liatrio\/ai-101-course"[^>]*>Go to our repo<\/a>/);
+  assert.match(source, /href="https:\/\/github\.com\/liatrio-labs\/ai-101-course"[^>]*>Go to our repo<\/a>/);
+  assert.doesNotMatch(source, /href="https:\/\/github\.com\/liatrio\/ai-101-course"/);
   assert.match(source, /Have a suggestion or found a bug\?/);
 });
 

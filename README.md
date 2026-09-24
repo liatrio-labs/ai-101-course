@@ -1,49 +1,52 @@
 # AI 101: How AI Works
 
-A standalone interactive course for learning how modern AI systems behave. It covers five conceptual areas:
+**A visual, self-paced introduction to what happens between sending a message to an AI and reading its reply.** Liatrio built this course for people who write code, design workflows, or manage delivery. Allow **45–60 minutes** to explore it.
 
-1. **Getting oriented** — the core terms and the course map.
-2. **What the model is** — messages, tokens, and the context window.
-3. **What it cannot do on its own** — next-token prediction, hallucinations, and the limits of recall.
+[Start the course →](https://ai-101-course.lab.liatr.io/) · [Suggest an improvement](https://github.com/liatrio-labs/ai-101-course/issues) · [Latest release](https://github.com/liatrio-labs/ai-101-course/releases/latest)
+
+[![The AI 101 course opening screen, showing its five acts and interactive lesson navigation](docs/images/ai-101-course-overview.webp)](https://ai-101-course.lab.liatr.io/)
+
+## What you'll learn
+
+The course demystifies prompts and responses without requiring a technical background. Its five acts build a grounded mental model of:
+
+1. **Getting oriented** — the course map and essential terms.
+2. **What the model is** — messages, tokens, and context windows.
+3. **What it cannot do on its own** — prediction, hallucinations, and limits of recall.
 4. **Reaching the world** — harnesses, tools, documents, skills, and plugins.
-5. **Agents at work** — loops, sub-agents, durable artifacts, and the choices people control.
+5. **Agents at work** — loops, sub-agents, durable artifacts, and human choices.
 
-## Referencing slides
+Each lesson reveals its diagrams step by step. Use **Next** and **Back** (or the right and left arrow keys), select an act or lesson from the navigation, and open **Help** for the course guide.
 
-Refer to a course slide by its **section.slide** number, such as `01.03`, `07.04`, or `12.02`. This identifier appears at the bottom left of every slide. The first two digits identify the course section, and the final two digits identify the slide within that section.
+### Referencing a slide
 
-Use this format when sharing feedback, discussing a lesson, or linking a change to a specific piece of course content.
+Use its **section.slide** number, shown at the bottom left of the course, when discussing content or reporting an issue—for example, `01.03`, `07.04`, or `12.02`. The first two digits identify the section; the final two identify the slide within it.
 
-## Preview locally with hot reload
+## Progress and completion
 
-From this repository, run:
+Progress stays in your browser's `localStorage` on that device. It is not synced across browsers or devices and disappears if you clear site data or use private browsing. **Reset Progress & Restart** clears your position, name, and completion record.
+
+At the end, you can optionally add a name to a personal completion record and use **Print / save as PDF** to keep a copy. Its ID and timestamp are created in your browser; it is not an independently verified or Liatrio-issued credential.
+
+## Run locally
+
+This static site needs no build step or package installation for local preview. From the repository root, serve it with any static HTTP server; for example:
 
 ```sh
-npx --yes browser-sync start --server --files "**/*" --ignore ".git/**" --startPath /ai-101-course.html --host 127.0.0.1 --port 8090 --no-open
+python3 -m http.server 8090 --bind 127.0.0.1
 ```
 
-Then open [http://127.0.0.1:8090/ai-101-course.html](http://127.0.0.1:8090/ai-101-course.html). BrowserSync watches the project files (excluding `.git/`) and reloads connected browsers whenever a file changes.
+Open [http://127.0.0.1:8090/ai-101-course.html](http://127.0.0.1:8090/ai-101-course.html). The hosted container serves the same `ai-101-course.html` as `/`.
 
-## Local learner progress
+## Contributing and releases
 
-The course saves progress locally in your browser using `localStorage`. It survives browser restarts in the same browser on the same device. It is cleared by private browsing or clearing site data, and it does not sync across devices or browsers.
+Found an unclear explanation or a bug? [Open an issue](https://github.com/liatrio-labs/ai-101-course/issues) and include the **section.slide** number when relevant. Before changing course behavior, note that `support.js` is generated runtime code and should not be edited directly; learner state lives in `course-state.js` and browser `localStorage`.
 
-At completion, you may optionally add a name to a local personal completion record. The browser generates its UUID and timestamp; use the native **Print / save as PDF** action to keep a copy. This record is not independently verified, Liatrio-issued, or a formal credential.
-
-Choose **Reset Progress & Restart** to clear the local course position, name, and completion record.
-
-## Checks and releases
-
-Install [pre-commit](https://pre-commit.com/) once on your machine (for example, `pipx install pre-commit`), then enable both hook stages in this clone:
+Install [pre-commit](https://pre-commit.com/) (for example, `pipx install pre-commit`) and enable both hook stages:
 
 ```sh
 pre-commit install --hook-type pre-commit --hook-type commit-msg
 pre-commit run --all-files
-```
-
-The hooks check file hygiene, scan for secrets with Betterleaks, format the maintained Markdown files, enforce Conventional Commit messages, and run the course's fast Node checks. Review and restage any Markdown fixes before committing. Pull requests and pushes to `main` also run the same pre-commit checks in GitHub Actions, even when hooks were not installed locally; PR titles are checked as the prospective squash-merge subject. The `Pre-commit checks` status is listed in the branch ruleset. Run the course checks directly with:
-
-```sh
 node --test tests/course-state.test.mjs
 node --test tests/course-template.test.mjs
 node --check course-state.js
@@ -51,8 +54,8 @@ node --check support.js
 git diff --check
 ```
 
-After checks pass on `main`, [Python Semantic Release](https://python-semantic-release.readthedocs.io/) reads [Conventional Commits](https://www.conventionalcommits.org/) to create a `v*` tag, `CHANGELOG.md`, and a GitHub Release. With no existing version tag, the first releasable change produces `v1.0.0`; subsequent `feat:` commits bump the minor version, `fix:` commits bump the patch version, and breaking changes bump the major version. Commits that do not warrant a release (for example, `docs:` or `chore:`) do not bump the version. There is no Python package or application version file: Git tags are the source of truth. The release job uses a short-lived Octo STS GitHub App token, scoped to pushes from this repository's `main` branch by `.github/chainguard/main-semantic-release.sts.yaml`.
+The hooks cover file hygiene, secrets, maintained Markdown, Conventional Commits, and fast course checks. Review and restage any formatter changes. CI runs the same checks on pull requests even if local hooks are absent. Releases follow Conventional Commits: see the [changelog](CHANGELOG.md) and [GitHub Releases](https://github.com/liatrio-labs/ai-101-course/releases).
 
-## Development note
+## License and reuse
 
-`support.js` is generated runtime source and should not be edited. The page behavior together with `course-state.js` owns learner state.
+Liatrio has not yet approved public reuse terms for this repository's course software, teaching material, and bundled design-system material. No repository-wide license is granted while that review is pending. Liatrio names and marks are not offered for general reuse; the bundled Space Grotesk font identifies its own SIL Open Font License 1.1 terms. Do not assume that access to the hosted course grants permission to redistribute its source or assets.
