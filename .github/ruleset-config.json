@@ -28,6 +28,7 @@
         "strict_required_status_checks_policy": true,
         "required_status_checks": [
           { "context": "Course checks" },
+          { "context": "Pre-commit checks" },
           { "context": "Detect Ruleset Drift" }
         ]
       }

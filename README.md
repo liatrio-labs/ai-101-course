@@ -34,7 +34,14 @@ Choose **Reset Progress & Restart** to clear the local course position, name, an
 
 ## Checks and releases
 
-Pull requests and pushes to `main` run the course's Node tests and syntax checks in GitHub Actions. Run the same checks locally with:
+Install [pre-commit](https://pre-commit.com/) once on your machine (for example, `pipx install pre-commit`), then enable both hook stages in this clone:
+
+```sh
+pre-commit install --hook-type pre-commit --hook-type commit-msg
+pre-commit run --all-files
+```
+
+The hooks check file hygiene, scan for secrets with Betterleaks, format the maintained Markdown files, enforce Conventional Commit messages, and run the course's fast Node checks. Review and restage any Markdown fixes before committing. Pull requests and pushes to `main` also run the same pre-commit checks in GitHub Actions, even when hooks were not installed locally; PR titles are checked as the prospective squash-merge subject. The `Pre-commit checks` status is listed in the branch ruleset. Run the course checks directly with:
 
 ```sh
 node --test tests/course-state.test.mjs
