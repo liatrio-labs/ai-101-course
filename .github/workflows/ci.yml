@@ -2,6 +2,7 @@ name: CI and Release
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
   push:
     branches: [main]
 
@@ -155,7 +156,7 @@ jobs:
   release:
     name: Semantic release
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: test
+    needs: [test, pre-commit, ruleset-drift]
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -16,7 +16,7 @@
     "hasSponsorshipsEnabled": false,
     "mergeCommitAllowed": false,
     "squashMergeAllowed": true,
-    "squashMergeCommitTitle": "COMMIT_OR_PR_TITLE",
+    "squashMergeCommitTitle": "PR_TITLE",
     "squashMergeCommitMessage": "COMMIT_MESSAGES",
     "rebaseMergeAllowed": false,
     "autoMergeAllowed": true,
