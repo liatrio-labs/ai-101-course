@@ -291,10 +291,14 @@ test('manages help modal lifecycle with first-time display, Escape dismissal, an
   assert.match(source, /if\s*\(this\.state\.showHelp\)\s*return;/);
 });
 
-test('renders Liatrio logomark without a public link to the internal repository', () => {
-  assert.match(source, /class="course-modal"[\s\S]*?<img src="logomark_Liatrio_background\.png" alt="Liatrio"/);
-  assert.doesNotMatch(source, /href="https:\/\/github\.com\/(?:liatrio|liatrio-labs)\/ai-101-course"/);
-  assert.doesNotMatch(source, /Have a suggestion or found a bug\?/);
+test('Help directs suggestions and bug reports to GitHub Issues with a sign-in caveat', () => {
+  const start = source.indexOf('<div class="course-modal" role="dialog"');
+  assert.ok(start >= 0, 'Help dialog exists');
+  const help = source.slice(start, source.indexOf('</sc-if>', start));
+  assert.match(help, /<img src="logomark_Liatrio_background\.png" alt="Liatrio"/);
+  assert.match(help, /Have a suggestion or found a bug\?/);
+  assert.match(help, /<a\b[^>]*href="https:\/\/github\.com\/liatrio-labs\/ai-101-course\/issues"[^>]*>Open a GitHub issue<\/a>/);
+  assert.match(help, /GitHub sign-in required/);
 });
 
 test('explains slide referencing convention and structural terms in help modal', () => {
