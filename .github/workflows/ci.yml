@@ -52,7 +52,7 @@ jobs:
     # See .github/SETTINGS.md for apply commands and the CI coverage matrix.
     # This job is read-only. The JSON files declare intended GitHub settings;
     # checking them does not apply them. GitHub must require this status to make
-    # drift block merges (the current ruleset is still in evaluate mode).
+    # drift block ordinary merges (the ruleset is active; bypasses are intentional).
     env:
       GH_TOKEN: ${{ github.token }}
     steps:

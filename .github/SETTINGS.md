@@ -1,6 +1,6 @@
 # GitHub repository settings
 
-These files describe desired settings for `liatrio-labs/ai-101-course`; they do not change GitHub by themselves. The read-only **Detect Ruleset Drift** job compares the fields it can see on pull requests and pushes to `main`. The live branch ruleset is in `evaluate` mode, so a failing job does not yet block merges.
+These files describe desired settings for `liatrio-labs/ai-101-course`; they do not change GitHub by themselves. The read-only **Detect Ruleset Drift** job compares the fields it can see on pull requests and pushes to `main`. The live branch ruleset is `active`, so this status is required before ordinary merges; authorized bypass actors remain an explicit exception.
 
 | File or setting | Apply with an authorized `gh api` identity | Checked by the read-only CI job? |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ These files describe desired settings for `liatrio-labs/ai-101-course`; they do 
 
 ## Apply the branch ruleset
 
-Use an authorized identity, review the JSON and the live policy first, and retain `"enforcement": "evaluate"` unless a separate decision authorizes activation. PUT replaces the selected ruleset configuration, including its bypass actors. The CI job cannot validate bypass changes or guarantee that its own status remains required.
+Use an authorized identity and review the JSON and the live policy first. The ruleset was activated separately; keep `"enforcement": "active"` unless a new decision changes it. PUT replaces the selected ruleset configuration, including its bypass actors. The CI job cannot validate bypass changes or guarantee that its own status remains required.
 
 ```bash
 repo=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
@@ -69,4 +69,4 @@ printf '%s\n' "$payload" | jq .
 # Only after approval: printf '%s\n' "$payload" | gh api graphql --input -
 ```
 
-Read back `gh api "repos/$repo"` and the relevant GraphQL repository fields, then rerun CI. A successful API write alone is not verification. These commands do not manage visibility, release immutability, or the UI controls excluded above; review those separately. An agent must explain the intended changes and permission scope, ask before applying them, and never activate the ruleset or make the repository public as a side effect of a settings sync.
+Read back `gh api "repos/$repo"` and the relevant GraphQL repository fields, then rerun CI. A successful API write alone is not verification. These commands do not manage visibility, release immutability, or the UI controls excluded above; review those separately. An agent must explain the intended changes and permission scope, ask before applying them, and never change ruleset enforcement or make the repository public as a side effect of a settings sync.

@@ -1,7 +1,7 @@
 {
   "name": "main branch protection",
   "target": "branch",
-  "enforcement": "evaluate",
+  "enforcement": "active",
   "conditions": {
     "ref_name": {
       "include": ["~DEFAULT_BRANCH"],
