@@ -22,6 +22,17 @@ jobs:
       - run: node --check course-state.js
       - run: node --check support.js
 
+  ruleset-drift:
+    name: Detect Ruleset Drift
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: python3 -m unittest discover -s tests -p 'test_ruleset_drift.py'
+      - name: Compare committed ruleset with GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/ruleset_drift.py
+
   release:
     name: Semantic release
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
