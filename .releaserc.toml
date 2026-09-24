@@ -1,0 +1,17 @@
+[semantic_release]
+tag_format = "v{version}"
+# Start at v1.0.0 when the first releasable change reaches main.
+allow_zero_version = false
+# The course is a static site; Git tags and the generated changelog are its version record.
+version_variables = []
+commit_message = "chore(release): {version} [skip ci]"
+
+[semantic_release.branches.main]
+match = "main"
+
+[semantic_release.changelog.default_templates]
+changelog_file = "CHANGELOG.md"
+output_format = "md"
+
+[semantic_release.remote]
+token = { env = "GH_TOKEN" }

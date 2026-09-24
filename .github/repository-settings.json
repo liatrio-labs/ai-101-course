@@ -1,0 +1,26 @@
+{
+  "rest": {
+    "default_branch": "main",
+    "is_template": false,
+    "has_issues": true,
+    "has_pull_requests": true,
+    "allow_forking": true,
+    "has_wiki": false,
+    "has_projects": false,
+    "has_discussions": false,
+    "web_commit_signoff_required": false
+  },
+  "graphql": {
+    "issueCreationPolicy": "ALL",
+    "pullRequestCreationPolicy": "ALL",
+    "hasSponsorshipsEnabled": false,
+    "mergeCommitAllowed": false,
+    "squashMergeAllowed": true,
+    "squashMergeCommitTitle": "PR_TITLE",
+    "squashMergeCommitMessage": "COMMIT_MESSAGES",
+    "rebaseMergeAllowed": false,
+    "autoMergeAllowed": true,
+    "allowUpdateBranch": true,
+    "deleteBranchOnMerge": true
+  }
+}
