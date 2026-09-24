@@ -1119,6 +1119,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div class="help-course-title title-lockup"><span class="course-series-badge"><span class="course-series-ai">AI</span> <span class="course-series-number">101</span></span><span class="title-how">How AI Works</span></div>
             </div>
             <div id="help-title" style="font-size:24px;font-weight:600;letter-spacing:-0.02em;color:#F2F5F6;">How to Use the Course</div>
+            <div class="help-course-version" style="font-size:11px;color:#AEB8BF;margin-top:4px;">Version {{ courseVersion }}</div>
           </div>
           <button onClick="{{ closeHelp }}" aria-label="Close help modal" style="width:32px;height:32px;border:1px solid #2A3036;background:#22282D;color:#AEB8BF;border-radius:6px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex:none;" style-hover="border-color:#89DF00;color:#F2F5F6;">×</button>
         </div>
@@ -1615,6 +1616,7 @@ class Component extends DCLogic {
     const nd = (d + 1) % N, nextTpl = this.ORDER[nd];
     const v = {
       nowIso, nowLong,
+      courseVersion: "v1.0.0",
       dnum: String(d + 1).padStart(2, "0"),
       dstep: String(Math.min(step, cur.steps.length) + 1).padStart(2, "0"),
       dtitle: cur.title,

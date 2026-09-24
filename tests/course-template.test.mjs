@@ -279,6 +279,15 @@ test('renders a Help and Getting Started modal with title How to Use the Course,
   assert.match(source, /onClick="\{\{\s*resetFromHelp\s*\}\}"[^>]*>Reset Progress<\/button>/);
 });
 
+test('Help displays the semantic-release-stamped course version', () => {
+  const config = readFileSync(new URL('../.releaserc.toml', import.meta.url), 'utf8');
+  const declaration = source.match(/\bcourseVersion:\s*"(v\d+\.\d+\.\d+)"/g) || [];
+  assert.equal(declaration.length, 1, 'one release-owned course version value');
+  assert.match(config, /^version_variables\s*=\s*\["ai-101-course\.html:courseVersion:tf"\]$/m);
+  const help = source.slice(source.indexOf('<div class="course-modal" role="dialog"'), source.indexOf('</sc-if>', source.indexOf('<div class="course-modal" role="dialog"')));
+  assert.match(help, /<div class="help-course-version"[^>]*>Version \{\{ courseVersion \}\}<\/div>/);
+});
+
 test('Help offers the agreed 45–60 minute course duration', () => {
   const help = source.slice(source.indexOf('id="help-title"'), source.indexOf('Course Structure &amp; Navigation'));
   assert.match(help, /Allow 45–60 minutes to read and work through the course\./);
