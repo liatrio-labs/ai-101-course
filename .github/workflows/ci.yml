@@ -88,10 +88,11 @@ jobs:
 
       - name: Compare General settings with GitHub
         # General settings live on multiple APIs, not the branch ruleset API.
-        # Read the selected fields from REST, GraphQL, and immutable releases;
-        # fail on missing fields or mismatches. No settings are changed here.
+        # Read selected fields from REST and GraphQL; fail on missing fields
+        # or mismatches. No settings are changed here.
         # To apply approved changes manually: PATCH /repos/{owner}/{repo},
-        # GraphQL updateRepository, or PUT/DELETE immutable-releases.
+        # GraphQL updateRepository. The immutable-releases endpoint returned
+        # 403 to the read-only Actions token; an admin can inspect it separately.
         # Visibility, commit comments, LFS archives, push limits, and linked-
         # issue auto-close are intentionally outside this verified API subset.
         run: |
@@ -112,8 +113,7 @@ jobs:
                    '{issueCreationPolicy pullRequestCreationPolicy hasSponsorshipsEnabled}}')
           graphql = api('graphql', '-f', f'query={query}', '-f', f'owner={owner}',
                         '-f', f'name={name}')['data']['repository']
-          immutable = api(f'repos/{owner}/{name}/immutable-releases')
-          sources = {'rest': repo, 'graphql': graphql, 'immutable_releases': immutable}
+          sources = {'rest': repo, 'graphql': graphql}
           drift = [(f'{source}.{key}', expected, sources[source].get(key, '<missing>'))
                    for source, fields in desired.items() for key, expected in fields.items()
                    if sources[source].get(key, '<missing>') != expected]

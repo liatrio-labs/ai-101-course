@@ -22,8 +22,5 @@
     "issueCreationPolicy": "ALL",
     "pullRequestCreationPolicy": "ALL",
     "hasSponsorshipsEnabled": false
-  },
-  "immutable_releases": {
-    "enabled": false
   }
 }
