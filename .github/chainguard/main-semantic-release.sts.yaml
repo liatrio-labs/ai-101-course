@@ -1,4 +1,5 @@
 issuer: https://token.actions.githubusercontent.com
-subject_pattern: "repo:liatrio-labs/ai-101-course:ref:refs/heads/main"
+# This repository's GitHub OIDC subject includes immutable owner/repository IDs.
+subject: "repo:liatrio-labs@223510100/ai-101-course@1380901006:ref:refs/heads/main"
 permissions:
   contents: write
