@@ -6,6 +6,7 @@
 - The hosted entry point is `ai-101-course.html`; the container serves it as `/`.
 - `support.js` is generated runtime code. Do not edit it directly.
 - Keep learner state in `course-state.js` and browser `localStorage`; do not add server-side identity, verification, analytics, or sync without explicit approval.
+- For GitHub settings, read `.github/SETTINGS.md` before using either settings JSON file. Explain what CI can and cannot verify, show the proposed API changes, and obtain human approval before changing live settings.
 
 ## Slide references
 
