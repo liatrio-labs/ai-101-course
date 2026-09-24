@@ -48,6 +48,11 @@ test('renders the finalized connected track top act navigation with nested secti
   assert.doesNotMatch(source, /vibe-var-vibe_1790185615201_kw9jyfnkt/);
 });
 
+test('act shortcuts are semantic buttons while lesson buttons remain nested siblings', () => {
+  assert.match(source, /<nav class="course-act-nav"[\s\S]*?<button class="course-act-heading" type="button" onClick="\{\{ a\.pick \}\}"[^>]*>[\s\S]*?\{\{ a\.label \}\}[\s\S]*?<\/button>/);
+  assert.match(source, /<sc-for list="\{\{ a\.lessons \}\}" as="t">[\s\S]*?<button onClick="\{\{ t\.pick \}\}"/);
+});
+
 test('renders the course header position with title on the left and tabular count on the right in a static location', () => {
   assert.match(source, /class="course-position"[^>]*><span>\{\{\s*dtitle\s*\}\}<\/span><span[^>]*>·<\/span><span style="[^"]*tabular-nums;[^"]*ui-monospace[^"]*">\{\{\s*dnum\s*\}\}\s*\/\s*\{\{\s*dcount\s*\}\}<\/span><\/div>/);
 });
@@ -75,9 +80,37 @@ test('prints the completion record as a landscape certificate with its on-page s
   assert.match(printStyles, /\.completion-record__grid\{[^}]*grid-template-columns:1fr 1fr!important;/);
 });
 
+test('print certificate balances its content without changing screen layout', () => {
+  const css = source.match(/@media print\{([\s\S]*?)\n\}/)?.[1] || '';
+  assert.match(css, /\.completion-record\{display:flex!important;flex-direction:column!important;justify-content:center!important;\}/);
+  assert.match(css, /@page\{size:landscape;margin:0;\}/);
+});
+
 test('uses one explicit completion reset action and no redundant course-control restart', () => {
   assert.match(source, />Reset Progress &amp; Restart<\/button>/);
   assert.equal((source.match(/>Start again<\/button>/g) || []).length, 0);
+});
+
+test('final recap cues completion instead of wrapping its next-lesson teaser', () => {
+  assert.match(source, /hasNextLesson:\s*d\s*<\s*N\s*-\s*1/);
+  assert.match(source, /<sc-if value="\{\{ hasNextLesson \}\}"[\s\S]*?coming next[\s\S]*?\{\{ nextTitle \}\}/);
+  assert.match(source, /<sc-if value="\{\{ finalRecap \}\}"[\s\S]*?ready to finish/);
+});
+
+test('certificate reset asks before discarding the local record', () => {
+  const script = source.match(/<script type="text\/x-dc"[^>]*>([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(script, 'component script exists');
+  const browser = { confirmed: false, confirm() { return this.confirmed; } };
+  const Component = new Function('DCLogic', 'window', 'HowAiWorksCourseState', 'localStorage', `${script}\nreturn Component;`)(class {}, browser, {}, {});
+  const app = new Component();
+  let resets = 0;
+  app.startAgain = () => { resets++; };
+  assert.equal(app.confirmReset(), false);
+  assert.equal(resets, 0);
+  browser.confirmed = true;
+  assert.equal(app.confirmReset(), true);
+  assert.equal(resets, 1);
+  assert.match(source, /startAgain:\s*\(\)\s*=>\s*this\.confirmReset\(\)/);
 });
 
 test('returns from the completed view to the preceding final-course step when Back is pressed', () => {
@@ -246,6 +279,12 @@ test('renders a Help and Getting Started modal with title How to Use the Course,
   assert.match(source, /onClick="\{\{\s*resetFromHelp\s*\}\}"[^>]*>Reset Progress<\/button>/);
 });
 
+test('Help offers the agreed 45–60 minute course duration', () => {
+  const help = source.slice(source.indexOf('id="help-title"'), source.indexOf('Have a suggestion or found a bug?'));
+  assert.match(help, /Allow 45–60 minutes to read and work through the course\./);
+  assert.doesNotMatch(help, /35 minutes|guaranteed/);
+});
+
 test('manages help modal lifecycle with first-time display, Escape dismissal, and persistence key', () => {
   assert.match(source, /HELP_KEY\s*=\s*["']howAIWorks\.helpSeen\.v1["']/);
   assert.match(source, /if\s*\(e\.key\s*===\s*["']Escape["']\s*&&\s*this\.state\.showHelp\)\s*\{?\s*this\.closeHelp\(\)/);
@@ -265,8 +304,161 @@ test('explains slide referencing convention and structural terms in help modal',
   assert.match(source, /<li>autonomous agents<\/li>/);
 });
 
+test('mobile skill sample stacks above its explanation', () => {
+  assert.match(source, /class="skill-file-layout"/);
+  assert.match(source, /\.skill-file-layout\{flex-direction:column!important;align-items:stretch!important;\}/);
+  assert.match(source, /\.skill-file-layout > div\{width:100%!important;min-width:0!important;flex:none!important;\}/);
+});
+
+test('mobile retrieval stages stack and retain context card', () => {
+  assert.match(source, /class="retrieval-flow"/);
+  assert.match(source, /\.retrieval-flow\{flex-direction:column!important;align-items:stretch!important;\}/);
+  assert.match(source, /\.retrieval-flow > div\{width:100%!important;min-width:0!important;flex:none!important;\}/);
+  assert.match(source, /class="retrieval-arrow"/);
+  assert.match(source, /\.retrieval-arrow\{height:26px;transform:none!important;\}/);
+  assert.match(source, /\.retrieval-arrow span\{display:inline-block;transform:rotate\(90deg\);\}/);
+});
+
+test('mobile tool-skill takeaway wraps without clipping', () => {
+  assert.match(source, /class="tool-skill-takeaway"/);
+  assert.match(source, /\.tool-skill-takeaway\{flex-direction:column!important;align-items:stretch!important;\}/);
+  assert.match(source, /\.tool-skill-takeaway > div:first-child\{white-space:normal!important;overflow-wrap:anywhere;\}/);
+});
+
+test('mobile sub-agent explanation follows its task cards', () => {
+  assert.match(source, /class="subagent-layout"/);
+  assert.match(source, /class="subagent-cards"/);
+  assert.match(source, /\.subagent-layout\{flex-direction:column!important;align-items:stretch!important;\}/);
+  assert.match(source, /\.subagent-cards > div\{flex:1 1 100%!important;\}/);
+});
+
+test('inactive glossary preview has a restrained but readable opacity', () => {
+  assert.match(source, /from === st \? 1 : 0\.5/);
+  assert.match(source, /!on \? 0\.24/);
+});
+
+test('mobile prediction explanation follows its illustration', () => {
+  assert.match(source, /class="prediction-layout"/);
+  assert.match(source, /\.prediction-layout\{flex-direction:column!important;align-items:stretch!important;\}/);
+});
+
 test('finalizes the chosen modal intro variant without variant scaffolding', () => {
   assert.match(source, /Whether you write code, design workflows, or manage delivery, this guide provides a grounded mental model of generative models, tools, and agent loops\./);
   assert.match(source, /The course demystifies the mechanics behind prompts and responses without technical jargon, breaking down the technology into five core areas:/);
   assert.doesNotMatch(source, /vibe-annotations:scaffold vibe_1790180026441_b1t90s3rh|vibe-var-vibe_1790180026441_b1t90s3rh/);
+});
+
+test('mobile navigation leaves in-lesson scroll in place beside the sticky caption', () => {
+  const script = source.match(/<script type="text\/x-dc"[^>]*>([\s\S]*?)<\/script>/)?.[1];
+  const calls = [];
+  const browser = { matchMedia: () => ({ matches: true }), scrollTo: (...args) => calls.push(args) };
+  const document = { querySelector: selector => ({
+    getBoundingClientRect: () => ({ top: -66 }),
+    scrollIntoView: () => calls.push([selector])
+  }) };
+  const Component = new Function('DCLogic', 'window', 'document', 'HowAiWorksCourseState', 'localStorage', `${script}\nreturn Component;`)(class {}, browser, document, {}, {});
+  const app = new Component();
+  app.state = { d: 0, step: 3, typed: 0, finished: false, learnerName: '', completion: null };
+  app._key = '0:2'; app.startType = () => {}; app.setAuto = () => {}; app.persistProgress = () => {};
+  app.componentDidUpdate();
+  assert.deepEqual(calls, [], 'a new beat leaves the slide at the learner’s reading position');
+  app.state.typed = 1; app.componentDidUpdate();
+  assert.deepEqual(calls, [], 'caption typing does not move the page');
+  app.state.step = 4; app.componentDidUpdate();
+  assert.deepEqual(calls, [], 'a learner already at the page top is not pushed down');
+  app.state.step = 5; app.componentDidUpdate();
+  assert.deepEqual(calls.at(-1), ['.course-canvas'], 'the recap starts at its canvas');
+  app.state.step = 4; app.componentDidUpdate();
+  assert.deepEqual(calls.at(-1), ['.course-canvas'], 'Back from recap reveals the diagram');
+  app.state.d = 1; app.state.step = 0; app.componentDidUpdate();
+  assert.deepEqual(calls.at(-1), [0, 0], 'a new lesson starts from its header');
+  browser.matchMedia = () => ({ matches: false });
+  app.state.step = 1; app.componentDidUpdate();
+  assert.deepEqual(calls.at(-1), [0, 0], 'desktop scroll remains unchanged');
+});
+
+test('typed captions dock above mobile Back and Next but stay above the desktop canvas', () => {
+  const desktopCaption = source.indexOf('class="course-caption course-caption--desktop"');
+  const canvas = source.indexOf('class="course-canvas"');
+  const controls = source.indexOf('class="course-controls"');
+  const mobileCaption = source.indexOf('class="course-caption course-caption--mobile"');
+  const back = source.indexOf('onClick="{{ back }}"', controls);
+  assert.ok(desktopCaption > 0 && desktopCaption < canvas, 'desktop caption precedes the diagram');
+  assert.ok(mobileCaption > controls && mobileCaption < back, 'mobile caption sits above the buttons in the sticky controls');
+  assert.match(source, /\.course-caption--mobile\{display:none;\}/);
+  assert.match(source, /\.course-caption--desktop\{display:none!important;\}/);
+  assert.match(source, /\.course-caption--mobile\{display:flex!important;/);
+  assert.match(source, /<sc-if value="\{\{ hasCaption \}\}"[\s\S]*?class="course-caption course-caption--mobile"/);
+  assert.match(source, /hasCaption: !isOutro && !finished/);
+});
+
+test('mobile controls own the bottom safe area without unused padding beneath the dock', () => {
+  assert.match(source, /\.course-main\{[^\n]*padding:14px 18px 0!important;/);
+  assert.match(source, /\.course-controls\{[^\n]*padding:10px 18px max\(10px,env\(safe-area-inset-bottom\)\)!important;/);
+});
+
+test('narrow mobile finish controls keep Help alongside Back and Finish', () => {
+  assert.match(source, /class="course-actions"/);
+  assert.match(source, /class="course-dots"/);
+  assert.match(source, /\.course-controls\{[^\n]*column-gap:8px!important;/);
+  assert.match(source, /\.course-actions button\{padding:10px 10px!important;\}/);
+  assert.match(source, /\.course-dots\{gap:4px!important;\}/);
+});
+
+test('mobile recaps remove the outgoing panel and size to their content', () => {
+  assert.ok(source.includes('.course-canvas:has(> [data-outro]) > div:not([data-outro]){display:none!important;}'));
+  assert.ok(source.includes('.course-canvas:has(> [data-outro]){min-height:0!important;}'));
+  assert.ok(source.includes('.course-canvas > [data-outro]{min-height:0!important;}'));
+  assert.ok(source.includes('.course-canvas > [data-outro] > div:last-child{margin-top:24px!important;}'));
+});
+
+test('mobile completion entry reveals its record without a lesson-position change', () => {
+  const script = source.match(/<script type="text\/x-dc"[^>]*>([\s\S]*?)<\/script>/)?.[1];
+  const calls = [];
+  const browser = { matchMedia: () => ({ matches: true }), scrollTo: () => calls.push(['top']) };
+  const document = { querySelector: selector => ({ scrollIntoView: () => calls.push([selector]) }) };
+  const Component = new Function('DCLogic', 'window', 'document', 'HowAiWorksCourseState', 'localStorage', `${script}\nreturn Component;`)(class {}, browser, document, {}, {});
+  const app = new Component();
+  app.state = { d: 21, step: 5, finished: true, learnerName: '', completion: { id: 'test' } };
+  app._key = '21:5'; app._wasFinished = false;
+  app.setAuto = () => {}; app.persistProgress = () => {};
+  app.componentDidUpdate();
+  assert.deepEqual(calls, [['.completion-shell']]);
+});
+
+test('mobile context layout constrains diagram and key idea', () => {
+  assert.match(source, /class="context-layout"/);
+  assert.match(source, /\.context-layout > div:first-child\{width:100%!important;min-width:0!important;\}/);
+  assert.match(source, /\.context-layout > div:first-child > div:nth-child\(4\)\{flex-direction:column;align-items:stretch;\}/);
+  assert.match(source, /\.context-layout > div:first-child > div:nth-child\(4\) > span\{white-space:normal!important;\}/);
+});
+
+test('mobile artifact explanation stacks its panels', () => {
+  assert.match(source, /class="artifact-layout"/);
+  assert.match(source, /\.artifact-layout\{flex-direction:column!important;align-items:stretch!important;\}/);
+  assert.match(source, /\.artifact-layout > div\{width:100%!important;min-width:0!important;flex:none!important;\}/);
+});
+
+test('mobile calculator fix shows every step', () => {
+  assert.match(source, /class="calculator-fix"/);
+  assert.match(source, /class="calculator-steps"/);
+  assert.match(source, /\.calculator-steps\{flex-direction:column!important;align-items:stretch!important;\}/);
+  assert.match(source, /\.calculator-steps > div:nth-child\(2\),\.calculator-steps > div:nth-child\(4\)\{align-self:center;width:fit-content;text-align:center;transform:rotate\(90deg\);\}/);
+});
+
+test('mobile durable-artifact takeaway uses the available reading width', () => {
+  assert.match(source, /class="artifact-takeaway"/);
+  assert.match(source, /\.artifact-takeaway\{flex-direction:column!important;align-items:stretch!important;\}/);
+  assert.match(source, /\.artifact-takeaway > div\{width:100%!important;flex:none!important;\}/);
+});
+
+test('mobile retrieval explanation uses the available reading width', () => {
+  assert.ok(source.includes('class="retrieval-takeaway"'), 'retrieval summary has a scoped layout');
+  assert.ok(source.includes('.retrieval-takeaway{flex-direction:column!important;align-items:stretch!important;}'));
+  assert.ok(source.includes('.retrieval-takeaway > div{width:100%!important;flex:none!important;}'));
+});
+
+test('mobile stacked sub-agent cards do not keep detached parallel wires', () => {
+  assert.ok(source.includes('class="subagent-wires"'), 'three desktop wires have a scoped wrapper');
+  assert.ok(source.includes('.subagent-wires{display:none!important;}'), 'stacked mobile cards omit misleading desktop connectors');
 });
