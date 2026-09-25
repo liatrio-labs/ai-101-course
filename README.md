@@ -1,6 +1,6 @@
 # AI 101: How AI Works
 
-**A visual, self-paced introduction to what happens between sending a message to an AI and reading its reply.** Liatrio built this course for anyone curious about AI—whether you're exploring it for yourself, using it at work, or helping a team use it well. Allow **45–60 minutes** to explore it.
+**A visual, self-paced introduction to what happens between sending a message to an AI and reading its reply.** Liatrio built this course for anyone curious about AI, whether you're exploring it for yourself, using it at work, or helping a team use it well. Allow **45–60 minutes** to explore it.
 
 [Start the course →](https://ai-101-course.lab.liatr.io/) · [Suggest an improvement](https://github.com/liatrio-labs/ai-101-course/issues) · [Latest release](https://github.com/liatrio-labs/ai-101-course/releases/latest)
 

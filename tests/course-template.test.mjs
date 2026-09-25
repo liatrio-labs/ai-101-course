@@ -19,6 +19,7 @@ test('README and Help welcome anyone curious about AI, including personal and wo
     assert.match(text, /using it at work/);
     assert.match(text, /helping a team use it well/);
     assert.doesNotMatch(text, /write code, design workflows, or manage delivery/);
+    assert.doesNotMatch(text, /AI—whether/);
   }
 });
 
@@ -382,7 +383,7 @@ test('mobile prediction explanation follows its illustration', () => {
 });
 
 test('finalizes the chosen modal intro variant without variant scaffolding', () => {
-  assert.match(source, /anyone curious about AI—whether you're exploring it for yourself, using it at work, or helping a team use it well/);
+  assert.match(source, /anyone curious about AI, whether you're exploring it for yourself, using it at work, or helping a team use it well/);
   assert.match(source, /The course demystifies the mechanics behind prompts and responses without technical jargon, breaking down the technology into five core areas:/);
   assert.doesNotMatch(source, /vibe-annotations:scaffold vibe_1790180026441_b1t90s3rh|vibe-var-vibe_1790180026441_b1t90s3rh/);
 });
