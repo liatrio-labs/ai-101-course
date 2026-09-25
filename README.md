@@ -38,6 +38,10 @@ python3 -m http.server 8090 --bind 127.0.0.1
 
 Open [http://127.0.0.1:8090/ai-101-course.html](http://127.0.0.1:8090/ai-101-course.html). The hosted container serves the same `ai-101-course.html` as `/`.
 
+## Deployment
+
+The [hosted course](https://ai-101-course.lab.liatr.io/) is deployed manually through [The Lab](https://lab.liatr.io/). Pushing to `main` or creating a Semantic Release tag does not deploy the site. After a release, deploy its release commit so the live course shows the version recorded in the tag and changelog.
+
 ## Contributing and releases
 
 Found an unclear explanation or a bug? [Open an issue](https://github.com/liatrio-labs/ai-101-course/issues) and include the **section.slide** number when relevant. Before changing course behavior, note that `support.js` is generated runtime code and should not be edited directly; learner state lives in `course-state.js` and browser `localStorage`.
