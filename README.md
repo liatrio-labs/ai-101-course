@@ -1,10 +1,10 @@
 # AI 101: How AI Works
 
-**A visual, self-paced introduction to what happens between sending a message to an AI and reading its reply.** Liatrio built this course for people who write code, design workflows, or manage delivery. Allow **45–60 minutes** to explore it.
+**A visual, self-paced introduction to what happens between sending a message to an AI and reading its reply.** Liatrio built this course for anyone curious about AI—whether you're exploring it for yourself, using it at work, or helping a team use it well. Allow **45–60 minutes** to explore it.
 
 [Start the course →](https://ai-101-course.lab.liatr.io/) · [Suggest an improvement](https://github.com/liatrio-labs/ai-101-course/issues) · [Latest release](https://github.com/liatrio-labs/ai-101-course/releases/latest)
 
-[![The AI 101 course opening screen, showing its five acts and interactive lesson navigation](docs/images/ai-101-course-overview.webp)](https://ai-101-course.lab.liatr.io/)
+[![The AI 101 course opening screen, showing its five acts and interactive lesson navigation](docs/ai-101-course-preview.png)](https://ai-101-course.lab.liatr.io/)
 
 ## What you'll learn
 
@@ -58,6 +58,6 @@ The hooks cover file hygiene, secrets, maintained Markdown, Conventional Commits
 
 ## Source availability and reuse
 
-The source may be visible on GitHub, but visibility is not a grant of reuse rights. Liatrio does not provide a general reuse license for its authored source, teaching material, design-system material, or marks. If you want to suggest a correction or improvement, [open an issue](https://github.com/liatrio-labs/ai-101-course/issues) (GitHub sign-in required; access depends on repository visibility) rather than assuming outside code contributions are accepted.
+The source may be visible on GitHub, but visibility is not a grant of reuse rights. Liatrio does not provide a general reuse license for its authored source, teaching material, design-system material, or marks. If you want to suggest a correction or improvement, [open an issue](https://github.com/liatrio-labs/ai-101-course/issues) rather than assuming outside code contributions are accepted.
 
 The bundled Space Grotesk font is licensed separately under the SIL Open Font License 1.1; see its [font-specific license notice](_ds/liatrio-design-system-019dd485-a9ab-7b37-9403-944d981aaea9/fonts/OFL.txt). This font license does not apply to Liatrio-authored materials.

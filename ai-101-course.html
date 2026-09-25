@@ -1077,7 +1077,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
               <div><div class="completion-record__label">Completed locally</div><div class="completion-record__value">{{ recordCompletedAt }}</div></div>
               <div style="grid-column:1 / -1;"><div class="completion-record__label">Local record ID</div><div class="completion-record__value">{{ recordId }}</div></div>
             </div>
-            <div class="completion-record__notice">Locally generated personal completion record; not independently verified or a formal credential.</div>
+            <div class="completion-record__notice">Course version {{ courseVersion }} · Locally generated personal completion record; not independently verified or a formal credential.</div>
           </section>
           <div class="print-hide" style="display:flex;gap:10px;align-items:center;">
             <button class="completion-action" onClick="{{ printRecord }}">Print / save as PDF</button>
@@ -1125,7 +1125,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #89DF00;outline-offse
         </div>
 
         <div style="font-size:13.5px;line-height:1.55;color:#C9D1D6;display:flex;flex-direction:column;gap:10px;">
-          <div>This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works. Whether you write code, design workflows, or manage delivery, this guide provides a grounded mental model of generative models, tools, and agent loops.</div>
+          <div>Liatrio built this course for anyone curious about AI—whether you're exploring it for yourself, using it at work, or helping a team use it well. This guide provides a grounded mental model of generative models, tools, and agent loops.</div>
           <div class="course-time-estimate" style="font-size:12.5px;line-height:1.45;color:#C9D1D6;">Allow 45–60 minutes to read and work through the course.</div>
           <div>
             <div>The course demystifies the mechanics behind prompts and responses without technical jargon, breaking down the technology into five core areas:</div>
