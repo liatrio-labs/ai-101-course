@@ -2,8 +2,8 @@
 tag_format = "v{version}"
 # Start at v1.0.0 when the first releasable change reaches main.
 allow_zero_version = false
-# The course is a static site; Git tags and the generated changelog are its version record.
-version_variables = []
+# Stamp the Help version in the same release commit as the changelog and tag.
+version_variables = ["ai-101-course.html:courseVersion:tf"]
 commit_message = "chore(release): {version} [skip ci]"
 
 [semantic_release.branches.main]

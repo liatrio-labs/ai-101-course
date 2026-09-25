@@ -4,6 +4,25 @@ import { existsSync, readFileSync } from 'node:fs';
 
 const source = readFileSync(new URL('../ai-101-course.html', import.meta.url), 'utf8');
 
+test('README uses the supplied course preview', () => {
+  const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
+  assert.match(readme, /\(docs\/ai-101-course-preview\.png\)/);
+  assert.equal(existsSync(new URL('../docs/ai-101-course-preview.png', import.meta.url)), true);
+  assert.doesNotMatch(readme, /docs\/images\/ai-101-course-overview\.webp/);
+});
+
+test('README and Help welcome anyone curious about AI, including personal and workplace learners', () => {
+  const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
+  for (const text of [readme, source]) {
+    assert.match(text, /Liatrio built this course for anyone curious about AI/);
+    assert.match(text, /exploring it for yourself/);
+    assert.match(text, /using it at work/);
+    assert.match(text, /helping a team use it well/);
+    assert.doesNotMatch(text, /write code, design workflows, or manage delivery/);
+    assert.doesNotMatch(text, /AI—whether/);
+  }
+});
+
 test('does not render the per-act progress count on course slides', () => {
   assert.doesNotMatch(source, /\{\{ actProgress \}\}/);
 });
@@ -78,6 +97,14 @@ test('prints the completion record as a landscape certificate with its on-page s
   assert.match(printStyles, /\.completion-record\{[^}]*inset:12mm;[^}]*padding:18mm 20mm;/);
   assert.match(printStyles, /\.completion-record__brand\{[^}]*display:flex!important;/);
   assert.match(printStyles, /\.completion-record__grid\{[^}]*grid-template-columns:1fr 1fr!important;/);
+});
+
+test('the completion certificate shows the release-owned course version', () => {
+  const start = source.indexOf('<section class="completion-record"');
+  assert.ok(start >= 0, 'completion record exists');
+  const record = source.slice(start, source.indexOf('</section>', start));
+  assert.match(record, /Course version \{\{ courseVersion \}\}/);
+  assert.equal((source.match(/\bcourseVersion:\s*"v\d+\.\d+\.\d+"/g) || []).length, 1);
 });
 
 test('print certificate balances its content without changing screen layout', () => {
@@ -274,13 +301,22 @@ test('renders a help trigger button in the bottom-right corner of course control
 
 test('renders a Help and Getting Started modal with title How to Use the Course, Liatrio purpose, and shortcuts', () => {
   assert.match(source, />How to Use the Course<\/div>/);
-  assert.match(source, /This course is Liatrio’s introduction to how to think about AI and understand the basic concepts of how the technology works\./);
+  assert.match(source, /Liatrio built this course for anyone curious about AI/);
   assert.match(source, /Course Structure &amp; Navigation/);
   assert.match(source, /onClick="\{\{\s*resetFromHelp\s*\}\}"[^>]*>Reset Progress<\/button>/);
 });
 
+test('Help displays the semantic-release-stamped course version', () => {
+  const config = readFileSync(new URL('../.releaserc.toml', import.meta.url), 'utf8');
+  const declaration = source.match(/\bcourseVersion:\s*"(v\d+\.\d+\.\d+)"/g) || [];
+  assert.equal(declaration.length, 1, 'one release-owned course version value');
+  assert.match(config, /^version_variables\s*=\s*\["ai-101-course\.html:courseVersion:tf"\]$/m);
+  const help = source.slice(source.indexOf('<div class="course-modal" role="dialog"'), source.indexOf('</sc-if>', source.indexOf('<div class="course-modal" role="dialog"')));
+  assert.match(help, /<div class="help-course-version"[^>]*>Version \{\{ courseVersion \}\}<\/div>/);
+});
+
 test('Help offers the agreed 45–60 minute course duration', () => {
-  const help = source.slice(source.indexOf('id="help-title"'), source.indexOf('Have a suggestion or found a bug?'));
+  const help = source.slice(source.indexOf('id="help-title"'), source.indexOf('Course Structure &amp; Navigation'));
   assert.match(help, /Allow 45–60 minutes to read and work through the course\./);
   assert.doesNotMatch(help, /35 minutes|guaranteed/);
 });
@@ -291,10 +327,14 @@ test('manages help modal lifecycle with first-time display, Escape dismissal, an
   assert.match(source, /if\s*\(this\.state\.showHelp\)\s*return;/);
 });
 
-test('renders Liatrio logomark and GitHub suggestion link in help modal', () => {
-  assert.match(source, /class="course-modal"[\s\S]*?<img src="logomark_Liatrio_background\.png" alt="Liatrio"/);
-  assert.match(source, /href="https:\/\/github\.com\/liatrio\/ai-101-course"[^>]*>Go to our repo<\/a>/);
-  assert.match(source, /Have a suggestion or found a bug\?/);
+test('Help directs suggestions and bug reports to GitHub Issues with a sign-in caveat', () => {
+  const start = source.indexOf('<div class="course-modal" role="dialog"');
+  assert.ok(start >= 0, 'Help dialog exists');
+  const help = source.slice(start, source.indexOf('</sc-if>', start));
+  assert.match(help, /<img src="logomark_Liatrio_background\.png" alt="Liatrio"/);
+  assert.match(help, /Have a suggestion or found a bug\?/);
+  assert.match(help, /<a\b[^>]*href="https:\/\/github\.com\/liatrio-labs\/ai-101-course\/issues"[^>]*>Open a GitHub issue<\/a>/);
+  assert.match(help, /GitHub sign-in required/);
 });
 
 test('explains slide referencing convention and structural terms in help modal', () => {
@@ -343,7 +383,7 @@ test('mobile prediction explanation follows its illustration', () => {
 });
 
 test('finalizes the chosen modal intro variant without variant scaffolding', () => {
-  assert.match(source, /Whether you write code, design workflows, or manage delivery, this guide provides a grounded mental model of generative models, tools, and agent loops\./);
+  assert.match(source, /anyone curious about AI, whether you're exploring it for yourself, using it at work, or helping a team use it well/);
   assert.match(source, /The course demystifies the mechanics behind prompts and responses without technical jargon, breaking down the technology into five core areas:/);
   assert.doesNotMatch(source, /vibe-annotations:scaffold vibe_1790180026441_b1t90s3rh|vibe-var-vibe_1790180026441_b1t90s3rh/);
 });
