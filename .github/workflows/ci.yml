@@ -153,10 +153,82 @@ jobs:
           print('Tracked General settings match GitHub.')
           PY
 
+  container-smoke:
+    name: Container smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      IMAGE: ai-101-course:ci-smoke
+      CONTAINER: ai-101-course-smoke
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build image
+        run: docker build --tag "$IMAGE" .
+      - name: Start container
+        # Use the image's default command and port; do not mask packaging defects.
+        run: docker run --detach --name "$CONTAINER" --publish 127.0.0.1::8080 "$IMAGE"
+      - name: Check start page
+        run: |
+          port=$(docker port "$CONTAINER" 8080/tcp | cut -d: -f2)
+          url="http://127.0.0.1:$port/"
+          deadline=$((SECONDS + 30))
+          ready=false
+          while (( SECONDS < deadline )); do
+            if [[ $(docker inspect --format '{{.State.Running}}' "$CONTAINER") != true ]]; then
+              echo "Container exited before serving the start page" >&2
+              exit 1
+            fi
+            if curl --silent --show-error --connect-timeout 1 --max-time 2 \
+              --dump-header "$RUNNER_TEMP/smoke-headers.txt" \
+              --output "$RUNNER_TEMP/smoke-body.html" \
+              --write-out '%{http_code}' "$url" > "$RUNNER_TEMP/smoke-status.txt" 2>/dev/null; then
+              if [[ $(< "$RUNNER_TEMP/smoke-status.txt") == 200 ]]; then
+                ready=true
+                break
+              fi
+            fi
+            sleep 1
+          done
+          if [[ "$ready" != true ]]; then
+            echo "Start page did not respond within 30 seconds" >&2
+            exit 1
+          fi
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import re
+
+          root = Path(os.environ['RUNNER_TEMP'])
+          status = (root / 'smoke-status.txt').read_text().strip()
+          headers = (root / 'smoke-headers.txt').read_text()
+          body = (root / 'smoke-body.html').read_text()
+          if status != '200':
+              raise SystemExit(f'Expected HTTP 200, got {status}')
+          if not re.search(r'^content-type:\s*text/html(?:\s*;|\s*$)', headers, re.I | re.M):
+              raise SystemExit('Start page is not served as text/html')
+          if '<title>AI 101: How AI Works</title>' not in body:
+              raise SystemExit('Response is missing the course start-page title')
+          print('Container serves the AI 101 start page (HTTP 200, HTML, course title).')
+          PY
+      - name: Failure diagnostics
+        if: failure()
+        run: |
+          docker inspect --format '{{json .State}}' "$CONTAINER" || true
+          docker logs "$CONTAINER" || true
+          for file in smoke-status.txt smoke-headers.txt smoke-body.html; do
+            if [[ -f "$RUNNER_TEMP/$file" ]]; then
+              printf '\n--- %s ---\n' "$file"
+              head -c 2000 "$RUNNER_TEMP/$file"
+            fi
+          done
+      - name: Remove smoke container
+        if: always()
+        run: docker rm --force "$CONTAINER" || true
+
   release:
     name: Semantic release
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [test, pre-commit, ruleset-drift]
+    needs: [test, pre-commit, ruleset-drift, container-smoke]
     runs-on: ubuntu-latest
     permissions:
       contents: read
