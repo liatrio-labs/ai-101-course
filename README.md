@@ -56,7 +56,7 @@ After deploying, run the same tests with `COURSE_URL=https://ai-101-course.lab.l
 
 Found an unclear explanation or a bug? [Open an issue](https://github.com/liatrio-labs/ai-101-course/issues) and include the **section.slide** number when relevant. Before changing course behavior, note that `support.js` is generated runtime code and should not be edited directly; learner state lives in `course-state.js` and browser `localStorage`.
 
-Install [pre-commit](https://pre-commit.com/) (for example, `pipx install pre-commit`) and enable both hook stages:
+Install [pre-commit](https://pre-commit.com/) (for example, `pipx install pre-commit`) and enable both hook stages. Docker must be installed and running for the pinned Hadolint container hook; it lints Dockerfiles locally and in the existing CI pre-commit job.
 
 ```sh
 pre-commit install --hook-type pre-commit --hook-type commit-msg

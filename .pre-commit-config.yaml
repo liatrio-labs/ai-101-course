@@ -35,6 +35,13 @@ repos:
       - id: markdownlint-fix
         files: ^(README\.md|AGENTS\.md|\.github/.*\.md)$
 
+  - repo: https://github.com/hadolint/hadolint
+    rev: 2eece55955ced00200be9729e9728cb7dacca505 # v2.15.1
+    hooks:
+      - id: hadolint-docker
+        # Pin the multi-platform image as well as the hook definition.
+        entry: ghcr.io/hadolint/hadolint:v2.15.1@sha256:32dac94127fd60b7b7e3fbfc65e1383b9b5e25c9bfd7b8536de7a539fe68a12d hadolint
+
   - repo: local
     hooks:
       - id: course-checks
