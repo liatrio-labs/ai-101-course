@@ -22,6 +22,7 @@ Run these after behavior changes:
 ```sh
 node --test tests/course-state.test.mjs
 node --test tests/course-template.test.mjs
+node --test tests/static-resources.test.mjs
 node --check course-state.js
 node --check support.js
 git diff --check

@@ -39,7 +39,7 @@ repos:
     hooks:
       - id: course-checks
         name: course tests and JavaScript syntax
-        entry: bash -c 'node --test tests/course-state.test.mjs && node --test tests/course-template.test.mjs && node --check course-state.js && node --check support.js'
+        entry: bash -c 'node --test tests/course-state.test.mjs && node --test tests/course-template.test.mjs && node --test tests/static-resources.test.mjs && node --check course-state.js && node --check support.js'
         language: system
         pass_filenames: false
         always_run: true

@@ -1,0 +1,3 @@
+# AI 101: How AI Works is a public educational course; crawling is allowed.
+User-agent: *
+Disallow:
