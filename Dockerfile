@@ -4,6 +4,7 @@ WORKDIR /srv
 
 COPY ai-101-course.html index.html
 COPY course-state.js support.js logo_Liatrio_reverse-color.png logomark_Liatrio_background.png ./
+COPY favicon.ico apple-touch-icon.png apple-touch-icon-precomposed.png apple-touch-icon-240x240.png apple-touch-icon-240x240-precomposed.png robots.txt ./
 COPY _ds ./_ds
 
 EXPOSE 8080
